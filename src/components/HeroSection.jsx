@@ -40,7 +40,7 @@ export function HeroSection() {
         <img
           src="/src/assets/clubmite.png"
           alt="Club MITE Logo"
-          className="w-32 h-20 md:w-62 md:h-20 object-contain"
+          className="w-24 h-16 md:w-62 md:h-20 object-contain"
         />
       </div>
       {/* Content container */}
