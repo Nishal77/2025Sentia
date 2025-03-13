@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="800" height="400" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="400" fill="#1e293b" />
+  
+  <!-- Stage and speaker -->
+  <rect x="350" y="320" width="100" height="50" fill="#475569" />
+  <circle cx="400" cy="320" r="15" fill="#94a3b8" />
+  
+  <!-- Audience -->
+  <g id="audience">
+    <!-- Row 1 -->
+    <circle cx="200" cy="280" r="5" fill="#94a3b8" />
+    <circle cx="220" cy="280" r="5" fill="#94a3b8" />
+    <circle cx="240" cy="280" r="5" fill="#94a3b8" />
+    <circle cx="260" cy="280" r="5" fill="#94a3b8" />
+    <circle cx="280" cy="280" r="5" fill="#94a3b8" />
+    <circle cx="300" cy="280" r="5" fill="#94a3b8" />
+    <circle cx="320" cy="280" r="5" fill="#94a3b8" />
+    <circle cx="340" cy="280" r="5" fill="#94a3b8" />
+    <circle cx="360" cy="280" r="5" fill="#94a3b8" />
+    <circle cx="380" cy="280" r="5" fill="#94a3b8" />
+    <circle cx="400" cy="280" r="5" fill="#94a3b8" />
+    <circle cx="420" cy="280" r="5" fill="#94a3b8" />
+    <circle cx="440" cy="280" r="5" fill="#94a3b8" />
+    <circle cx="460" cy="280" r="5" fill="#94a3b8" />
+    <circle cx="480" cy="280" r="5" fill="#94a3b8" />
+    <circle cx="500" cy="280" r="5" fill="#94a3b8" />
+    <circle cx="520" cy="280" r="5" fill="#94a3b8" />
+    <circle cx="540" cy="280" r="5" fill="#94a3b8" />
+    <circle cx="560" cy="280" r="5" fill="#94a3b8" />
+    <circle cx="580" cy="280" r="5" fill="#94a3b8" />
+    <circle cx="600" cy="280" r="5" fill="#94a3b8" />
+    
+    <!-- Row 2 -->
+    <circle cx="200" cy="250" r="5" fill="#94a3b8" />
+    <circle cx="220" cy="250" r="5" fill="#94a3b8" />
+    <circle cx="240" cy="250" r="5" fill="#94a3b8" />
+    <circle cx="260" cy="250" r="5" fill="#94a3b8" />
+    <circle cx="280" cy="250" r="5" fill="#94a3b8" />
+    <circle cx="300" cy="250" r="5" fill="#94a3b8" />
+    <circle cx="320" cy="250" r="5" fill="#94a3b8" />
+    <circle cx="340" cy="250" r="5" fill="#94a3b8" />
+    <circle cx="360" cy="250" r="5" fill="#94a3b8" />
+    <circle cx="380" cy="250" r="5" fill="#94a3b8" />
+    <circle cx="400" cy="250" r="5" fill="#94a3b8" />
+    <circle cx="420" cy="250" r="5" fill="#94a3b8" />
+    <circle cx="440" cy="250" r="5" fill="#94a3b8" />
+    <circle cx="460" cy="250" r="5" fill="#94a3b8" />
+    <circle cx="480" cy="250" r="5" fill="#94a3b8" />
+    <circle cx="500" cy="250" r="5" fill="#94a3b8" />
+    <circle cx="520" cy="250" r="5" fill="#94a3b8" />
+    <circle cx="540" cy="250" r="5" fill="#94a3b8" />
+    <circle cx="560" cy="250" r="5" fill="#94a3b8" />
+    <circle cx="580" cy="250" r="5" fill="#94a3b8" />
+    <circle cx="600" cy="250" r="5" fill="#94a3b8" />
+    
+    <!-- Row 3 -->
+    <circle cx="200" cy="220" r="5" fill="#94a3b8" />
+    <circle cx="220" cy="220" r="5" fill="#94a3b8" />
+    <circle cx="240" cy="220" r="5" fill="#94a3b8" />
+    <circle cx="260" cy="220" r="5" fill="#94a3b8" />
+    <circle cx="280" cy="220" r="5" fill="#94a3b8" />
+    <circle cx="300" cy="220" r="5" fill="#94a3b8" />
+    <circle cx="320" cy="220" r="5" fill="#94a3b8" />
+    <circle cx="340" cy="220" r="5" fill="#94a3b8" />
+    <circle cx="360" cy="220" r="5" fill="#94a3b8" />
+    <circle cx="380" cy="220" r="5" fill="#94a3b8" />
+    <circle cx="400" cy="220" r="5" fill="#94a3b8" />
+    <circle cx="420" cy="220" r="5" fill="#94a3b8" />
+    <circle cx="440" cy="220" r="5" fill="#94a3b8" />
+    <circle cx="460" cy="220" r="5" fill="#94a3b8" />
+    <circle cx="480" cy="220" r="5" fill="#94a3b8" />
+    <circle cx="500" cy="220" r="5" fill="#94a3b8" />
+    <circle cx="520" cy="220" r="5" fill="#94a3b8" />
+    <circle cx="540" cy="220" r="5" fill="#94a3b8" />
+    <circle cx="560" cy="220" r="5" fill="#94a3b8" />
+    <circle cx="580" cy="220" r="5" fill="#94a3b8" />
+    <circle cx="600" cy="220" r="5" fill="#94a3b8" />
+    
+    <!-- Row 4 -->
+    <circle cx="200" cy="190" r="5" fill="#94a3b8" />
+    <circle cx="220" cy="190" r="5" fill="#94a3b8" />
+    <circle cx="240" cy="190" r="5" fill="#94a3b8" />
+    <circle cx="260" cy="190" r="5" fill="#94a3b8" />
+    <circle cx="280" cy="190" r="5" fill="#94a3b8" />
+    <circle cx="300" cy="190" r="5" fill="#94a3b8" />
+    <circle cx="320" cy="190" r="5" fill="#94a3b8" />
+    <circle cx="340" cy="190" r="5" fill="#94a3b8" />
+    <circle cx="360" cy="190" r="5" fill="#94a3b8" />
+    <circle cx="380" cy="190" r="5" fill="#94a3b8" />
+    <circle cx="400" cy="190" r="5" fill="#94a3b8" />
+    <circle cx="420" cy="190" r="5" fill="#94a3b8" />
+    <circle cx="440" cy="190" r="5" fill="#94a3b8" />
+    <circle cx="460" cy="190" r="5" fill="#94a3b8" />
+    <circle cx="480" cy="190" r="5" fill="#94a3b8" />
+    <circle cx="500" cy="190" r="5" fill="#94a3b8" />
+    <circle cx="520" cy="190" r="5" fill="#94a3b8" />
+    <circle cx="540" cy="190" r="5" fill="#94a3b8" />
+    <circle cx="560" cy="190" r="5" fill="#94a3b8" />
+    <circle cx="580" cy="190" r="5" fill="#94a3b8" />
+    <circle cx="600" cy="190" r="5" fill="#94a3b8" />
+  </g>
+  
+  <!-- Screen elements -->
+  <rect x="150" y="50" width="200" height="120" fill="#334155" />
+  <rect x="450" y="50" width="200" height="120" fill="#334155" />
+  
+  <!-- Lights -->
+  <circle cx="250" cy="25" r="5" fill="#fbbf24" />
+  <circle cx="350" cy="25" r="5" fill="#2dd4bf" />
+  <circle cx="450" cy="25" r="5" fill="#c084fc" />
+  <circle cx="550" cy="25" r="5" fill="#fbbf24" />
+</svg> 
