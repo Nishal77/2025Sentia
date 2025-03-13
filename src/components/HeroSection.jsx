@@ -25,18 +25,17 @@ export function HeroSection() {
       
       {/* College Logo and MITE Description - Top Left */}
       <div className="absolute top-4 md:top-6 z-20 w-full flex justify-between items-center px-4 md:px-6">
-        <div className="hidden md:flex items-center">
+        <div className="flex items-center">
           <img 
             src={collegeLogo}
             alt="College Logo"
-            className="w-16 h-16 md:w-20 md:h-20 object-contain"
+            className="w-24 h-16 sm:w-28 sm:h-18 md:w-16 md:h-16 object-contain"
           />
-          <div className="ml-3">
-            <h2 className="text-[#1a4e9a] text-sm md:text-lg font-semibold flex flex-col">
-              <span>Mangalore Institute of Technology</span>
-              <span>& Engineering</span>
-            </h2>
-          </div>
+          <img
+            src="/src/assets/mainlogopg-removebg-preview (1).png"
+            alt="MITE Logo"
+            className="hidden md:block h-12 md:h-16 object-contain ml-2" 
+          />
         </div>
         <img
           src="/src/assets/clubmite.png"
