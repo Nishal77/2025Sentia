@@ -701,7 +701,7 @@ export function Events({ setGlobalVideoHovered }) {
                 </button>
               </AlertDialogTrigger>
               
-              <AlertDialogContent className="max-w-md w-[450px] rounded-xl overflow-hidden p-0 border border-gray-200 shadow-xl">
+              <AlertDialogContent className="max-w-3xl w-[800px] rounded-xl overflow-hidden p-0 border border-gray-200 shadow-xl">
                 {/* Header - Fixed at top */}
                 <div className="p-5 bg-black text-white sticky top-0 z-10">
                   <AlertDialogTitle className="text-xl font-bold">
@@ -711,7 +711,7 @@ export function Events({ setGlobalVideoHovered }) {
                 
                 {/* Scrollable content area */}
                 <div className="max-h-[420px] overflow-y-auto">
-                  <div className="p-5 space-y-5">
+                  <div className="p-6 space-y-5">
                     {/* Coordinators Section */}
                     {eventRules[id]?.coordinators && (
                       <div className="bg-gray-50 p-5 rounded-lg border border-gray-100">
@@ -747,9 +747,9 @@ export function Events({ setGlobalVideoHovered }) {
                         </svg>
                         Rules & Guidelines
                       </h3>
-                      <ul className="list-none space-y-3">
+                      <ul className="list-none space-y-4">
                         {eventRules[id]?.rules.map((rule, index) => (
-                          <li key={index} className="pl-4 border-l-2 border-black py-1 text-gray-700">
+                          <li key={index} className="pl-5 border-l-3 border-black py-2 text-gray-700 hover:bg-gray-50 rounded-r-lg transition-colors">
                             {rule}
                           </li>
                         ))}

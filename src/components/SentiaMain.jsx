@@ -10,6 +10,13 @@ export function SentiaMain() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isAnyVideoHovered, setIsAnyVideoHovered] = useState(false);
+  const [currentSong, setCurrentSong] = useState({
+    id: 0,
+    name: 'Soni Soni (From "ishq vishk rebound")',
+    artist: 'Jonita Gandhi',
+    src: '/src/assets/Songs/Sonisoni.mp3',
+    duration: '2:56'
+  });
   const audioRef = useRef(null);
   const intervalRef = useRef(null);
   
@@ -79,6 +86,48 @@ export function SentiaMain() {
     }
   };
 
+  // Play a specific song
+  const playSong = (songData) => {
+    if (audioRef.current) {
+      try {
+        // Update the current song state
+        setCurrentSong(songData);
+        
+        // Completely reset the audio element
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+        
+        // Force load the new source
+        audioRef.current.src = songData.src;
+        audioRef.current.load();
+        
+        console.log(`Attempting to play: ${songData.name} from ${songData.src}`);
+        
+        // Play immediately with better error handling
+        const playPromise = audioRef.current.play();
+        
+        if (playPromise !== undefined) {
+          playPromise
+            .then(() => {
+              console.log(`Successfully playing: ${songData.name}`);
+              setIsPlaying(true);
+            })
+            .catch(error => {
+              console.error(`Error playing ${songData.name}:`, error);
+              // Try one more time with a slight delay
+              setTimeout(() => {
+                audioRef.current.play()
+                  .then(() => setIsPlaying(true))
+                  .catch(e => console.error("Retry failed:", e));
+              }, 300);
+            });
+        }
+      } catch (error) {
+        console.error("Unexpected error in playSong:", error);
+      }
+    }
+  };
+
   // Clean up audio when component unmounts
   useEffect(() => {
     return () => {
@@ -88,6 +137,56 @@ export function SentiaMain() {
       }
     };
   }, []);
+
+  // Songs data
+  const songsData = [
+    {
+      id: 1,
+      name: 'Soni Soni (From "ishq vishk rebound")',
+      artist: 'Jonita Gandhi',
+      src: '/src/assets/Songs/Sonisoni.mp3',
+      duration: '2:56'
+    },
+    {
+      id: 2,
+      name: 'Deva Deva',
+      artist: 'Jonita Gandhi',
+      src: '/src/assets/Songs/devadeva.mp3',
+      duration: '4:39'
+    },
+    {
+      id: 3,
+      name: 'Gilehriyaan',
+      artist: 'Jonita Gandhi',
+      src: '/src/assets/Songs/whatjhumka.mp3',
+      duration: '3:42'
+    }
+  ];
+
+  // Track current audio time
+  const [audioProgress, setAudioProgress] = useState(0);
+  
+  // Effect to update progress
+  useEffect(() => {
+    const updateProgress = () => {
+      if (audioRef.current) {
+        const duration = audioRef.current.duration || 1;
+        const currentTime = audioRef.current.currentTime || 0;
+        setAudioProgress((currentTime / duration) * 100);
+      }
+    };
+    
+    // Update progress regularly while playing
+    let progressInterval;
+    if (isPlaying) {
+      progressInterval = setInterval(updateProgress, 100);
+    }
+    
+    // Cleanup
+    return () => {
+      if (progressInterval) clearInterval(progressInterval);
+    };
+  }, [isPlaying]);
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -436,12 +535,21 @@ export function SentiaMain() {
             </div>
             
             {/* Event Coordinators Contact Section */}
-            <div className="bg-white p-6 rounded-lg shadow-sm flex flex-col h-full">
-              <div className="flex-grow">
-                <h2 className="text-3xl font-bold text-black/80 mb-2">Your Sentia 2025 Outfit? It's Time to Show It Off!</h2>
-                <p className="text-gray-500 mb-6">The best memories start with the perfect outfit—dress for the Sentia vibe!</p>
+            <div className="bg-white p-4 rounded-lg shadow-sm flex flex-col h-[425px]">
+              <div className="flex-grow mb-2">
+                <h2 className="text-2xl font-bold text-black/80">Your Sentia 2025 Outfit? It's Time to Show It Off!</h2>
               </div>
               
+              <div className="relative w-full h-[350px] rounded-lg overflow-hidden">
+                <video
+                  src="/src/assets/shirtmp1.mp4"
+                  className="w-full h-full object-cover"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                />
+              </div>
               
             </div>
           </div>
@@ -496,7 +604,7 @@ export function SentiaMain() {
               </div>
               <div className="relative w-full h-52 rounded-lg overflow-hidden">
                 <img 
-                  src="/src/assets/jonita-gandhi.jpg"
+                  src="/src/assets/jonitha.png"
                   alt="Jonita Gandhi"
                   className="w-full h-full object-cover"
                 />
@@ -511,8 +619,10 @@ export function SentiaMain() {
                   {/* Hidden audio element for Spotify song */}
                   <audio 
                     ref={audioRef} 
-                    src="/src/assets/Songs/song1.mp3" 
-                    preload="auto"
+                    src={currentSong.src}
+                    preload="metadata"
+                    onEnded={() => setIsPlaying(false)}
+                    onError={(e) => console.error("Audio error:", e)}
                   />
                   
                   {/* Header with Album Art */}
@@ -542,42 +652,62 @@ export function SentiaMain() {
                   </div>
                   
                   {/* Player Controls */}
-                  <div className="flex items-center justify-between px-4 py-3 bg-black">
-                    <div className="flex items-center gap-5">
-                      <button className="text-white/70 hover:text-white transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                          <path d="M8.445 14.832A1 1 0 0010 14v-2.798l5.445 3.63A1 1 0 0017 14V6a1 1 0 00-1.555-.832L10 8.798V6a1 1 0 00-1.555-.832l-6 4a1 1 0 000 1.664l6 4z" />
-                        </svg>
-                      </button>
-                      <button 
-                        onClick={togglePlay}
-                        className="bg-white rounded-full w-12 h-12 flex items-center justify-center hover:scale-105 transition-transform shadow-[0_4px_12px_rgba(255,255,255,0.3)]"
-                      >
-                        {isPlaying ? (
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-black" viewBox="0 0 20 20" fill="currentColor">
-                            <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
+                  <div className="flex flex-col px-4 py-3 bg-black">
+                   
+                    
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-5">
+                        <button 
+                          className="text-white/70 hover:text-white transition-colors"
+                          onClick={() => {
+                            // Play previous song
+                            const currentIndex = songsData.findIndex(song => song.id === currentSong.id);
+                            const prevIndex = currentIndex <= 0 ? songsData.length - 1 : currentIndex - 1;
+                            playSong(songsData[prevIndex]);
+                          }}
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M8.445 14.832A1 1 0 0010 14v-2.798l5.445 3.63A1 1 0 0017 14V6a1 1 0 00-1.555-.832L10 8.798V6a1 1 0 00-1.555-.832l-6 4a1 1 0 000 1.664l6 4z" />
                           </svg>
-                        ) : (
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-black" viewBox="0 0 20 20" fill="currentColor">
-                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
+                        </button>
+                        <button 
+                          onClick={togglePlay}
+                          className="bg-white rounded-full w-12 h-12 flex items-center justify-center hover:scale-105 transition-transform shadow-[0_4px_12px_rgba(255,255,255,0.3)]"
+                        >
+                          {isPlaying ? (
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-black" viewBox="0 0 20 20" fill="currentColor">
+                              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" />
+                            </svg>
+                          ) : (
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-black" viewBox="0 0 20 20" fill="currentColor">
+                              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
+                            </svg>
+                          )}
+                        </button>
+                        <button 
+                          className="text-white/70 hover:text-white transition-colors"
+                          onClick={() => {
+                            // Play next song
+                            const currentIndex = songsData.findIndex(song => song.id === currentSong.id);
+                            const nextIndex = currentIndex >= songsData.length - 1 ? 0 : currentIndex + 1;
+                            playSong(songsData[nextIndex]);
+                          }}
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M4.555 5.168A1 1 0 003 6v8a1 1 0 001.555.832L10 11.202V14a1 1 0 001.555.832l6-4a1 1 0 000-1.664l-6-4A1 1 0 0010 6v2.798L4.555 5.168z" />
                           </svg>
-                        )}
-                      </button>
-                      <button className="text-white/70 hover:text-white transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                          <path d="M4.555 5.168A1 1 0 003 6v8a1 1 0 001.555.832L10 11.202V14a1 1 0 001.555.832l6-4a1 1 0 000-1.664l-6-4A1 1 0 0010 6v2.798L4.555 5.168z" />
-                        </svg>
-                      </button>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <div className="text-xs text-white/70">
-                        {isPlaying ? "Now Playing" : "Preview"}
+                        </button>
                       </div>
-                      <button className="text-white/70 hover:text-white transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                          <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
-                        </svg>
-                      </button>
+                      <div className="flex items-center gap-3">
+                        <div className="text-xs text-white/70">
+                          {isPlaying ? "Now Playing" : "Preview"}
+                        </div>
+                        <button className="text-white/70 hover:text-white transition-colors">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                          </svg>
+                        </button>
+                      </div>
                     </div>
                   </div>
                   
@@ -587,108 +717,49 @@ export function SentiaMain() {
                       <div className="text-xs uppercase tracking-wider text-white/50 px-2 mb-1 font-medium">Popular</div>
                       
                       <div className="space-y-1 mt-2 h-[calc(3*48px)] overflow-hidden hover:overflow-y-auto transition-all duration-300 pr-1">
-                        <div 
-                          className="flex items-center justify-between p-2 rounded-md transition-colors hover:bg-white/10 group relative cursor-pointer"
-                          onClick={() => {
-                            if (audioRef.current) {
-                              audioRef.current.src = "/src/assets/Songs/song1.mp3";
-                              audioRef.current.play()
-                                .then(() => {
-                                  setIsPlaying(true);
-                                })
-                                .catch(error => {
-                                  console.error("Error playing audio:", error);
-                                });
-                            }
-                          }}
-                        >
-                          <div className="flex items-center gap-3 w-full">
-                            <div className="relative w-8 h-8 flex items-center justify-center flex-shrink-0">
-                              <span className="text-white/60 group-hover:opacity-0 transition-opacity">1</span>
-                              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
-                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
-                                </svg>
+                        {songsData.map((song, index) => (
+                          <div 
+                            key={index}
+                            className={`flex items-center justify-between p-2 rounded-md transition-all hover:bg-white/10 group relative cursor-pointer ${isPlaying && currentSong.id === song.id ? 'bg-white/10' : ''}`}
+                            onClick={() => playSong(song)}
+                          >
+                            <div className="flex items-center gap-3 w-full">
+                              <div className="relative w-8 h-8 flex items-center justify-center flex-shrink-0">
+                                {isPlaying && currentSong.id === song.id ? (
+                                  <div className="w-3 h-3">
+                                    <span className="animate-soundbars block absolute bottom-0 left-0 w-1 h-2 bg-green-400 mr-[2px]"></span>
+                                    <span className="animate-soundbars animation-delay-200 block absolute bottom-0 left-[5px] w-1 h-3 bg-green-400 mr-[2px]"></span>
+                                    <span className="animate-soundbars animation-delay-400 block absolute bottom-0 left-[10px] w-1 h-1 bg-green-400"></span>
+                                  </div>
+                                ) : (
+                                  <>
+                                    <span className="text-white/60 group-hover:opacity-0 transition-opacity">{index + 1}</span>
+                                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
+                                      </svg>
+                                    </div>
+                                  </>
+                                )}
+                              </div>
+                              <div className="min-w-0 flex-grow">
+                                <h4 className={`font-medium text-sm truncate ${isPlaying && currentSong.id === song.id ? 'text-green-400' : 'group-hover:text-white'}`}>
+                                  {song.name}
+                                </h4>
+                                <p className="text-white/60 text-xs truncate group-hover:text-white/80 transition-colors">{song.artist}</p>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <span className="text-white/60 text-xs">{song.duration}</span>
+                                {/* Removed separate play/pause button that was causing issues */}
                               </div>
                             </div>
-                            <div className="min-w-0 flex-grow">
-                              <h4 className="font-medium text-sm truncate">Kahani Suno</h4>
-                              <p className="text-white/60 text-xs truncate">Jonita Gandhi</p>
-                            </div>
-                            <span className="text-white/60 text-xs">3:45</span>
                           </div>
-                        </div>
-                        
-                        <div 
-                          className="flex items-center justify-between p-2 rounded-md transition-colors hover:bg-white/10 group relative cursor-pointer"
-                          onClick={() => {
-                            if (audioRef.current) {
-                              audioRef.current.src = "/src/assets/Songs/song1.mp3";
-                              audioRef.current.play()
-                                .then(() => {
-                                  setIsPlaying(true);
-                                })
-                                .catch(error => {
-                                  console.error("Error playing audio:", error);
-                                });
-                            }
-                          }}
-                        >
-                          <div className="flex items-center gap-3 w-full">
-                            <div className="relative w-8 h-8 flex items-center justify-center flex-shrink-0">
-                              <span className="text-white/60 group-hover:opacity-0 transition-opacity">2</span>
-                              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
-                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
-                                </svg>
-                              </div>
-                            </div>
-                            <div className="min-w-0 flex-grow">
-                              <h4 className="font-medium text-sm truncate">The Breakup Song</h4>
-                              <p className="text-white/60 text-xs truncate">Jonita Gandhi</p>
-                            </div>
-                            <span className="text-white/60 text-xs">4:22</span>
-                          </div>
-                        </div>
-                        
-                        <div 
-                          className="flex items-center justify-between p-2 rounded-md transition-colors hover:bg-white/10 group relative cursor-pointer"
-                          onClick={() => {
-                            if (audioRef.current) {
-                              audioRef.current.src = "/src/assets/Songs/song1.mp3";
-                              audioRef.current.play()
-                                .then(() => {
-                                  setIsPlaying(true);
-                                })
-                                .catch(error => {
-                                  console.error("Error playing audio:", error);
-                                });
-                            }
-                          }}
-                        >
-                          <div className="flex items-center gap-3 w-full">
-                            <div className="relative w-8 h-8 flex items-center justify-center flex-shrink-0">
-                              <span className="text-white/60 group-hover:opacity-0 transition-opacity">3</span>
-                              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
-                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
-                                </svg>
-                              </div>
-                            </div>
-                            <div className="min-w-0 flex-grow">
-                              <h4 className="font-medium text-sm truncate">Gilehriyaan</h4>
-                              <p className="text-white/60 text-xs truncate">Jonita Gandhi</p>
-                            </div>
-                            <span className="text-white/60 text-xs">3:42</span>
-                          </div>
-                        </div>
+                        ))}
                       </div>
-                      
-                      
                     </div>
                   </div>
                   
-                  {/* Bottom section */}
+                  {/* Bottom section - removed unnecessary player elements */}
                   <div className="px-4 py-3 bg-gradient-to-t from-[#121212] to-black/90 flex items-center justify-between">
                     <div className="flex items-center gap-1.5">
                       <div className="w-2 h-2 bg-green-500 rounded-full"></div>
@@ -875,6 +946,36 @@ export function SentiaMain() {
           </div>
         </div>
       )}
+      
+      {/* CSS for the sound bars animation */}
+      <style jsx="true">{`
+        @keyframes soundBars {
+          0% { height: 2px; }
+          50% { height: 12px; }
+          100% { height: 2px; }
+        }
+        
+        .animate-soundbars {
+          animation: soundBars 1.2s ease-in-out infinite;
+        }
+        
+        .animation-delay-200 {
+          animation-delay: 0.2s;
+        }
+        
+        .animation-delay-400 {
+          animation-delay: 0.4s;
+        }
+        
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(-5px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-fadeIn {
+          animation: fadeIn 0.3s ease forwards;
+        }
+      `}</style>
     </div>
   );
 } 
