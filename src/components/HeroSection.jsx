@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom';
 import bgHero from '../assets/MainIntro.mp4';
 import collegeLogo from '../assets/MITELOGGO.png';
 import MiteLogo from '../assets/MITELogomain.png'
+import SentiaLogo from '../assets/sentialogo.png'
+import ClubLogo from '../assets/clubmite.png'
 
 export function HeroSection() {
   return (
@@ -39,7 +41,7 @@ export function HeroSection() {
           />
         </div>
         <img
-          src="/src/assets/clubmite.png"
+          src={ClubLogo}
           alt="Club MITE Logo"
           className="w-32 h-20 md:w-62 md:h-20 object-contain"
         />
@@ -48,7 +50,7 @@ export function HeroSection() {
       <div className="container mx-auto max-w-7xl px-4 relative z-10 py-20 min-h-screen flex flex-col justify-center">
         <div className="flex flex-col items-center justify-center text-center mt-20">
           <img 
-            src="/src/assets/sentialogo.png"
+            src={SentiaLogo}
             alt="Sentia 2025 Logo"
             className="w-[450px] md:w-[600px] lg:w-[750px] xl:w-[900px] h-auto mb-8 mx-auto"
           />
