@@ -11,6 +11,8 @@ import {
   AlertDialogTrigger,
 } from "./ui/alert-dialog";
 
+import Senhacks from "../assets/eventslogo/Hackathon.jpeg";
+
 export function Events({ setGlobalVideoHovered }) {
   const [activeTab, setActiveTab] = useState('home');
   const [isDownloadHovered, setIsDownloadHovered] = useState(false);
@@ -22,29 +24,27 @@ export function Events({ setGlobalVideoHovered }) {
       day: 1,
       coordinators: [
         {
-          name: 'Adithi Rao',
-          phone: '+91 90197 58621'
+          name: 'Aditya Sharma',
+          phone: '9876543210'
         },
         {
-          name: 'Sahit Raj', 
-          phone: '+91 84314 89585'
+          name: 'Riya Patel',
+          phone: '8765432109'
         }
       ],
       rules: [
-        '6-10 members, including at least 3 instrumentalists & 1 vocalist',
-        'Open to students from any college with a valid ID card',
-        'Team leaders will receive a Google Form from the organizers to submit team details & a performance video clip',
-        'Previous live performance videos can also be submitted if audio is clear, unaltered & free from edits',
-        'A 2-5 min video clip has to be submitted by March 10, 2025',
-        'Top 5 teams will be shortlisted based on video submitted',
-        'No backing tracks or synthesized beats allowed',
-        'Vulgarity and Obscenity are not permitted',
-        'Lyricists are not considered part of the band'
+        'Each band will have 15 minutes for setup and performance.',
+        'Minimum 3 and maximum 8 members per band.',
+        'Original compositions and covers are both allowed.',
+        'Bands must bring their own instruments.',
+        'Drum kit and amplifiers will be provided.',
+        'Pre-recorded tracks are not allowed.',
+        'Judges\' decision will be final.',
       ]
     },
     'fashion-walk': {
       title: 'Fashion walk',
-      day: 1,
+      day: 2,
       coordinators: [
         {
           name: 'Sussanna Merissa',
@@ -79,28 +79,56 @@ export function Events({ setGlobalVideoHovered }) {
         'Top 6 Teams: Selected based on submission',
 
         // Judgment Criteria
-        'Judged on theme integration, outfits, accessories, props creativity, coordination, music, confidence, gestures, and overall presentation',
-        'Walking barefoot: Not allowed'
+        'Judged on theme integration, outfits, accessories, props creativity, coordination, music, confidence, gestures, and overall presentation.',
+        'Walking barefoot: Not allowed.'
       ]
     },
-    'robo-wars-soccer': {
-      title: 'Robo wars & Robo soccer',
+    'robo-wars': {
+      title: 'Robo Wars',
       day: 1,
       coordinators: [
         {
-          name: 'Campus Crew',
+          name: 'Akshay Kumar',
           phone: '+91 98765 43210'
+        },
+        {
+          name: 'Rahul Singh',
+          phone: '+91 87654 32109'
         }
       ],
       rules: [
-        'Each team can have 3-5 members',
-        'Two robots are allowed per team - one for war and one for soccer',
+        'Each team can have 3-4 members',
         'Robot dimensions must not exceed 30cm x 30cm x 30cm',
         'Maximum weight allowed is 3kg per robot',
         'Robots must be controlled wirelessly',
-        'Pre-built robots are allowed with proper disclosure',
-        'Sharp, hazardous components are prohibited',
+        'The robot must have a clearly visible weapon mechanism',
+        'Sharp, hazardous components are prohibited without proper protection',
+        'Matches will be 3 minutes long with knockout format',
         'Deliberate damage to the arena will result in disqualification'
+      ]
+    },
+    'robo-soccer': {
+      title: 'Robo Soccer',
+      day: 1,
+      coordinators: [
+        {
+          name: 'Priya Sharma',
+          phone: '+91 89012 34567'
+        },
+        {
+          name: 'Karthik R',
+          phone: '+91 76543 21098'
+        }
+      ],
+      rules: [
+        'Each team can have 2-3 members',
+        'Robot dimensions must not exceed 25cm x 25cm x 25cm',
+        'Maximum weight allowed is 2kg per robot',
+        'Robots must be controlled wirelessly',
+        'The robot must be able to push a small ball (provided at the venue)',
+        'Matches will be played in a 5-minute format',
+        'Teams will compete in a league format followed by knockouts',
+        'The team scoring the most goals advances to the next round'
       ]
     },
     'coffee-break': {
@@ -118,6 +146,57 @@ export function Events({ setGlobalVideoHovered }) {
         'Coffee stations will close 5 minutes before end of break',
         'Networking encouraged during this time',
         'Staff will announce when break time is ending'
+      ]
+    },
+    'robo-mania': {
+      title: 'Robo Mania',
+      day: 1,
+      coordinators: [
+        {
+          name: 'Rohan Mehta',
+          phone: '9876543210'
+        },
+        {
+          name: 'Ananya Singh',
+          phone: '8765432109'
+        }
+      ],
+      rules: [
+        'Maximum 4 members per team.',
+        'Robots must be autonomous or remote controlled.',
+        'Maximum robot dimensions: 30cm × 30cm × 30cm.',
+        'Weight limit: 3kg.',
+        'No harmful components allowed (fire, liquids, etc.).',
+        'Each team gets 3 attempts in the arena.',
+        'Time limit: 5 minutes per attempt.',
+        'Teams must register at least 30 minutes before event starts.',
+      ]
+    },
+    'senhacks': {
+      title: 'Senhacks',
+      day: 1,
+      coordinators: [
+        {
+          name: 'Arjun Mehta',
+          phone: '9876543210'
+        },
+        {
+          name: 'Prisha Patel',
+          phone: '8765432109'
+        }
+      ],
+      rules: [
+        '### 20 HOUR HACKATHON',
+        '• Team & Registration: 1-4 member teams, register in the dedicated platform. Late entries not accepted.',
+        '• Two-Round Format:',
+        '   - First Round: Submit a presentation on given problem statements.',
+        '   - Top 20 advance.',
+        '   - Final Round: 20-hour coding challenge with on-the-spot problem statements.',
+        '• Problem Statements: AI-based EdTech, FinTech, Social Welfare, or Cybersecurity. Final round problems revealed on the spot; develop projects within the 20-hour timeframe.',
+        '• Final Round Fees: Selected teams pay ₹500 registration fee.',
+        '• Code & Submission: All code must be original (libraries/APIs allowed), hosted on GitHub, and submitted with a demo (if needed).',
+        '• Judging Criteria: Innovation, functionality, technical complexity, UI/UX, and presentation will be evaluated.',
+        '• Mentoring sessions will be available throughout the hackathon.'
       ]
     },
     'quantum-computing': {
@@ -142,7 +221,7 @@ export function Events({ setGlobalVideoHovered }) {
       ]
     },
     'lunch-break': {
-      title: 'Lunch Break Protocol',
+      title: 'Senhacks',
       day: 1,
       coordinators: [
         {
@@ -217,27 +296,130 @@ export function Events({ setGlobalVideoHovered }) {
         'Certificate provided upon completion'
       ]
     },
-    'robotics-demo': {
-      title: 'Robotics Demonstration',
-      day: 3,
+    'eastern-dance': {
+      title: 'Tales of Taal',
+      day: 1,
       coordinators: [
         {
-          name: 'Rajiv Sharma',
-          phone: '+91 89012 34567'
+          name: 'Suraj S Kumar',
+          phone: '+91 90197 58621'
         },
         {
-          name: 'Kiran Patel', 
-          phone: '+91 90123 45678'
+          name: 'Diya Shety',
+          phone: '+91 84314 89585'
         }
       ],
       rules: [
-        'Live demonstration of cutting-edge robotics',
-        'Q&A session with robotics engineers',
-        'Audience participation opportunities available',
-        'Photography allowed, but no flash photography',
-        'Sign up for robot interaction session after the demo'
+        '### EVENT DETAILS',
+        'Category: Eastern',
+        'One team per college.',
+        'A team must consist of 6-14 members.',
+        'Styles allowed: Semi classical, Fusion, Contemporary, Folk.',
+
+        '### RULES & REGULATIONS',
+        'Time limit: 5+2 minutes (performance + setup time).',
+        'Props are allowed but must be set up within the given time limit.',
+        'Costumes should reflect traditional eastern cultural elements.',
+        'Music must be submitted 2 days prior to the event.',
+        'Teams will be judged on choreography, rhythm, coordination, expressions, and authenticity.',
+        'Any form of vulgarity will lead to immediate disqualification.'
       ]
-    }
+    },
+    'western-dance': {
+      title: 'Rhythmic Reverence',
+      day: 1,
+      coordinators: [
+        {
+          name: 'Suraj S Kumar',
+          phone: '+91 90197 58621'
+        },
+        {
+          name: 'Diya Shety',
+          phone: '+91 84314 89585'
+        }
+      ],
+      rules: [
+        '### EVENT DETAILS',
+        'Category: Western',
+        'One team per college.',
+        'Team must consist of 6-14 members.',
+        'Styles allowed: Hip Hop, Jazz and Freestyle.',
+
+        '### RULES & REGULATIONS',
+        'Time limit: 5+2 minutes (performance + setup time).',
+        'Props are allowed but must be set up within the given time limit.',
+        'Appropriate costumes reflecting the dance style should be worn.',
+        'Music must be submitted 2 days prior to the event.',
+        'Teams will be judged on choreography, technique, synchronization, stage presence, and creativity.',
+        'Any form of vulgarity will lead to immediate disqualification.'
+      ]
+    },
+    'quiz-quest': {
+      title: 'Quiz quest',
+      day: 1,
+      coordinators: [
+        {
+          name: 'Sunil Piligunda',
+          phone: '+91 83105 45772'
+        },
+        {
+          name: 'Mohammed Shafiq',
+          phone: '+91 8762495484'
+        }
+      ],
+      rules: [
+        '1. Each team must consist of 2 members from the same institution.',
+        '2. Teams must register before the deadline.',
+        '3. No changes in team composition after registration.',
+        '4. The quiz is open to current MCA students.',
+        '5. The quiz consists of multiple rounds, with elimination at different stages.',
+        '6. Use of mobile phones, smartwatches, or external help is strictly prohibited.',
+        '7. In case of disputes, the quiz master\'s decision is final.',
+        '8. In case of a tie, a tie-breaker round will decide the finalist.'
+      ]
+    },
+    'award-nite': {
+      title: 'Award Nite',
+      day: 2,
+      coordinators: [
+        {
+          name: 'Anish Kumar',
+          phone: '9876543210'
+        },
+        {
+          name: 'Neha Sharma',
+          phone: '8765432109'
+        }
+      ],
+      rules: [
+        'All event winners must be present to receive their awards.',
+        'Dress code: Formal or semi-formal attire is recommended.',
+        'Award recipients will be called in a predetermined sequence.',
+        'Each team will have a maximum of 2 minutes on stage.',
+        'Photography will be allowed during the ceremony.',
+        'Please be seated at least 15 minutes before the ceremony begins.',
+        'Special performances have been arranged between award presentations.',
+        'Certificates will be distributed at the end of the ceremony.',
+      ]
+    },
+    'master-minds': {
+      title: 'Master minds',
+      day: 1,
+      coordinators: [
+        {
+          name: 'Ankitha',
+          phone: '+91 99016 43376'
+        }
+      ],
+      rules: [
+        '1. Each college is allowed to send maximum of two teams.',
+        '2. Each team must consist of 6 participants.',
+        '3. The event will consist of finance, HR marketing rounds and a multi-tasking round.',
+        '4. Judges and organizers decision is final and binding.',
+        '5. Any team found using unfair means shall be immediately disqualified.',
+        '6. Teams should carry their own laptop, wi-fi connection and pen drives.'
+      ]
+    },
   };
 
   // Define all events
@@ -246,52 +428,63 @@ export function Events({ setGlobalVideoHovered }) {
       id: "battle-of-bands",
       title: "Battle of bands",
       description: "Get ready for an electrifying intercollege showdown where the best bands clash in a high-energy musical battle! Who will steal the spotlight and claim the ultimate glory?",
-      time: "9:00 - 10:00",
-      building: "Main Building",
-      roomNumber: "MCA101",
+      time: "Begins at 7 PM",
+      building: "Venue Mite Greens",
       day: 1
     },
     {
       id: "fashion-walk",
       title: "Fashion walk",
       description: "A dazzling runway showdown where style, confidence, and glamour take center stage! Witness creative designs and bold fashion statements in this spectacular event.",
-      time: "10:00 - 10:30",
-      building: "Engineering Block",
-      roomNumber: "CSE202",
+      time: "Begins at 7 PM",
+      building: "Venue Mite Greens",
+      day: 2
+    },
+    {
+      id: "robo-wars",
+      title: "Robo Wars",
+      description: "Witness the ultimate robot showdown as machines battle for supremacy in high-energy combat. Engineering excellence meets competitive spirit in this thrilling arena of mechanical warfare!",
+      time: "10:30 - 11:30",
+      building: "Venue Mite Greens",
       day: 1
     },
     {
-      id: "robo-wars-soccer",
-      title: "Robo wars & Robo soccer",
-      description: "Witness the ultimate robot showdown as machines battle for supremacy in combat and compete in a thrilling soccer match. Engineering excellence meets competitive spirit!",
-      time: "10:30 - 11:00",
-      building: "Student Center",
-      roomNumber: "SC105",
+      id: "robo-soccer",
+      title: "Robo Soccer",
+      description: "Experience the excitement as robots compete in a thrilling soccer match, showcasing precision control and strategic gameplay. A unique fusion of sports and robotics engineering!",
+      time: "11:45 - 12:45",
+      building: "Venue Mite Greens",
       day: 1
     },
     {
-      id: "eastern-western-dance",
-      title: "Eastern and Western dance",
-      description: "Experience the beautiful fusion of rhythms and movements from around the world as talented dancers showcase both traditional Eastern and contemporary Western dance forms.",
-      time: "11:00 - 12:00",
-      building: "Science Block",
-      roomNumber: "PHY303",
+      id: "eastern-dance",
+      title: "Eastern Dance",
+      description: "Experience the rhythmic beauty of traditional eastern dance forms as talented performers showcase classical and folk styles with graceful movements and cultural richness.",
+      time: "Begins at 10:30 AM",
+      building: "Venue Main Stage",
       day: 1
     },
     {
-      id: "lunch-break",
-      title: "Lunch Break",
-      description: "Join us for a delightful lunch break, where you can enjoy a variety of delicious meals while networking with fellow attendees. Take this opportunity to relax, recharge, and engage in stimulating conversations with industry peers.",
-      time: "12:00 - 13:00",
-      building: "Food Court",
-      roomNumber: "FC001",
+      id: "western-dance",
+      title: "Western Dance",
+      description: "Witness the energy and creativity of contemporary western dance styles as performers deliver captivating routines combining technical skill with dynamic expressions and modern choreography.",
+      time: "Begins at 10:30 PM",
+      building: "Venue Main Stage",
+      day: 1
+    },
+    {
+      id: "senhacks",
+      title: "Senhacks",
+      description: "Join our flagship 24-hour hackathon where innovation meets code! Form a team, tackle real-world challenges, and build impressive solutions with mentorship from industry experts. Perfect for coders of all levels!",
+      time: "Begins at 10 AM (Both days)",
+      building: "Innovation Center (Main Building 3rd floor)",
       day: 1
     },
     {
       id: "quiz-quest",
       title: "Quiz quest",
       description: "Test your knowledge, quick thinking, and competitive spirit in this challenging quiz competition covering a wide range of topics from technology to pop culture.",
-      time: "13:00 - 14:00",
+      time: "Begins at 2 PM",
       building: "PG Block",
       roomNumber: "MCA402",
       day: 1
@@ -300,40 +493,34 @@ export function Events({ setGlobalVideoHovered }) {
       id: "master-minds",
       title: "Master minds",
       description: "Showcase your problem-solving abilities, critical thinking, and strategic planning in this ultimate battle of intellects. Only the sharpest minds will emerge victorious!",
-      time: "10:00 - 12:00",
-      building: "Innovation Hub",
+      time: "Begins at 12 PM",
+      building: "PG Block",
       roomNumber: "VR Lab 01",
-      day: 2
+      day: 1
     },
     {
       id: "award-nite",
       title: "Award nite",
       description: "The grand finale celebration recognizing outstanding achievements and performances throughout the event. Join us for an evening of accolades, entertainment, and inspiring moments.",
-      time: "14:00 - 16:00",
-      building: "Computer Science Block",
-      roomNumber: "CS304",
+      time: "Begins at 8 PM",
+      building: "Venue Mite Greens",
       day: 2
-    },
-    {
-      id: "robotics-demo",
-      title: "Robotics Demonstration",
-      description: "Watch cutting-edge robots in action and learn about the latest advancements in robotics engineering and automation.",
-      time: "11:00 - 13:00",
-      building: "Mechanical Engineering Department",
-      roomNumber: "Robotics Lab",
-      day: 3
     }
   ];
 
   // EventCard component with rules popup
-  const EventCard = ({ id, title, description, time, building, roomNumber, setGlobalVideoHovered }) => {
+  const EventCard = ({ id, title, description, time, building, roomNumber, setGlobalVideoHovered, showTime }) => {
     // Add state to track hover for cards with video effects
     const [isHovered, setIsHovered] = useState(false);
+    // Add state to control dialog open state
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
     // Create separate refs for different videos
     const fashionVideoRef = React.useRef(null);
     const bandVideoRef = React.useRef(null);
-    const danceVideoRef = React.useRef(null);
-    const roboVideoRef = React.useRef(null);
+    const easternDanceVideoRef = React.useRef(null);
+    const westernDanceVideoRef = React.useRef(null);
+    const roboWarsVideoRef = React.useRef(null);
+    const roboSoccerVideoRef = React.useRef(null);
     const quizVideoRef = React.useRef(null);
     const mindsVideoRef = React.useRef(null);
     const awardVideoRef = React.useRef(null);
@@ -342,8 +529,10 @@ export function Events({ setGlobalVideoHovered }) {
     const getVideoRef = () => {
       if (id === 'fashion-walk') return fashionVideoRef;
       if (id === 'battle-of-bands') return bandVideoRef;
-      if (id === 'eastern-western-dance') return danceVideoRef;
-      if (id === 'robo-wars-soccer') return roboVideoRef;
+      if (id === 'eastern-dance') return easternDanceVideoRef;
+      if (id === 'western-dance') return westernDanceVideoRef;
+      if (id === 'robo-wars') return roboWarsVideoRef;
+      if (id === 'robo-soccer') return roboSoccerVideoRef;
       if (id === 'quiz-quest') return quizVideoRef;
       if (id === 'master-minds') return mindsVideoRef;
       if (id === 'award-nite') return awardVideoRef;
@@ -354,7 +543,7 @@ export function Events({ setGlobalVideoHovered }) {
     React.useEffect(() => {
       const videoRef = getVideoRef();
       
-      if ((id === 'fashion-walk' || id === 'battle-of-bands' || id === 'eastern-western-dance' || id === 'robo-wars-soccer' || id === 'quiz-quest' || id === 'master-minds' || id === 'award-nite') && videoRef?.current) {
+      if ((id === 'fashion-walk' || id === 'battle-of-bands' || id === 'eastern-dance' || id === 'western-dance' || id === 'robo-wars' || id === 'robo-soccer' || id === 'quiz-quest' || id === 'master-minds' || id === 'award-nite') && videoRef?.current) {
         if (isHovered) {
           // Reset video to beginning for consistent experience
           videoRef.current.currentTime = 0;
@@ -385,7 +574,7 @@ export function Events({ setGlobalVideoHovered }) {
               if (isHovered && videoRef.current) {
                 videoRef.current.play().catch(error => console.error("Error playing after load:", error));
               }
-              videoRef.current.removeEventListener('canplay', handleCanPlay);
+              videoRef.current?.removeEventListener('canplay', handleCanPlay);
             };
             
             videoRef.current.addEventListener('canplay', handleCanPlay);
@@ -402,10 +591,37 @@ export function Events({ setGlobalVideoHovered }) {
       // Cleanup function
       return () => {
         if (videoRef?.current) {
-          videoRef.current.removeEventListener('canplay', () => {});
+          // Safely remove any event listeners
+          videoRef.current.oncanplay = null;
+          videoRef.current.pause();
         }
       };
     }, [isHovered, id]);
+
+    // Add useEffect to prevent unexpected dialog closing
+    React.useEffect(() => {
+      // This effect maintains the dialog state once opened
+      // No automatic timeout should close it
+      if (isDialogOpen) {
+        // Add a handler to prevent accidental closure
+        const handleKeyDown = (e) => {
+          if (e.key === 'Escape') {
+            // Prevent default escape key behavior to avoid accidental closing
+            e.preventDefault();
+            // Still allow manual closing, but through our controlled state
+            setIsDialogOpen(false);
+          }
+        };
+        
+        // Add event listener
+        window.addEventListener('keydown', handleKeyDown);
+        
+        // Cleanup
+        return () => {
+          window.removeEventListener('keydown', handleKeyDown);
+        };
+      }
+    }, [isDialogOpen]);
 
     // Helper function to get icon for the event number area
     const getEventIcon = () => {
@@ -432,38 +648,60 @@ export function Events({ setGlobalVideoHovered }) {
               />
             </div>
           );
-        case 'robo-wars-soccer':
+        case 'robo-wars':
           return (
             <div className="w-full h-full flex items-center justify-center overflow-hidden">
               <img 
                 src="/src/assets/eventslogo/robowars.png" 
-                alt="Fashion Walk"
+                alt="Robo Wars"
                 className="w-full h-full object-cover"
                 style={{ objectFit: 'cover', width: '100%', height: '100%' }}
               />
             </div>
           );
-        case 'eastern-western-dance':
+        case 'robo-soccer':
           return (
             <div className="w-full h-full flex items-center justify-center overflow-hidden">
               <img 
-                src="/src/assets/eventslogo/dancelogo.jpeg" 
-                alt="Fashion Walk"
+                src="/src/assets/eventslogo/robosoccer.png" 
+                alt="Robo Soccer"
                 className="w-full h-full object-cover"
                 style={{ objectFit: 'cover', width: '100%', height: '100%' }}
               />
             </div>
           );
-        case 'lunch-break':
+        case 'eastern-dance':
           return (
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" strokeWidth={1.5} className="w-8 h-8">
-              <path d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25" 
-                fill="#F0E68C" stroke="#DAA520" strokeLinecap="round" strokeLinejoin="round" />
-              <path d="M3 18.75v-7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6v.75m0 0v.75m0-1.5v.75m0 0h.75m-1.5 0h.75M6 18.75h.75m-1.5 0h.75m-.75 0v-.75m0 0v-.75M6 15h.75m-.75 0v-.75m0 0v-.75M6 15v.75m0 0v.75m0 0h.75M18 11.25h.75m-.75 0v-.75m0 0v-.75M18 11.25v.75m0 0v.75m0 0h.75M18 18.75h.75m0 0h.75m-1.5 0H18m0 0v-.75m0 0v-.75m0 0h.75m-1.5 0h.75M6 18.75H5.25m0 0H4.5m1.5 0H4.5m0 0v-.75m0 0v-.75m0 0h.75m-.75 0h.75m0 0v.75" 
-                fill="#FF6347" stroke="#DC143C" strokeLinecap="round" strokeLinejoin="round" />
-              <path d="M3 9.75h18m-18 0v-.75a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 9v.75m-18 0H4.5m16.5 0H18" 
-                fill="#4CAF50" stroke="#006400" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
+            <div className="w-full h-full flex items-center justify-center overflow-hidden">
+              <img 
+                src="/src/assets/eventslogo/easterndance.jpeg" 
+                alt="Eastern Dance"
+                className="w-full h-full object-cover"
+                style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+              />
+            </div>
+          );
+        case 'western-dance':
+          return (
+            <div className="w-full h-full flex items-center justify-center overflow-hidden">
+              <img 
+                src="/src/assets/eventslogo/westerndance.jpeg" 
+                alt="Western Dance"
+                className="w-full h-full object-cover"
+                style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+              />
+            </div>
+          );
+        case 'senhacks':
+          return (
+            <div className="w-full h-full flex items-center justify-center overflow-hidden">
+              <img 
+                src={Senhacks} 
+                alt="Quiz Quest"
+                className="w-full h-full object-cover"
+                style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+              />
+            </div>
           );
         case 'quiz-quest':
           return (
@@ -498,15 +736,6 @@ export function Events({ setGlobalVideoHovered }) {
               />
             </div>
           );
-        case 'robotics-demo':
-          return (
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" strokeWidth={1.5} className="w-8 h-8">
-              <path d="M15.59 14.37a6 6 0 0 1-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 0 0 6.16-12.12A14.98 14.98 0 0 0 9.631 8.41m5.96 5.96a14.926 14.926 0 0 1-5.841 2.58m-.119-8.54a6 6 0 0 0-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 0 0-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 0 1-2.448-2.448 14.9 14.9 0 0 1 .06-.312m-2.24 2.39a4.493 4.493 0 0 0-1.757 4.306 4.493 4.493 0 0 0 4.306-1.758" 
-                fill="#CD7F32" stroke="#8B4513" strokeLinecap="round" strokeLinejoin="round" />
-              <circle cx="16.5" cy="9" r="1.5" fill="#FFD700" stroke="#DAA520" />
-              <path d="M9.631 8.41a6 6 0 0 1 6.16-6.12" fill="none" stroke="#C0C0C0" strokeWidth={2} strokeLinecap="round" />
-            </svg>
-          );
         default:
           return (
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" strokeWidth={1.5} className="w-8 h-8">
@@ -519,7 +748,7 @@ export function Events({ setGlobalVideoHovered }) {
 
     return (
       <div 
-        className={`bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow flex flex-col h-full relative ${id === 'fashion-walk' || id === 'battle-of-bands' || id === 'eastern-western-dance' || id === 'robo-wars-soccer' || id === 'quiz-quest' || id === 'master-minds' || id === 'award-nite' ? 'group' : ''}`}
+        className={`bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow flex flex-col h-full relative ${id === 'fashion-walk' || id === 'battle-of-bands' || id === 'eastern-dance' || id === 'western-dance' || id === 'robo-wars' || id === 'robo-soccer' || id === 'quiz-quest' || id === 'master-minds' || id === 'award-nite' ? 'group' : ''}`}
         style={{ 
           height: '100%', 
           width: '100%',
@@ -527,7 +756,7 @@ export function Events({ setGlobalVideoHovered }) {
           transition: 'box-shadow 0.3s ease'
         }}
         onMouseEnter={() => {
-          if (id === 'fashion-walk' || id === 'battle-of-bands' || id === 'eastern-western-dance' || id === 'robo-wars-soccer' || id === 'quiz-quest' || id === 'master-minds' || id === 'award-nite') {
+          if (id === 'fashion-walk' || id === 'battle-of-bands' || id === 'eastern-dance' || id === 'western-dance' || id === 'robo-wars' || id === 'robo-soccer' || id === 'quiz-quest' || id === 'master-minds' || id === 'award-nite') {
             setIsHovered(true);
             // If global state setter is available, use it to pause slider
             if (typeof setGlobalVideoHovered === 'function') {
@@ -541,7 +770,7 @@ export function Events({ setGlobalVideoHovered }) {
           }
         }}
         onMouseLeave={() => {
-          if (id === 'fashion-walk' || id === 'battle-of-bands' || id === 'eastern-western-dance' || id === 'robo-wars-soccer' || id === 'quiz-quest' || id === 'master-minds' || id === 'award-nite') {
+          if (id === 'fashion-walk' || id === 'battle-of-bands' || id === 'eastern-dance' || id === 'western-dance' || id === 'robo-wars' || id === 'robo-soccer' || id === 'quiz-quest' || id === 'master-minds' || id === 'award-nite') {
             setIsHovered(false);
             // Reset global state when no longer hovering
             if (typeof setGlobalVideoHovered === 'function') {
@@ -580,13 +809,13 @@ export function Events({ setGlobalVideoHovered }) {
           </div>
         )}
         
-        {/* Video background for eastern-western-dance card */}
-        {id === 'eastern-western-dance' && (
+        {/* Video background for eastern-dance card */}
+        {id === 'eastern-dance' && (
           <div className="absolute inset-0 w-full h-full z-0 pointer-events-none opacity-0 group-hover:opacity-40 transition-opacity duration-300 ">
             <video 
-              ref={danceVideoRef}
+              ref={easternDanceVideoRef}
               className="w-full h-full object-cover"
-              src="/src/assets/events/easterdance.mp4" 
+              src="/src/assets/events/easterndance.mp4" 
               muted 
               playsInline
               loop
@@ -595,13 +824,43 @@ export function Events({ setGlobalVideoHovered }) {
           </div>
         )}
         
-        {/* Video background for robo-wars-soccer card */}
-        {id === 'robo-wars-soccer' && (
+        {/* Video background for western-dance card */}
+        {id === 'western-dance' && (
           <div className="absolute inset-0 w-full h-full z-0 pointer-events-none opacity-0 group-hover:opacity-40 transition-opacity duration-300 ">
             <video 
-              ref={roboVideoRef}
+              ref={westernDanceVideoRef}
+              className="w-full h-full object-cover"
+              src="/src/assets/events/westerndance.mp4" 
+              muted 
+              playsInline
+              loop
+              preload="auto"
+            />
+          </div>
+        )}
+        
+        {/* Video background for robo-wars card */}
+        {id === 'robo-wars' && (
+          <div className="absolute inset-0 w-full h-full z-0 pointer-events-none opacity-0 group-hover:opacity-40 transition-opacity duration-300 ">
+            <video 
+              ref={roboWarsVideoRef}
               className="w-full h-full object-cover"
               src="/src/assets/events/robowars.mov" 
+              muted 
+              playsInline
+              loop
+              preload="auto"
+            />
+          </div>
+        )}
+        
+        {/* Video background for robo-soccer card */}
+        {id === 'robo-soccer' && (
+          <div className="absolute inset-0 w-full h-full z-0 pointer-events-none opacity-0 group-hover:opacity-40 transition-opacity duration-300 ">
+            <video 
+              ref={roboSoccerVideoRef}
+              className="w-full h-full object-cover"
+              src="/src/assets/events/robosoccer.mov" 
               muted 
               playsInline
               loop
@@ -664,10 +923,15 @@ export function Events({ setGlobalVideoHovered }) {
             </div>
             <div>
               <h3 className="font-semibold text-black/80 text-lg">{title}</h3>
-              <p className="text-gray-500">{building} • Room no: {roomNumber}</p>
+              <p className="text-gray-500">
+                {building}
+                {(id === 'quiz-quest' || id === 'master-minds') && roomNumber && (
+                  <> • Room no: {roomNumber}</>
+                )}
+              </p>
               
-              {/* Coordinator badge */}
-              {eventRules[id]?.coordinators && (
+              {/* Coordinator badge - hide for award-nite */}
+              {eventRules[id]?.coordinators && id !== 'award-nite' && (
                 <div className="inline-flex items-center mt-1 text-xs bg-indigo-100 text-indigo-700 px-2 py-1 rounded-full">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-3 h-3 mr-1">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
@@ -682,100 +946,244 @@ export function Events({ setGlobalVideoHovered }) {
             {description}
           </p>
           
-          {/* Clean divider line */}
-          <div className="w-full h-px bg-gray-200 mt-3 mb-3"></div>
+          {/* Clean divider line - hide for award-nite */}
+          {id !== 'award-nite' && (
+            <div className="w-full h-px bg-gray-200 mt-3 mb-3"></div>
+          )}
           
-          {/* Footer with time and arrow button exactly as in reference */}
-          <div className="flex items-center justify-between">
-            <div className="bg-indigo-50 text-indigo-700 px-4 py-1.5 rounded-full font-medium text-sm">
-              {time}
-            </div>
+          {/* Footer with time and rules/register button */}
+          <div className={`flex items-center ${showTime ? 'justify-between' : 'justify-end'}`}>
+            {showTime && (
+              <div className="bg-indigo-50 text-indigo-700 px-4 py-1.5 rounded-full font-medium text-sm">
+                {time}
+              </div>
+            )}
             
-            <AlertDialog>
-              <AlertDialogTrigger asChild>
-                <button className="w-10 h-10 bg-black hover:bg-gray-800 rounded-full flex items-center justify-center text-white transition-colors"
-                  style={{ transform: 'none' }}>
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-                  </svg>
-                </button>
-              </AlertDialogTrigger>
-              
-              <AlertDialogContent className="max-w-3xl w-[800px] rounded-xl overflow-hidden p-0 border border-gray-200 shadow-xl">
-                {/* Header - Fixed at top */}
-                <div className="p-5 bg-black text-white sticky top-0 z-10">
-                  <AlertDialogTitle className="text-xl font-bold">
-                    {eventRules[id]?.title || title}
-                  </AlertDialogTitle>
-                </div>
+            {/* Show "Register Here" button for robo-wars and robo-soccer */}
+            {(id === 'robo-wars' || id === 'robo-soccer') && (
+              <a 
+                href="/register" 
+                className="w-auto h-10 bg-black hover:bg-gray-800 rounded-full flex items-center justify-center text-white transition-colors px-4"
+                style={{ transform: 'none' }}
+              >
+                <span className="mr-2 text-sm">Register Here</span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                </svg>
+              </a>
+            )}
+            
+            {/* Show "Rules" button for all other events except award-nite, robo-wars, and robo-soccer */}
+            {id !== 'award-nite' && id !== 'robo-wars' && id !== 'robo-soccer' && (
+              <AlertDialog 
+                open={isDialogOpen} 
+                onOpenChange={(open) => {
+                  // Only allow the dialog to close through our explicit controls
+                  if (!open) {
+                    setIsDialogOpen(false);
+                  }
+                }}
+              >
+                <AlertDialogTrigger asChild>
+                  <button 
+                    className="w-auto h-10 bg-black hover:bg-gray-800 rounded-full flex items-center justify-center text-white transition-colors px-4"
+                    style={{ transform: 'none' }}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsDialogOpen(true);
+                    }}
+                  >
+                    <span className="mr-2 text-sm">Rules</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                    </svg>
+                  </button>
+                </AlertDialogTrigger>
                 
-                {/* Scrollable content area */}
-                <div className="max-h-[420px] overflow-y-auto">
-                  <div className="p-6 space-y-5">
-                    {/* Coordinators Section */}
-                    {eventRules[id]?.coordinators && (
-                      <div className="bg-gray-50 p-5 rounded-lg border border-gray-100">
-                        <h3 className="font-medium text-black text-sm uppercase tracking-wide mb-4 flex items-center">
-                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 mr-2">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
+                <AlertDialogContent className="max-w-[100rem] w-[99vw] md:w-[1400px] rounded-xl overflow-hidden p-0 border border-gray-200 shadow-2xl bg-white">
+                  {/* Header - Fixed at top with gradient background */}
+                  <div className="p-6 bg-gradient-to-r from-gray-900 to-gray-800 text-white sticky top-0 z-10 flex items-center justify-between">
+                    <div className="flex items-center">
+                      <div className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center mr-4 flex-shrink-0">
+                        {id === 'fashion-walk' && (
+                          <img src="/src/assets/eventslogo/fashionlogo.jpeg" alt="Fashion Walk" className="w-9 h-9 rounded-full object-cover" />
+                        )}
+                        {id === 'battle-of-bands' && (
+                          <img src="/src/assets/eventslogo/bandicon.jpeg" alt="Battle of Bands" className="w-9 h-9 rounded-full object-cover" />
+                        )}
+                        {id === 'robo-wars' && (
+                          <img src="/src/assets/eventslogo/robowars.png" alt="Robo Wars" className="w-9 h-9 rounded-full object-cover" />
+                        )}
+                        {id === 'robo-soccer' && (
+                          <img src="/src/assets/eventslogo/robosoccer.png" alt="Robo Soccer" className="w-9 h-9 rounded-full object-cover" />
+                        )}
+                        {id === 'eastern-dance' && (
+                          <img src="/src/assets/eventslogo/easterndance.jpeg" alt="Eastern Dance" className="w-9 h-9 rounded-full object-cover" />
+                        )}
+                        {id === 'western-dance' && (
+                          <img src="/src/assets/eventslogo/westerndance.jpeg" alt="Western Dance" className="w-9 h-9 rounded-full object-cover" />
+                        )}
+                        {id === 'quiz-quest' && (
+                          <img src="/src/assets/eventslogo/quiz.png" alt="Quiz" className="w-9 h-9 rounded-full object-cover" />
+                        )}
+                        {id === 'master-minds' && (
+                          <img src="/src/assets/eventslogo/mastermindlogo.png" alt="Master Minds" className="w-9 h-9 rounded-full object-cover" />
+                        )}
+                        {id === 'award-nite' && (
+                          <img src="/src/assets/eventslogo/awardwinning.jpeg" alt="Awards" className="w-9 h-9 rounded-full object-cover" />
+                        )}
+                        {!['fashion-walk', 'battle-of-bands', 'robo-wars', 'robo-soccer', 'eastern-dance', 'western-dance', 'quiz-quest', 'master-minds', 'award-nite'].includes(id) && (
+                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 18.75h-9m9 0a3 3 0 0 1 3 3h-15a3 3 0 0 1 3-3m9 0v-3.375c0-.621-.503-1.125-1.125-1.125h-.871M7.5 18.75v-3.375c0-.621.504-1.125 1.125-1.125h.872m5.007 0H9.497m5.007 0a7.454 7.454 0 0 1-.982-3.172M9.497 14.25a7.454 7.454 0 0 0 .981-3.172M5.25 4.236c-.982.143-1.954.317-2.916.52A6.003 6.003 0 0 0 7.73 9.728M5.25 4.236V4.5c0 2.108.966 3.99 2.48 5.228M5.25 4.236V2.721C7.456 2.41 9.71 2.25 12 2.25c2.291 0 4.545.16 6.75.47v1.516M7.73 9.728a6.726 6.726 0 0 0 2.748 1.35m8.272-6.842V4.5c0 2.108-.966 3.99-2.48 5.228m2.48-5.492a46.32 46.32 0 0 1 2.916.52 6.003 6.003 0 0 1-5.395 4.972m0 0a6.726 6.726 0 0 1-2.749 1.35m0 0a6.772 6.772 0 0 1-3.044 0" />
                           </svg>
-                          Event Coordinators
-                        </h3>
-                        <div className="space-y-4">
-                          {eventRules[id].coordinators.map((coordinator, index) => (
-                            <div key={index} className="flex items-center">
-                              <div className="w-10 h-10 bg-black rounded-full flex items-center justify-center text-white mr-4 flex-shrink-0">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-                                </svg>
+                        )}
+                      </div>
+                      <div>
+                        <AlertDialogTitle className="text-2xl font-bold mb-1">
+                          {eventRules[id]?.title || title}
+                        </AlertDialogTitle>
+                        <p className="text-white/70 text-sm">Sentia 2025 • Event Guidelines</p>
+                      </div>
+                    </div>
+                    <AlertDialogCancel 
+                      className="rounded-full w-8 h-8 bg-white/10 hover:bg-white/20 text-white flex items-center justify-center border-none"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setIsDialogOpen(false);
+                      }}
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </AlertDialogCancel>
+                  </div>
+                  
+                  {/* Add the AlertDialogDescription component for accessibility */}
+                  <AlertDialogDescription className="sr-only">
+                    Event rules and guidelines for {eventRules[id]?.title || title}. This dialog contains information about coordinators, rules, and important notes.
+                  </AlertDialogDescription>
+
+                  {/* Scrollable content area with improved styling */}
+                  <div className="max-h-[65vh] overflow-y-auto relative">
+                    {/* Subtle background pattern */}
+                    <div className="absolute inset-0 bg-grid-pattern opacity-5 pointer-events-none z-0"></div>
+                    
+                    <div className="relative z-10 p-8 space-y-6">
+                      {/* Coordinators Section with enhanced styling */}
+                      {eventRules[id]?.coordinators && (
+                        <div className="bg-gradient-to-br from-gray-50 to-gray-100 p-4 rounded-xl border border-gray-200 shadow-sm">
+                          <h3 className="font-semibold text-gray-800 text-sm uppercase tracking-wide mb-3 flex items-center">
+                            <div className="bg-indigo-100 p-1.5 rounded-lg mr-2">
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 text-indigo-600">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
+                              </svg>
+                            </div>
+                            EVENT COORDINATORS
+                          </h3>
+                          <div className="flex flex-col space-y-3 max-w-xl mx-auto">
+                            {eventRules[id].coordinators.map((coordinator, index) => (
+                              <div key={index} className="flex items-center p-3 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow border border-gray-100 w-full">
+                                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center text-white mr-3 flex-shrink-0">
+                                  <span className="font-bold text-base">{coordinator.name.charAt(0)}</span>
+                                </div>
+                                <div className="flex flex-col">
+                                  <p className="font-semibold text-gray-800 text-base">{coordinator.name}</p>
+                                  <a href={`tel:${coordinator.phone.replace(/\s+/g, '')}`} className="flex items-center text-indigo-600 hover:text-indigo-800 text-sm font-medium mt-1 transition-colors">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mr-1 flex-shrink-0">
+                                      <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.034 12.034 0 01-7.381-7.38c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+                                    </svg>
+                                    <span className="font-mono tracking-wide">{coordinator.phone}</span>
+                                  </a>
+                                </div>
                               </div>
-                              <div>
-                                <p className="font-medium text-gray-800 text-base">{coordinator.name}</p>
-                                <p className="text-black text-sm font-mono">{coordinator.phone}</p>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      
+                      {/* Rules Section with enhanced card styling */}
+                      <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
+                        <h3 className="font-semibold text-gray-800 text-base uppercase tracking-wide mb-5 flex items-center">
+                          <div className="bg-yellow-100 p-2 rounded-lg mr-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 text-yellow-600">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" />
+                            </svg>
+                          </div>
+                          RULES & GUIDELINES
+                        </h3>
+                        
+                        <div className="space-y-4">
+                          {eventRules[id]?.rules.map((rule, index) => (
+                            <div key={index} className="flex items-start p-5 rounded-lg transition-colors hover:bg-gray-50 border border-gray-100 shadow-sm">
+                              <div className="flex-shrink-0 bg-indigo-100 text-indigo-600 font-semibold rounded-full w-7 h-7 flex items-center justify-center mr-4 mt-0.5">
+                                {index + 1}
+                              </div>
+                              <div className="text-gray-700 flex-1">
+                                {rule}
                               </div>
                             </div>
                           ))}
                         </div>
                       </div>
-                    )}
-                    
-                    {/* Rules Section */}
-                    <div>
-                      <h3 className="font-medium text-black text-sm uppercase tracking-wide mb-4 flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 mr-2">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" />
-                        </svg>
-                        Rules & Guidelines
-                      </h3>
-                      <ul className="list-none space-y-4">
-                        {eventRules[id]?.rules.map((rule, index) => (
-                          <li key={index} className="pl-5 border-l-3 border-black py-2 text-gray-700 hover:bg-gray-50 rounded-r-lg transition-colors">
-                            {rule}
-                          </li>
-                        ))}
-                      </ul>
+                      
+                      {/* Additional notes or information section */}
+                      <div className="bg-amber-50 p-5 rounded-xl border border-amber-200">
+                        <div className="flex items-start">
+                          <div className="flex-shrink-0 text-amber-500 mr-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+                            </svg>
+                          </div>
+                          <div>
+                            <h4 className="text-amber-800 font-medium mb-1">Important Note</h4>
+                            <p className="text-amber-700 text-sm">All participants must arrive at least 30 minutes before the event. Late entries may be disqualified at the discretion of the event coordinators.</p>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-                
-                {/* Footer - Fixed at bottom */}
-                <div className="p-5 bg-gray-50 border-t border-gray-200 flex justify-end gap-3 sticky bottom-0 z-10">
-                  <AlertDialogCancel className="px-5 py-2 bg-gray-200 hover:bg-gray-300 text-black font-medium rounded-lg transition-colors">
-                    Close
-                  </AlertDialogCancel>
-                  <AlertDialogAction className="px-5 py-2 bg-black hover:bg-gray-800 text-white font-medium rounded-lg transition-colors">
-                    I understand
-                  </AlertDialogAction>
-                </div>
-              </AlertDialogContent>
-            </AlertDialog>
+                  
+                  {/* Footer with enhanced buttons */}
+                  <div className="p-6 bg-gray-50 border-t border-gray-200 flex justify-between items-center sticky bottom-0 z-10">
+                    <div className="text-gray-500 text-sm hidden md:block">
+                      <span className="flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mr-1">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        Last updated: March 15, 2025
+                      </span>
+                    </div>
+                    <div className="flex gap-3 ml-auto">
+                      <AlertDialogCancel 
+                        className="px-6 py-2.5 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-medium rounded-lg transition-colors"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setIsDialogOpen(false);
+                        }}
+                      >
+                        Close
+                      </AlertDialogCancel>
+                      <AlertDialogAction 
+                        className="px-6 py-2.5 bg-black hover:from-indigo-700 hover:to-indigo-800 text-white font-medium rounded-lg transition-all shadow-sm hover:shadow-md"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setIsDialogOpen(false);
+                        }}
+                      >
+                        I understand
+                      </AlertDialogAction>
+                    </div>
+                  </div>
+                </AlertDialogContent>
+              </AlertDialog>
+            )}
           </div>
         </div>
       </div>
     );
   };
 
-  // Helper function to render event cards based on selected day
+  // Helper function to render event cards based on selected tab
   const renderEventCards = () => {
     // Filter events based on selected tab
     let eventsToShow = [];
@@ -801,6 +1209,9 @@ export function Events({ setGlobalVideoHovered }) {
       );
     }
     
+    // Show time only when a specific day is selected
+    const showTime = activeTab !== 'home';
+    
     // Otherwise, map events to EventCard components
     return eventsToShow.map((event) => (
       <EventCard
@@ -812,6 +1223,7 @@ export function Events({ setGlobalVideoHovered }) {
         building={event.building}
         roomNumber={event.roomNumber}
         setGlobalVideoHovered={setGlobalVideoHovered}
+        showTime={showTime}
       />
     ));
   };
@@ -907,8 +1319,15 @@ export function Events({ setGlobalVideoHovered }) {
           50% { background-position: 100% 50%; }
           100% { background-position: 0% 50%; }
         }
+        
+        .bg-grid-pattern {
+          background-image: 
+            linear-gradient(to right, rgba(0,0,0,0.05) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(0,0,0,0.05) 1px, transparent 1px);
+          background-size: 24px 24px;
+        }
       `}</style>
-      </div>
+    </div>
   );
 }
 

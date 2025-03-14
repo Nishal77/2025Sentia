@@ -27,23 +27,23 @@ export function HeroSection() {
       </div>
       
       {/* College Logo and MITE Description - Top Left */}
-      <div className="absolute top-4 md:top-6 z-20 w-full flex justify-between items-center px-4 md:px-6">
+      <div className="absolute top-4 md:top-6 z-20 w-full flex justify-between items-center px-2 md:px-6">
         <div className="flex items-center">
           <img 
             src={collegeLogo}
             alt="College Logo"
-            className="w-24 h-16 sm:w-28 sm:h-18 md:w-16 md:h-16 object-contain"
+            className="w-16 h-10 sm:w-20 sm:h-14 md:w-16 md:h-16 object-contain"
           />
           <img
             src={MiteLogo}
             alt="MITE Logo"
-            className="hidden md:block h-12 md:h-16 object-contain " 
+            className="hidden md:block h-12 md:h-16 object-contain" 
           />
         </div>
         <img
           src={ClubLogo}
           alt="Club MITE Logo"
-          className="w-32 h-20 md:w-62 md:h-20 object-contain"
+          className="w-20 h-12 sm:w-28 sm:h-16 md:w-62 md:h-20 object-contain"
         />
       </div>
       {/* Content container */}
@@ -52,7 +52,7 @@ export function HeroSection() {
           <img 
             src={SentiaLogo}
             alt="Sentia 2025 Logo"
-            className="w-[450px] md:w-[600px] lg:w-[750px] xl:w-[900px] h-auto mb-8 mx-auto"
+            className="w-[320px] sm:w-[450px] md:w-[600px] lg:w-[750px] xl:w-[900px] h-auto mb-8 mx-auto"
           />
         </div>
 
@@ -60,9 +60,9 @@ export function HeroSection() {
             
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center w-full">
             <Button 
-              className="relative overflow-hidden bg-[#1e40af] hover:bg-[#1e4bd8] text-white rounded-md py-4 px-6 flex items-center gap-2 transition-all duration-300 shadow-[0_4px_15px_rgba(30,64,175,0.5)] border border-[#60a5fa]/30 group"
+              className="relative overflow-hidden bg-[#1e40af] hover:bg-[#1e4bd8] text-white rounded-md py-4 px-6 flex items-center justify-center gap-2 transition-all duration-300 shadow-[0_4px_15px_rgba(30,64,175,0.5)] border border-[#60a5fa]/30 group w-full sm:w-auto"
               style={{
                 backgroundImage: 'linear-gradient(135deg, #1e40af 0%, #3b82f6 100%)',
               }}
@@ -90,9 +90,9 @@ export function HeroSection() {
               <div className="absolute top-3 right-1/4 w-[3px] h-[3px] rounded-full bg-white opacity-0 scale-0 group-hover:opacity-50 group-hover:scale-100 group-hover:animate-pulse transition-all duration-500 blur-[1px]"></div>
               <div className="absolute bottom-2 left-1/3 w-[2px] h-[2px] rounded-full bg-white opacity-0 scale-0 group-hover:opacity-60 group-hover:scale-100 group-hover:animate-pulse transition-all duration-700 blur-[1px]"></div>
             </Button>
-            <Link to="/register" className="relative">
+            <Link to="/register" className="relative w-full sm:w-auto">
               <Button 
-                className="relative overflow-hidden bg-[#3b82f6] hover:bg-[#60a5fa] text-white rounded-md py-4 px-6 flex items-center gap-2 transition-all duration-300 shadow-[0_4px_15px_rgba(59,130,246,0.5)] border border-[#93c5fd]/30 group"
+                className="relative overflow-hidden bg-[#3b82f6] hover:bg-[#60a5fa] text-white rounded-md py-4 px-6 flex items-center justify-center gap-2 transition-all duration-300 shadow-[0_4px_15px_rgba(59,130,246,0.5)] border border-[#93c5fd]/30 group w-full"
                 style={{
                   backgroundImage: 'linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%)',
                 }}

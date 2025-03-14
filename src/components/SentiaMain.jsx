@@ -6,6 +6,11 @@ import { Link } from 'react-router-dom';
 import Footer from './Footer';
 
 export function SentiaMain() {
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -542,7 +547,7 @@ export function SentiaMain() {
               
               <div className="relative w-full h-[350px] rounded-lg overflow-hidden">
                 <video
-                  src="/src/assets/shirtmp1.mp4"
+                  src="/src/assets/SentiaDressUpdate.mp4"
                   className="w-full h-full object-cover"
                   autoPlay
                   loop
@@ -560,7 +565,7 @@ export function SentiaMain() {
             <div className="bg-white p-6 rounded-lg shadow-sm overflow-hidden flex flex-col h-full">
               <div className="mb-4">
                 <h2 className="text-3xl font-bold text-black/80 mb-2">Flashback to the Best Sentia 2024 Highlights!</h2>
-                <p className="text-gray-600">Energy, excitement, and epic moments—relive the magic of Sentia 2024 through these unforgettable highlights!</p>
+                <p className="text-gray-600">Energy, excitement, and epic moments—relive the magic of Sentia 2024 through these unforgettable highlights! <Link to="/oldmemories" className="text-indigo-700 hover:text-indigo-800 text-sm font-medium">View all memories →</Link></p>
               </div>
 
               {/* Image Slider */}
@@ -883,6 +888,16 @@ export function SentiaMain() {
               </div>
               
               <div className="space-y-3 mt-auto">
+              <div className="bg-yellow-50 border-l-4 border-yellow-400 p-3 rounded">
+                <div className="flex items-center gap-2">
+                  <svg className="h-4 w-4 text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 6a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 6zm0 9a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
+                  </svg>
+                  <p className="text-sm text-yellow-700">
+                    <strong>Note:</strong> For assistance, contact the respective event coordinator. Details available in the Events section.
+                  </p>
+                </div>
+              </div>
               <Button className="w-full bg-indigo-600 hover:bg-indigo-700 text-white rounded-full py-5 px-6 flex items-center justify-center gap-2">
                   <span>Event Proofs (Coming Soon)</span>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
@@ -890,12 +905,7 @@ export function SentiaMain() {
                   </svg>
                 </Button>
 
-                <Button className="w-full bg-indigo-600 hover:bg-indigo-700 text-white rounded-full py-5 px-6 flex items-center justify-center gap-2">
-                  <span>Any queries</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 9.75a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375m-13.5 3.01c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.184-4.183a1.14 1.14 0 0 1 .778-.332 48.294 48.294 0 0 0 5.83-.498c1.585-.233 2.708-1.626 2.708-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
-                  </svg>
-                </Button>
+                
 
                 
                 <Link to="/register">
