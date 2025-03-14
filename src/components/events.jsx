@@ -693,9 +693,8 @@ export function Events({ setGlobalVideoHovered }) {
             
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                <button className="flex items-center gap-2 px-4 py-2 bg-black hover:bg-gray-800 rounded-full text-white transition-colors"
+                <button className="w-10 h-10 bg-black hover:bg-gray-800 rounded-full flex items-center justify-center text-white transition-colors"
                   style={{ transform: 'none' }}>
-                  <span>Rules</span>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
                   </svg>

@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 // Import the background image using Vite's static asset handling
 import bgHero from '../assets/MainIntro.mp4';
 import collegeLogo from '../assets/MITELOGGO.png';
-import MITELogo from '../assets/MITELogomain.png'
 
 export function HeroSection() {
   return (
@@ -33,7 +32,7 @@ export function HeroSection() {
             className="w-24 h-16 sm:w-28 sm:h-18 md:w-16 md:h-16 object-contain"
           />
           <img
-            src={MITELogo}
+            src="/src/assets/mainlogopg-removebg-preview (1).png"
             alt="MITE Logo"
             className="hidden md:block h-12 md:h-16 object-contain ml-2" 
           />
@@ -41,7 +40,7 @@ export function HeroSection() {
         <img
           src="/src/assets/clubmite.png"
           alt="Club MITE Logo"
-          className="w-24 h-16 md:w-62 md:h-20 object-contain"
+          className="w-32 h-20 md:w-62 md:h-20 object-contain"
         />
       </div>
       {/* Content container */}

@@ -4,18 +4,6 @@ import { HeroSection } from './HeroSection';
 import Events from './events';
 import { Link } from 'react-router-dom';
 import Footer from './Footer';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
-
 
 export function SentiaMain() {
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
@@ -168,10 +156,10 @@ export function SentiaMain() {
     },
     {
       id: 3,
-      name: 'What Jhumka ?',
+      name: 'Gilehriyaan',
       artist: 'Jonita Gandhi',
       src: '/src/assets/Songs/whatjhumka.mp3',
-      duration: '3:33'
+      duration: '3:42'
     }
   ];
 
@@ -895,108 +883,19 @@ export function SentiaMain() {
               </div>
               
               <div className="space-y-3 mt-auto">
-              <Button className="w-full bg-indigo-600 hover:bg-indigo-700 text-white rounded-full py-5 px-6 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+              <Button className="w-full bg-indigo-600 hover:bg-indigo-700 text-white rounded-full py-5 px-6 flex items-center justify-center gap-2">
                   <span>Event Proofs (Coming Soon)</span>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 9.75a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375m-13.5 3.01c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.184-4.183a1.14 1.14 0 0 1 .778-.332 48.294 48.294 0 0 0 5.83-.498c1.585-.233 2.708-1.626 2.708-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
                   </svg>
                 </Button>
 
-                <AlertDialog>
-                  <AlertDialogTrigger asChild>
-                    <Button className="w-full bg-indigo-600 hover:from-indigo-700 hover:to-purple-700 text-white rounded-full py-5 px-6 flex items-center justify-center gap-2 transform transition-all duration-300 shadow-lg hover:shadow-indigo-500/30">
-                      <span className="font-medium">Contact Us</span>
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 animate-bounce">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 9.75a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375m-13.5 3.01c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.184-4.183a1.14 1.14 0 0 1 .778-.332 48.294 48.294 0 0 0 5.83-.498c1.585-.233 2.708-1.626 2.708-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
-                      </svg>
-                    </Button>
-                  </AlertDialogTrigger>
-                  <AlertDialogContent className="bg-gradient-to-br from-white to-indigo-50 border-2 border-indigo-100 shadow-xl">
-                    <AlertDialogHeader>
-                      <AlertDialogTitle className="text-2xl font-bold text-indigo-900 text-center mb-4">
-                        Meet Our Team
-                      </AlertDialogTitle>
-                      <AlertDialogDescription>
-                        <div className="space-y-6">
-                          <div className="bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 border border-indigo-100">
-                            <div className="flex items-center gap-3">
-                              <div className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-full flex items-center justify-center text-white text-xl font-bold">
-                                RK
-                              </div>
-                              <div>
-                                <h4 className="font-semibold text-lg text-indigo-900">Rahul Kumar</h4>
-                                <p className="text-sm text-indigo-600 font-medium">Event Coordinator</p>
-                                <div className="flex items-center gap-2 mt-1">
-                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 text-green-600">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
-                                  </svg>
-                                  <a href="tel:+919876543210" className="text-sm text-indigo-600 hover:text-indigo-800 transition-colors">+91 9876543210</a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div className="bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 border border-indigo-100">
-                            <div className="flex items-center gap-3">
-                              <div className="w-12 h-12 bg-gradient-to-br from-pink-500 to-rose-500 rounded-full flex items-center justify-center text-white text-xl font-bold">
-                                PS
-                              </div>
-                              <div>
-                                <h4 className="font-semibold text-lg text-indigo-900">Priya Singh</h4>
-                                <p className="text-sm text-indigo-600 font-medium">Technical Head</p>
-                                <div className="flex items-center gap-2 mt-1">
-                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 text-green-600">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
-                                  </svg>
-                                  <a href="tel:+919876543211" className="text-sm text-indigo-600 hover:text-indigo-800 transition-colors">+91 9876543211</a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div className="bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 border border-indigo-100">
-                            <div className="flex items-center gap-3">
-                              <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-orange-500 rounded-full flex items-center justify-center text-white text-xl font-bold">
-                                AP
-                              </div>
-                              <div>
-                                <h4 className="font-semibold text-lg text-indigo-900">Amit Patel</h4>
-                                <p className="text-sm text-indigo-600 font-medium">Cultural Head</p>
-                                <div className="flex items-center gap-2 mt-1">
-                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 text-green-600">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
-                                  </svg>
-                                  <a href="tel:+919876543212" className="text-sm text-indigo-600 hover:text-indigo-800 transition-colors">+91 9876543212</a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div className="bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 border border-indigo-100">
-                            <div className="flex items-center gap-3">
-                              <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-full flex items-center justify-center text-white text-xl font-bold">
-                                SR
-                              </div>
-                              <div>
-                                <h4 className="font-semibold text-lg text-indigo-900">Sneha Reddy</h4>
-                                <p className="text-sm text-indigo-600 font-medium">Student Coordinator</p>
-                                <div className="flex items-center gap-2 mt-1">
-                                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 text-green-600">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
-                                  </svg>
-                                  <a href="tel:+919876543213" className="text-sm text-indigo-600 hover:text-indigo-800 transition-colors">+91 9876543213</a>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                      <AlertDialogCancel className="bg-white hover:bg-gray-100 text-gray-600 border border-gray-300">Close</AlertDialogCancel>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialog>
+                <Button className="w-full bg-indigo-600 hover:bg-indigo-700 text-white rounded-full py-5 px-6 flex items-center justify-center gap-2">
+                  <span>Any queries</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 9.75a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375m-13.5 3.01c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.184-4.183a1.14 1.14 0 0 1 .778-.332 48.294 48.294 0 0 0 5.83-.498c1.585-.233 2.708-1.626 2.708-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
+                  </svg>
+                </Button>
 
                 
                 <Link to="/register">
