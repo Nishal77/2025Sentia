@@ -3,12 +3,17 @@ import { Button } from './ui/button';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
-// Import the background image using Vite's static asset handling
-import bgHero from '../assets/MainIntro.mp4';
+// Import local assets for testing
 import collegeLogo from '../assets/MITELOGGO.png';
-import MiteLogo from '../assets/MITELogomain.png'
-import SentiaLogo from '../assets/sentialogo.png'
-import ClubLogo from '../assets/clubmite.png'
+import MiteLogo from '../assets/MITELogomain.png';
+import SentiaLogo from '../assets/sentialogo.png';
+import ClubLogo from '../assets/clubmite.png';
+
+// Cloudinary configuration for video only
+const CLOUDINARY_CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || 'dqmryiyhz'; 
+
+// Direct video URL from Cloudinary
+const videoUrl = 'https://res.cloudinary.com/dqmryiyhz/video/upload/v1742035121/sentia/ixpbo4budsp7epswcf3u.mp4';
 
 export function HeroSection() {
   const [videoLoaded, setVideoLoaded] = useState(false);
@@ -32,7 +37,7 @@ export function HeroSection() {
     videoPreload.onerror = () => setVideoError(true);
     
     // Set the source
-    videoPreload.src = bgHero;
+    videoPreload.src = videoUrl;
     videoPreload.load();
     
     // Clean up
@@ -44,11 +49,11 @@ export function HeroSection() {
 
   return (
     <section className="relative min-h-screen overflow-hidden">
-      {/* Video background with optimized loading */}
+      {/* Video background with Cloudinary URL */}
       <div className="absolute inset-0 z-0 bg-black/50"> {/* Dark background while loading */}
         {!videoError && (
           <video
-            src={bgHero}
+            src={videoUrl}
             className={`w-full h-full object-cover md:object-fill transition-opacity duration-500 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
             style={{ minHeight: '100vh' }}
             autoPlay

@@ -324,7 +324,7 @@ export function OldMemories() {
         </div>
 
         <img
-          src="/src/assets/MITEMemoriesimageupdated.png"
+          src="/src/assets/mite123.png"
           alt="Sentia Memories"
           className="absolute inset-0 w-full h-full"
         />
