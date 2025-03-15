@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Button } from './ui/button';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -15,9 +15,13 @@ const CLOUDINARY_CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || 'dqm
 // Direct video URL from Cloudinary
 const videoUrl = 'https://res.cloudinary.com/dqmryiyhz/video/upload/v1742035121/sentia/ixpbo4budsp7epswcf3u.mp4';
 
+// Create thumbnail URL for poster (adding /e_preview:duration_2 to get a good frame)
+const posterUrl = 'https://res.cloudinary.com/dqmryiyhz/video/upload/e_preview:duration_2/v1742035121/sentia/ixpbo4budsp7epswcf3u.jpg';
+
 export function HeroSection() {
   const [videoLoaded, setVideoLoaded] = useState(false);
   const [videoError, setVideoError] = useState(false);
+  const videoRef = useRef(null);
 
   // Function to scroll to page content
   const scrollToContent = () => {
@@ -25,6 +29,21 @@ export function HeroSection() {
       top: window.innerHeight,
       behavior: 'smooth'
     });
+  };
+
+  // Handle video playback issues that can occur on mobile devices
+  const handleCanPlay = () => {
+    setVideoLoaded(true);
+    if (videoRef.current) {
+      // Try to play the video now that it can play
+      const playPromise = videoRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(error => {
+          console.log('Auto-play was prevented, user interaction may be needed');
+          // Don't set error state, just log it - the poster will show
+        });
+      }
+    }
   };
 
   // Preload the video when component mounts
@@ -53,15 +72,25 @@ export function HeroSection() {
       <div className="absolute inset-0 z-0 bg-black/50"> {/* Dark background while loading */}
         {!videoError && (
           <video
+            ref={videoRef}
             src={videoUrl}
-            className={`w-full h-full object-cover md:object-fill transition-opacity duration-500 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
-            style={{ minHeight: '100vh' }}
+            className={`w-full h-full object-cover transition-opacity duration-500 ${videoLoaded ? 'opacity-100' : 'opacity-80'}`}
+            style={{ 
+              minHeight: '100vh',
+              width: '100%',
+              height: '100%',
+              position: 'absolute',
+              left: '0',
+              top: '0'
+            }}
+            poster={posterUrl}
             autoPlay
             loop
             muted
             playsInline
             preload="auto"
             fetchpriority="high"
+            onCanPlay={handleCanPlay}
             onLoadedData={() => setVideoLoaded(true)}
             onError={() => setVideoError(true)}
           />
