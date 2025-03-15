@@ -9,7 +9,13 @@ import Sonisoni from '../assets/Songs/Sonisoni.mp3';
 import devadeva from '../assets/Songs/devadeva.mp3';
 import whatjhumka from '../assets/Songs/whatjhumka.mp3';
 
-import Sentia2025 from '../assets/Sentia2025.mp4';
+// Replace this line
+// import Sentia2025 from '../assets/Sentia2025.mp4';
+
+// With Cloudinary video URL
+// import Sentia2025 from '../assets/Sentia2025.mp4'; // Removed local import
+const Sentia2025 = 'https://res.cloudinary.com/dqmryiyhz/video/upload/v1742053509/sentia/bybm497cwxns4ebxewm1.mp4';
+
 import drum from '../assets/drum.mp4';
 import fashionwalk from '../assets/fashionwalk.mp4';
 import robowars from '../assets/robowars.mp4';
@@ -230,7 +236,7 @@ export function SentiaMain() {
       <HeroSection />
       
       {/* Detailed Content Sections */}
-      <div className="pt-16 pb-8 px-2 sm:px-4 mt-16">
+      <div className="pb-8 px-2 sm:px-4">
         <div className="max-w-7xl mx-auto space-y-6">
           {/* Top Row - Conference Info */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -262,6 +268,7 @@ export function SentiaMain() {
                     playsInline
                     preload="auto"
                     onClick={() => setIsVideoModalOpen(true)}
+                    fetchpriority="high"
                   />
                 </div>
               </div>

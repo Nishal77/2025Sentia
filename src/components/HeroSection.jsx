@@ -4,10 +4,43 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 // Import local assets for testing
-import collegeLogo from '../assets/MITELOGGO.png';
-import MiteLogo from '../assets/MITELogomain.png';
-import SentiaLogo from '../assets/sentialogo.png';
-import ClubLogo from '../assets/clubmite.png';
+// import collegeLogo from '../assets/MITELOGGO.png'; // Removed local import
+// import MiteLogo from '../assets/MITELogomain.png'; // Removed local import
+// import ClubLogo from '../assets/clubmite.png'; // Removed local import
+
+// Cloudinary URLs for assets
+const SentiaLogo = 'https://res.cloudinary.com/dqmryiyhz/image/upload/v1742037206/sentia/ok4az4bo05nmgeiq6bzo.png';
+const SentiaLogoSizes = {
+  sm: 'https://res.cloudinary.com/dqmryiyhz/image/upload/w_320,q_auto,f_auto/v1742037206/sentia/ok4az4bo05nmgeiq6bzo.png',
+  md: 'https://res.cloudinary.com/dqmryiyhz/image/upload/w_450,q_auto,f_auto/v1742037206/sentia/ok4az4bo05nmgeiq6bzo.png',
+  lg: 'https://res.cloudinary.com/dqmryiyhz/image/upload/w_600,q_auto,f_auto/v1742037206/sentia/ok4az4bo05nmgeiq6bzo.png',
+  xl: 'https://res.cloudinary.com/dqmryiyhz/image/upload/w_750,q_auto,f_auto/v1742037206/sentia/ok4az4bo05nmgeiq6bzo.png',
+  xxl: 'https://res.cloudinary.com/dqmryiyhz/image/upload/w_900,q_auto,f_auto/v1742037206/sentia/ok4az4bo05nmgeiq6bzo.png'
+};
+
+// College Logo from Cloudinary
+const CollegeLogo = 'https://res.cloudinary.com/dqmryiyhz/image/upload/v1742037204/sentia/zyc4nm8ksvugvboiw7u5.png';
+const CollegeLogoSizes = {
+  sm: 'https://res.cloudinary.com/dqmryiyhz/image/upload/w_160,q_auto,f_auto/v1742037204/sentia/zyc4nm8ksvugvboiw7u5.png',
+  md: 'https://res.cloudinary.com/dqmryiyhz/image/upload/w_200,q_auto,f_auto/v1742037204/sentia/zyc4nm8ksvugvboiw7u5.png',
+  lg: 'https://res.cloudinary.com/dqmryiyhz/image/upload/w_250,q_auto,f_auto/v1742037204/sentia/zyc4nm8ksvugvboiw7u5.png'
+};
+
+// MITE Logo from Cloudinary
+const MiteLogo = 'https://res.cloudinary.com/dqmryiyhz/image/upload/v1742053263/sentia/bbihqv0vhpezbfnhluzr.png';
+const MiteLogoSizes = {
+  sm: 'https://res.cloudinary.com/dqmryiyhz/image/upload/w_160,q_auto,f_auto/v1742053263/sentia/bbihqv0vhpezbfnhluzr.png',
+  md: 'https://res.cloudinary.com/dqmryiyhz/image/upload/w_200,q_auto,f_auto/v1742053263/sentia/bbihqv0vhpezbfnhluzr.png',
+  lg: 'https://res.cloudinary.com/dqmryiyhz/image/upload/w_250,q_auto,f_auto/v1742053263/sentia/bbihqv0vhpezbfnhluzr.png'
+};
+
+// Club Logo from Cloudinary
+const ClubLogo = 'https://res.cloudinary.com/dqmryiyhz/image/upload/v1742053263/sentia/k7hohwsicphkud5msxkz.png';
+const ClubLogoSizes = {
+  sm: 'https://res.cloudinary.com/dqmryiyhz/image/upload/w_160,q_auto,f_auto/v1742053263/sentia/k7hohwsicphkud5msxkz.png',
+  md: 'https://res.cloudinary.com/dqmryiyhz/image/upload/w_220,q_auto,f_auto/v1742053263/sentia/k7hohwsicphkud5msxkz.png',
+  lg: 'https://res.cloudinary.com/dqmryiyhz/image/upload/w_280,q_auto,f_auto/v1742053263/sentia/k7hohwsicphkud5msxkz.png'
+};
 
 // Cloudinary configuration for video only
 const CLOUDINARY_CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || 'dqmryiyhz'; 
@@ -15,19 +48,16 @@ const CLOUDINARY_CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || 'dqm
 // Check if the device is mobile
 const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-// Create optimized Cloudinary URLs for different devices
-const videoUrlDesktop = 'https://res.cloudinary.com/dqmryiyhz/video/upload/q_auto,vc_auto/v1742035121/sentia/ixpbo4budsp7epswcf3u.mp4';
-const videoUrlMobile = 'https://res.cloudinary.com/dqmryiyhz/video/upload/q_auto,vc_auto,w_640/v1742035121/sentia/ixpbo4budsp7epswcf3u.mp4';
-const videoUrlWebM = 'https://res.cloudinary.com/dqmryiyhz/video/upload/q_auto,vc_auto,f_webm/v1742035121/sentia/ixpbo4budsp7epswcf3u.webm';
-const videoUrlFallback = 'https://res.cloudinary.com/dqmryiyhz/video/upload/q_auto,vc_auto/v1742035121/sentia/ixpbo4budsp7epswcf3u.mp4';
-
-// Create optimized poster image
-const posterUrl = 'https://res.cloudinary.com/dqmryiyhz/video/upload/e_preview:duration_2,q_auto/v1742035121/sentia/ixpbo4budsp7epswcf3u.jpg';
+// Direct video URL as requested by user - with transcoding parameters for better compatibility
+const videoUrl = 'https://res.cloudinary.com/dqmryiyhz/video/upload/q_auto:good,vc_auto/v1742035121/sentia/ixpbo4budsp7epswcf3u.mp4';
+const videoUrlMobile = 'https://res.cloudinary.com/dqmryiyhz/video/upload/q_auto:good,vc_auto,w_640/v1742035121/sentia/ixpbo4budsp7epswcf3u.mp4';
 
 export function HeroSection() {
   const [videoLoaded, setVideoLoaded] = useState(false);
   const [videoError, setVideoError] = useState(false);
   const [userInteracted, setUserInteracted] = useState(false);
+  const [showPlayButton, setShowPlayButton] = useState(false);
+  const [showScreenSizeDisclaimer, setShowScreenSizeDisclaimer] = useState(false);
   const videoRef = useRef(null);
   const containerRef = useRef(null);
 
@@ -39,42 +69,138 @@ export function HeroSection() {
     });
   };
 
-  // Try to play video - this helps with mobile browsers
+  // Detect small/medium screens and show disclaimer
+  useEffect(() => {
+    const checkScreenSize = () => {
+      // Show for screens smaller than 1024px (tailwind's lg breakpoint)
+      const isSmallOrMediumScreen = window.innerWidth < 1024;
+      setShowScreenSizeDisclaimer(isSmallOrMediumScreen);
+    };
+    
+    // Check on mount
+    checkScreenSize();
+    
+    // Check on resize
+    window.addEventListener('resize', checkScreenSize);
+    
+    return () => {
+      window.removeEventListener('resize', checkScreenSize);
+    };
+  }, []);
+
+  // Hide disclaimer after a delay or when dismissed
+  useEffect(() => {
+    if (showScreenSizeDisclaimer) {
+      // Auto-hide after 8 seconds
+      const timer = setTimeout(() => {
+        setShowScreenSizeDisclaimer(false);
+      }, 8000);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [showScreenSizeDisclaimer]);
+
+  // Improved play function with multiple fallbacks
   const attemptPlay = () => {
-    if (videoRef.current) {
-      setUserInteracted(true);
+    if (!videoRef.current) return;
+    
+    setUserInteracted(true);
+    
+    // Create a proper play promise with error handling
+    try {
       const playPromise = videoRef.current.play();
+      
       if (playPromise !== undefined) {
-        playPromise.catch(error => {
-          console.log('Auto-play was prevented:', error);
-        });
+        playPromise
+          .then(() => {
+            console.log('Video playback started successfully');
+            setShowPlayButton(false);
+          })
+          .catch(error => {
+            console.warn('Auto-play was prevented:', error);
+            setShowPlayButton(true); // Show play button if autoplay fails
+          });
       }
+    } catch (error) {
+      console.error('Error attempting to play video:', error);
+      setShowPlayButton(true);
     }
   };
 
   // Handle video events
   const handleCanPlay = () => {
+    console.log('Video can play');
     setVideoLoaded(true);
-    // Only try to autoplay if we're not on mobile or user has interacted
-    if (!isMobile || userInteracted) {
+    attemptPlay();
+  };
+  
+  // Immediate play when loaded
+  const handleLoadedData = () => {
+    console.log('Video data loaded');
+    setVideoLoaded(true);
+    attemptPlay();
+  };
+
+  // Handle video errors better
+  const handleVideoError = (e) => {
+    console.error('Video error:', e);
+    setVideoError(true);
+    setShowPlayButton(true);
+  };
+  
+  // Ensure video loops properly by handling the ended event
+  const handleVideoEnded = () => {
+    if (videoRef.current) {
+      videoRef.current.currentTime = 0;
       attemptPlay();
     }
   };
 
-  // Add interaction detection to trigger playback on mobile
+  // Add interaction detection to trigger playback on all devices
   useEffect(() => {
     const handleInteraction = () => {
       setUserInteracted(true);
       attemptPlay();
     };
     
-    // Detect any user interaction with the page
-    document.addEventListener('touchstart', handleInteraction, { once: true });
-    document.addEventListener('click', handleInteraction, { once: true });
+    // Use more events to catch all possible user interactions
+    const events = ['click', 'touchstart', 'pointerdown', 'mousedown'];
+    events.forEach(event => {
+      document.addEventListener(event, handleInteraction, { once: true });
+    });
     
     return () => {
-      document.removeEventListener('touchstart', handleInteraction);
-      document.removeEventListener('click', handleInteraction);
+      events.forEach(event => {
+        document.removeEventListener(event, handleInteraction);
+      });
+    };
+  }, []);
+
+  // Add more aggressive autoplay on component mount
+  useEffect(() => {
+    let attempts = 0;
+    const maxAttempts = 3;
+    
+    // Try multiple times with delays
+    const attemptPlayback = () => {
+      if (attempts < maxAttempts) {
+        console.log(`Attempt ${attempts + 1} to play video`);
+        attemptPlay();
+        attempts++;
+        setTimeout(attemptPlayback, 1000); // Try again after 1 second
+      }
+    };
+    
+    // Initial delay to ensure DOM is ready
+    setTimeout(attemptPlayback, 500);
+    
+    // iOS specific handling - needs user gesture
+    if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+      setShowPlayButton(true);
+    }
+    
+    return () => {
+      attempts = maxAttempts; // Stop additional attempts on unmount
     };
   }, []);
 
@@ -88,91 +214,142 @@ export function HeroSection() {
       }
     };
 
-    // Set size initially and on resize
     handleResize();
     window.addEventListener('resize', handleResize);
     
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Optimize performance
+  // Handle visibility changes to ensure looping continues
   useEffect(() => {
-    if (isMobile) {
-      // Create a lightweight preloader for mobile
-      const img = new Image();
-      img.src = posterUrl;
-      img.onload = () => console.log('Poster loaded');
-    } else {
-      // On desktop, preload the video
-      const videoPreload = document.createElement('video');
-      videoPreload.onloadeddata = () => setVideoLoaded(true);
-      videoPreload.onerror = () => setVideoError(true);
-      videoPreload.src = videoUrlDesktop;
-      videoPreload.load();
-      
-      return () => {
-        videoPreload.onloadeddata = null;
-        videoPreload.onerror = null;
-      };
-    }
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible' && videoRef.current) {
+        if (videoRef.current.paused) {
+          attemptPlay();
+        }
+        videoRef.current.loop = true;
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
   }, []);
 
   return (
-    <section className="relative min-h-screen overflow-hidden">
-      {/* Video background with optimized sources */}
-      <div ref={containerRef} className="absolute inset-0 z-0 bg-black/60"> {/* Darker background for better visibility */}
+    <section className="overflow-hidden">
+      {/* Video background with enhanced sources */}
+      <div ref={containerRef} className="absolute inset-0 z-0 bg-black/60"> 
         {!videoError && (
-          <video
-            ref={videoRef}
-            className={`w-full h-full object-cover transition-opacity duration-500 ${videoLoaded ? 'opacity-100' : 'opacity-80'}`}
-            style={{ 
-              objectPosition: 'center center',
-              minHeight: '100vh',
-              width: '100%',
-              height: '100%',
-              position: 'absolute',
-              left: '0',
-              top: '0'
-            }}
-            poster={posterUrl}
-            autoPlay={!isMobile} // Only autoplay on desktop
-            loop
-            muted
-            playsInline
-            preload={isMobile ? "metadata" : "auto"} // Only preload metadata on mobile
-            fetchpriority="high"
-            onCanPlay={handleCanPlay}
-            onLoadedData={() => setVideoLoaded(true)}
-            onError={() => setVideoError(true)}
-            onClick={attemptPlay} // Enable play on click (helps with mobile)
-          >
-            {/* Multiple source formats for better compatibility */}
-            <source src={videoUrlWebM} type="video/webm" />
-            <source src={isMobile ? videoUrlMobile : videoUrlDesktop} type="video/mp4" />
-            <source src={videoUrlFallback} type="video/mp4" /> {/* Fallback */}
-          </video>
+          <>
+            <video
+              ref={videoRef}
+              className={`w-full h-full object-cover transition-opacity duration-500 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
+              autoPlay
+              loop
+              muted
+              playsInline
+              controls={false}
+              disablePictureInPicture
+              disableRemotePlayback
+              preload="auto"
+              fetchpriority="high"
+              onCanPlay={handleCanPlay}
+              onLoadedData={handleLoadedData}
+              onError={handleVideoError}
+              onClick={attemptPlay}
+              onEnded={handleVideoEnded}
+              src={isMobile ? videoUrlMobile : videoUrl}
+              type="video/mp4"
+            />
+            
+            {/* Play button overlay - appears if autoplay fails */}
+            {showPlayButton && (
+              <div 
+                className="absolute inset-0 flex items-center justify-center bg-black/30 z-10 cursor-pointer"
+                onClick={attemptPlay}
+              >
+                <div className="bg-white/20 backdrop-blur-sm p-6 rounded-full">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" className="w-12 h-12">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                </div>
+                <span className="absolute bottom-10 text-white text-lg font-medium">
+                  Tap to play video
+                </span>
+              </div>
+            )}
+          </>
         )}
+        
+        {/* Black overlay for better content visibility */}
         <div className="absolute inset-0 bg-black/30"></div>
       </div>
+      
+      {/* Screen size disclaimer for small/medium screens */}
+      {showScreenSizeDisclaimer && (
+        <div className="fixed top-4 left-0 right-0 mx-auto w-[90%] max-w-md z-50 bg-black/80 backdrop-blur-md text-white p-4 rounded-lg shadow-lg border border-white/20 transition-all duration-300 animate-fade-in">
+          <div className="flex justify-between items-center">
+            <div className="flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 text-blue-400">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25" />
+              </svg>
+              <p className="text-sm font-medium">Use a larger screen for the best experience</p>
+            </div>
+            <button 
+              onClick={() => setShowScreenSizeDisclaimer(false)} 
+              className="text-white hover:text-gray-300 transition-colors"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      )}
       
       {/* College Logo and MITE Description - Top Left */}
       <div className="absolute top-4 md:top-6 z-20 w-full flex justify-between items-center px-2 md:px-6">
         <div className="flex items-center">
           <img 
-            src={collegeLogo}
+            src={CollegeLogo}
+            srcSet={`
+              ${CollegeLogoSizes.sm} 160w,
+              ${CollegeLogoSizes.md} 200w,
+              ${CollegeLogoSizes.lg} 250w
+            `}
+            sizes="(max-width: 640px) 160px, (max-width: 768px) 200px, 250px"
             alt="College Logo"
             className="w-16 h-10 sm:w-20 sm:h-14 md:w-16 md:h-16 object-contain"
+            loading="eager"
+            fetchpriority="high"
           />
           <img
             src={MiteLogo}
+            srcSet={`
+              ${MiteLogoSizes.sm} 160w,
+              ${MiteLogoSizes.md} 200w,
+              ${MiteLogoSizes.lg} 250w
+            `}
+            sizes="(max-width: 640px) 160px, (max-width: 768px) 200px, 250px"
             alt="MITE Logo"
-            className="hidden md:block h-12 md:h-16 object-contain" 
+            className="hidden md:block h-12 md:h-16 object-contain"
+            loading="eager"
           />
         </div>
         <img
           src={ClubLogo}
+          srcSet={`
+            ${ClubLogoSizes.sm} 160w,
+            ${ClubLogoSizes.md} 220w,
+            ${ClubLogoSizes.lg} 280w
+          `}
+          sizes="(max-width: 640px) 160px, (max-width: 768px) 220px, 280px"
           alt="Club MITE Logo"
           className="w-20 h-12 sm:w-28 sm:h-16 md:w-62 md:h-20 object-contain"
+          loading="eager"
         />
       </div>
       {/* Content container */}
@@ -180,16 +357,24 @@ export function HeroSection() {
         <div className="flex flex-col items-center justify-center text-center mt-20">
           <img 
             src={SentiaLogo}
+            srcSet={`
+              ${SentiaLogoSizes.sm} 320w,
+              ${SentiaLogoSizes.md} 450w,
+              ${SentiaLogoSizes.lg} 600w,
+              ${SentiaLogoSizes.xl} 750w,
+              ${SentiaLogoSizes.xxl} 900w
+            `}
+            sizes="(max-width: 640px) 320px, (max-width: 768px) 450px, (max-width: 1024px) 600px, (max-width: 1280px) 750px, 900px"
             alt="Sentia 2025 Logo"
             className="w-[320px] sm:w-[450px] md:w-[600px] lg:w-[750px] xl:w-[900px] h-auto mb-8 mx-auto"
+            loading="eager"
+            fetchpriority="high"
           />
         </div>
 
-          <p className="text-xl text-gray-200 mb-12 max-w-3xl mx-auto">
-            
-          </p>
+         
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center w-full">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center w-full mb-16 md:mb-20">
             <Button 
               className="relative overflow-hidden bg-[#1e40af] hover:bg-[#1e4bd8] text-white rounded-md py-4 px-6 flex items-center justify-center gap-2 transition-all duration-300 shadow-[0_4px_15px_rgba(30,64,175,0.5)] border border-[#60a5fa]/30 group w-full sm:w-auto"
               style={{

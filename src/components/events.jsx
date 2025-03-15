@@ -1301,7 +1301,7 @@ export function Events({ setGlobalVideoHovered }) {
         {/* Download Brochure Section with Lighter Animations */}
         <div className="mt-12 flex flex-col items-center">
           <div 
-            className="relative transition-all duration-300 ease-in-out" 
+            className="relative flex gap-4 transition-all duration-300 ease-in-out" 
             onMouseEnter={() => setIsDownloadHovered(true)}
             onMouseLeave={() => setIsDownloadHovered(false)}
           >
@@ -1310,8 +1310,6 @@ export function Events({ setGlobalVideoHovered }) {
               download="Sentia2025Brochure.pdf"
               className="flex flex-col items-center"
             >
-              
-              
               <div 
                 className={`bg-black text-white py-2.5 px-5 rounded-lg font-medium text-sm flex items-center space-x-2 shadow-md transition-shadow duration-300 ${isDownloadHovered ? 'shadow-lg' : ''}`}
                 style={{ transform: 'none' }}
@@ -1319,17 +1317,27 @@ export function Events({ setGlobalVideoHovered }) {
                 {/* Subtle gradient border on hover */}
                 <div 
                   className={`absolute inset-0 rounded-lg transition-opacity duration-300 ${isDownloadHovered ? 'opacity-100' : 'opacity-0'}`}
-                  style={{ 
-                    background: 'linear-gradient(90deg, #3B82F6, #8B5CF6, #3B82F6)',
-                    backgroundSize: '200% 100%',
-                    animation: 'subtleGradient 3s ease-in-out infinite',
-                    opacity: 0.2,
-                  }}
                 ></div>
                 
                 <span className="relative z-10">Download Brochure</span>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 relative z-10">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                </svg>
+              </div>
+            </a>
+
+            <a 
+              href="https://www.youtube.com/watch?v=d9IKg-nizhQ"
+              target="_blank"
+              rel="noopener noreferrer" 
+              className="flex flex-col items-center"
+            >
+              <div 
+                className={`bg-red-600 text-white py-2.5 px-5 rounded-lg font-medium text-sm flex items-center space-x-2 shadow-md transition-shadow duration-300 hover:bg-red-700`}
+              >
+                <span className="relative z-10">Watch Live</span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347c-.75.412-1.667-.13-1.667-.986V5.653Z" />
                 </svg>
               </div>
             </a>
