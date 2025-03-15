@@ -312,7 +312,7 @@ export function OldMemories() {
           <Link to="/">
             <Button 
               variant="outline" 
-              className="bg-white/20 hover:bg-white/30 text-white border-white/40 backdrop-blur-sm shadow-lg text-xs sm:text-sm py-1 px-2 sm:py-2 sm:px-3"
+              className="bg-black/20 hover:bg-white/30 text-white border-white/40 backdrop-blur-sm shadow-lg text-xs sm:text-sm py-1 px-2 sm:py-2 sm:px-3"
             >
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 sm:w-5 sm:h-5 mr-1 sm:mr-2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
@@ -324,7 +324,7 @@ export function OldMemories() {
         </div>
 
         <img
-          src="/src/assets/SentiaMemo.png"
+          src="/src/assets/MITEMemoriesimage.png"
           alt="Sentia Memories"
           className="absolute inset-0 w-full h-full"
         />

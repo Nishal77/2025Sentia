@@ -180,14 +180,14 @@ export function SentiaMain() {
       id: 1,
       name: 'Soni Soni (From "ishq vishk rebound")',
       artist: 'Jonita Gandhi',
-      src: {Sonisoni},
+      src: Sonisoni,
       duration: '2:56'
     },
     {
       id: 2,
       name: 'Deva Deva',
       artist: 'Jonita Gandhi',
-      src: {devadeva},
+      src: devadeva,
       duration: '4:39'
     },
     {
@@ -534,7 +534,7 @@ export function SentiaMain() {
                     </div>
                     <div>
                       <p className="text-gray-700">
-                        Keynote speeches, Technical workshops, Cultural showcase, Robo War, Dance performances, Hackathon night.
+                      Inaugural Ceremony, followed by dance performances, Robowar, Robo Soccer, faculty act, and Battle of Bands.
                       </p>
                     </div>
                   </div>

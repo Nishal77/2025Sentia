@@ -3,6 +3,13 @@ import { Button } from "./ui/button";
 import Footer from './Footer';
 import { Link } from 'react-router-dom';
 
+import bandicon from '../assets/eventslogo/bandicon.jpeg';
+import fashionlogo from '../assets/eventslogo/fashionlogo.jpeg';
+import robowarslogo from '../assets/eventslogo/robowars.png';
+import dancelogo from '../assets/eventslogo/dancelogo.jpeg';
+import quizlogo from '../assets/eventslogo/quiz.png';
+import mastermindlogo from '../assets/eventslogo/mastermindlogo.png';
+
 // Define all events
 const allEvents = [
   {
@@ -89,7 +96,7 @@ const SimpleEventCard = ({ id, title, description, time, building, roomNumber, d
         return (
           <div className="w-full h-full flex items-center justify-center overflow-hidden">
             <img 
-              src="/src/assets/eventslogo/bandicon.jpeg" 
+              src={bandicon} 
               alt="Battle of Bands"
               className="w-full h-full object-cover"
             />
@@ -99,7 +106,7 @@ const SimpleEventCard = ({ id, title, description, time, building, roomNumber, d
         return (
           <div className="w-full h-full flex items-center justify-center overflow-hidden">
             <img 
-              src="/src/assets/eventslogo/fashionlogo.jpeg" 
+              src={fashionlogo} 
               alt="Fashion Walk"
               className="w-full h-full object-cover"
             />
@@ -109,7 +116,7 @@ const SimpleEventCard = ({ id, title, description, time, building, roomNumber, d
         return (
           <div className="w-full h-full flex items-center justify-center overflow-hidden">
             <img 
-              src="/src/assets/eventslogo/robowars.png" 
+              src={robowarslogo} 
               alt="Robo Wars"
               className="w-full h-full object-cover"
             />
@@ -120,7 +127,7 @@ const SimpleEventCard = ({ id, title, description, time, building, roomNumber, d
         return (
           <div className="w-full h-full flex items-center justify-center overflow-hidden">
             <img 
-              src="/src/assets/eventslogo/dancelogo.jpeg" 
+              src={dancelogo} 
               alt="Dance"
               className="w-full h-full object-cover"
             />
@@ -130,7 +137,7 @@ const SimpleEventCard = ({ id, title, description, time, building, roomNumber, d
         return (
           <div className="w-full h-full flex items-center justify-center overflow-hidden">
             <img 
-              src="/src/assets/eventslogo/robowars.png" 
+              src={robowarslogo} 
               alt="Robo Mania"
               className="w-full h-full object-cover"
             />
@@ -140,7 +147,7 @@ const SimpleEventCard = ({ id, title, description, time, building, roomNumber, d
         return (
           <div className="w-full h-full flex items-center justify-center overflow-hidden">
             <img 
-              src="/src/assets/eventslogo/quiz.png" 
+              src={quizlogo} 
               alt="Quiz Quest"
               className="w-full h-full object-cover"
             />
@@ -150,7 +157,7 @@ const SimpleEventCard = ({ id, title, description, time, building, roomNumber, d
         return (
           <div className="w-full h-full flex items-center justify-center overflow-hidden">
             <img 
-              src="/src/assets/eventslogo/mastermindlogo.png" 
+              src={mastermindlogo} 
               alt="Master Minds"
               className="w-full h-full object-cover"
             />

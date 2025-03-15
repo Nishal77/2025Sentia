@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,7 +11,31 @@ import {
   AlertDialogTrigger,
 } from "./ui/alert-dialog";
 
+import bandicon from '../assets/eventslogo/bandicon.jpeg';
+import fashionlogo from '../assets/eventslogo/fashionlogo.jpeg';
+import robowarslogo from '../assets/eventslogo/robowars.png';
+import robosccer from '../assets/eventslogo/robosoccer.webp'
+import easterndance from '../assets/eventslogo/eastern.png'
+import westerndance from '../assets/eventslogo/western.png'
 import Senhacks from "../assets/eventslogo/Hackathon.jpeg";
+import quizlogo from '../assets/eventslogo/quiz.png';
+import mastermindlogo from '../assets/eventslogo/mastermindlogo.png';
+import awardnite from '../assets/eventslogo/awardwinning.jpeg'
+
+import fashionwalkvideo from '../assets/events/fashionwalk.mp4'
+import battleofbands from '../assets/events/battleofband1.mp4'
+import easterndancevideo from '../assets/events/easterdance.mp4'
+import westerndancevideo from '../assets/events/westerndance.mp4'
+import robowarvideo from '../assets/events/robowars.mov'
+import robosoccervideo from '../assets/events/robo_soccer.mov'
+import itquizvideo from '../assets/events/itquiz.mp4'
+import managervideo from '../assets/events/manager.mp4'
+import awardwinning from '../assets/events/awardwinning.mp4'
+import senhacksvideo from '../assets/events/hackthon.mp4'
+
+import Sentia2025Brochure from '../assets/Sentia2025_Brochure.pdf'
+
+
 import { Link } from 'react-router-dom';
 
 export function Events({ setGlobalVideoHovered }) {
@@ -511,6 +535,11 @@ export function Events({ setGlobalVideoHovered }) {
 
   // EventCard component with rules popup
   const EventCard = ({ id, title, description, time, building, roomNumber, setGlobalVideoHovered, showTime }) => {
+    const videoRef = useRef(null);
+    const danceVideoRef = useRef(null);
+    const awardVideoRef = useRef(null);
+    const senhacksVideoRef = useRef(null);
+    
     // Add state to track hover for cards with video effects
     const [isHovered, setIsHovered] = useState(false);
     // Add state to control dialog open state
@@ -524,7 +553,6 @@ export function Events({ setGlobalVideoHovered }) {
     const roboSoccerVideoRef = React.useRef(null);
     const quizVideoRef = React.useRef(null);
     const mindsVideoRef = React.useRef(null);
-    const awardVideoRef = React.useRef(null);
     
     // Get the appropriate ref based on the card ID
     const getVideoRef = () => {
@@ -537,6 +565,7 @@ export function Events({ setGlobalVideoHovered }) {
       if (id === 'quiz-quest') return quizVideoRef;
       if (id === 'master-minds') return mindsVideoRef;
       if (id === 'award-nite') return awardVideoRef;
+      if (id === 'senhacks') return senhacksVideoRef;
       return null;
     };
     
@@ -544,7 +573,7 @@ export function Events({ setGlobalVideoHovered }) {
     React.useEffect(() => {
       const videoRef = getVideoRef();
       
-      if ((id === 'fashion-walk' || id === 'battle-of-bands' || id === 'eastern-dance' || id === 'western-dance' || id === 'robo-wars' || id === 'robo-soccer' || id === 'quiz-quest' || id === 'master-minds' || id === 'award-nite') && videoRef?.current) {
+      if ((id === 'fashion-walk' || id === 'battle-of-bands' || id === 'eastern-dance' || id === 'western-dance' || id === 'robo-wars' || id === 'robo-soccer' || id === 'quiz-quest' || id === 'master-minds' || id === 'award-nite' || id === 'senhacks') && videoRef?.current) {
         if (isHovered) {
           // Reset video to beginning for consistent experience
           videoRef.current.currentTime = 0;
@@ -632,7 +661,7 @@ export function Events({ setGlobalVideoHovered }) {
           return (
             <div className="w-full h-full flex items-center justify-center overflow-hidden">
               <img 
-                src="/src/assets/eventslogo/bandicon.jpeg" 
+                src={bandicon}
                 alt="Fashion Walk"
                 className="w-full h-full object-cover"
                 style={{ objectFit: 'cover', width: '100%', height: '100%' }}
@@ -643,7 +672,7 @@ export function Events({ setGlobalVideoHovered }) {
           return (
             <div className="w-full h-full flex items-center justify-center overflow-hidden">
               <img 
-                src="/src/assets/eventslogo/fashionlogo.jpeg" 
+                src={fashionlogo} 
                 alt="Fashion Walk"
                 className="w-full h-full object-cover"
                 style={{ objectFit: 'cover', width: '100%', height: '100%' }}
@@ -654,7 +683,7 @@ export function Events({ setGlobalVideoHovered }) {
           return (
             <div className="w-full h-full flex items-center justify-center overflow-hidden">
               <img 
-                src="/src/assets/eventslogo/robowars.png" 
+                src={robowarslogo}
                 alt="Robo Wars"
                 className="w-full h-full object-cover"
                 style={{ objectFit: 'cover', width: '100%', height: '100%' }}
@@ -665,7 +694,7 @@ export function Events({ setGlobalVideoHovered }) {
           return (
             <div className="w-full h-full flex items-center justify-center overflow-hidden">
               <img 
-                src="/src/assets/eventslogo/robosoccer.png" 
+                src={robosccer}
                 alt="Robo Soccer"
                 className="w-full h-full object-cover"
                 style={{ objectFit: 'cover', width: '100%', height: '100%' }}
@@ -676,7 +705,7 @@ export function Events({ setGlobalVideoHovered }) {
           return (
             <div className="w-full h-full flex items-center justify-center overflow-hidden">
               <img 
-                src="/src/assets/eventslogo/easterndance.jpeg" 
+                src={easterndance} 
                 alt="Eastern Dance"
                 className="w-full h-full object-cover"
                 style={{ objectFit: 'cover', width: '100%', height: '100%' }}
@@ -687,7 +716,7 @@ export function Events({ setGlobalVideoHovered }) {
           return (
             <div className="w-full h-full flex items-center justify-center overflow-hidden">
               <img 
-                src="/src/assets/eventslogo/westerndance.jpeg" 
+                src={westerndance} 
                 alt="Western Dance"
                 className="w-full h-full object-cover"
                 style={{ objectFit: 'cover', width: '100%', height: '100%' }}
@@ -709,7 +738,7 @@ export function Events({ setGlobalVideoHovered }) {
           return (
             <div className="w-full h-full flex items-center justify-center overflow-hidden">
               <img 
-                src="/src/assets/eventslogo/quiz.png" 
+                src={quizlogo}
                 alt="Quiz Quest"
                 className="w-full h-full object-cover"
                 style={{ objectFit: 'cover', width: '100%', height: '100%' }}
@@ -720,7 +749,7 @@ export function Events({ setGlobalVideoHovered }) {
           return (
            <div className="w-full h-full flex items-center justify-center overflow-hidden">
               <img 
-                src="/src/assets/eventslogo/mastermindlogo.png" 
+                src={mastermindlogo} 
                 alt="Fashion Walk"
                 className="w-full h-full object-cover"
                 style={{ objectFit: 'cover', width: '100%', height: '100%' }}
@@ -731,7 +760,7 @@ export function Events({ setGlobalVideoHovered }) {
           return (
           <div className="w-full h-full flex items-center justify-center overflow-hidden">
               <img 
-                src="/src/assets/eventslogo/awardwinning.jpeg" 
+                src={awardnite} 
                 alt="Fashion Walk"
                 className="w-full h-full object-cover"
                 style={{ objectFit: 'cover', width: '100%', height: '100%' }}
@@ -750,7 +779,7 @@ export function Events({ setGlobalVideoHovered }) {
 
     return (
       <div 
-        className={`bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow flex flex-col h-full relative ${id === 'fashion-walk' || id === 'battle-of-bands' || id === 'eastern-dance' || id === 'western-dance' || id === 'robo-wars' || id === 'robo-soccer' || id === 'quiz-quest' || id === 'master-minds' || id === 'award-nite' ? 'group' : ''}`}
+        className={`bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow flex flex-col h-full relative ${id === 'fashion-walk' || id === 'battle-of-bands' || id === 'eastern-dance' || id === 'western-dance' || id === 'robo-wars' || id === 'robo-soccer' || id === 'quiz-quest' || id === 'master-minds' || id === 'award-nite' || id === 'senhacks' ? 'group' : ''}`}
         style={{ 
           height: '100%', 
           width: '100%',
@@ -758,7 +787,7 @@ export function Events({ setGlobalVideoHovered }) {
           transition: 'box-shadow 0.3s ease'
         }}
         onMouseEnter={() => {
-          if (id === 'fashion-walk' || id === 'battle-of-bands' || id === 'eastern-dance' || id === 'western-dance' || id === 'robo-wars' || id === 'robo-soccer' || id === 'quiz-quest' || id === 'master-minds' || id === 'award-nite') {
+          if (id === 'fashion-walk' || id === 'battle-of-bands' || id === 'eastern-dance' || id === 'western-dance' || id === 'robo-wars' || id === 'robo-soccer' || id === 'quiz-quest' || id === 'master-minds' || id === 'award-nite' || id === 'senhacks') {
             setIsHovered(true);
             // If global state setter is available, use it to pause slider
             if (typeof setGlobalVideoHovered === 'function') {
@@ -772,7 +801,7 @@ export function Events({ setGlobalVideoHovered }) {
           }
         }}
         onMouseLeave={() => {
-          if (id === 'fashion-walk' || id === 'battle-of-bands' || id === 'eastern-dance' || id === 'western-dance' || id === 'robo-wars' || id === 'robo-soccer' || id === 'quiz-quest' || id === 'master-minds' || id === 'award-nite') {
+          if (id === 'fashion-walk' || id === 'battle-of-bands' || id === 'eastern-dance' || id === 'western-dance' || id === 'robo-wars' || id === 'robo-soccer' || id === 'quiz-quest' || id === 'master-minds' || id === 'award-nite' || id === 'senhacks') {
             setIsHovered(false);
             // Reset global state when no longer hovering
             if (typeof setGlobalVideoHovered === 'function') {
@@ -787,7 +816,7 @@ export function Events({ setGlobalVideoHovered }) {
             <video 
               ref={fashionVideoRef}
               className="w-full h-full object-cover"
-              src="/src/assets/fashionwalk.mp4" 
+              src={fashionwalkvideo} 
               muted 
               playsInline
               loop
@@ -802,7 +831,7 @@ export function Events({ setGlobalVideoHovered }) {
             <video 
               ref={bandVideoRef}
               className="w-full h-full object-cover"
-              src="/src/assets/events/battleofband1.mp4" 
+              src={battleofbands}
               muted 
               playsInline
               loop
@@ -817,7 +846,7 @@ export function Events({ setGlobalVideoHovered }) {
             <video 
               ref={easternDanceVideoRef}
               className="w-full h-full object-cover"
-              src="/src/assets/events/easterndance.mp4" 
+              src={easterndancevideo} 
               muted 
               playsInline
               loop
@@ -832,7 +861,7 @@ export function Events({ setGlobalVideoHovered }) {
             <video 
               ref={westernDanceVideoRef}
               className="w-full h-full object-cover"
-              src="/src/assets/events/westerndance.mp4" 
+              src={westerndancevideo} 
               muted 
               playsInline
               loop
@@ -847,7 +876,7 @@ export function Events({ setGlobalVideoHovered }) {
             <video 
               ref={roboWarsVideoRef}
               className="w-full h-full object-cover"
-              src="/src/assets/events/robowars.mov" 
+              src={robowarvideo}
               muted 
               playsInline
               loop
@@ -862,7 +891,7 @@ export function Events({ setGlobalVideoHovered }) {
             <video 
               ref={roboSoccerVideoRef}
               className="w-full h-full object-cover"
-              src="/src/assets/events/robosoccer.mov" 
+              src={robosoccervideo}
               muted 
               playsInline
               loop
@@ -877,7 +906,7 @@ export function Events({ setGlobalVideoHovered }) {
             <video 
               ref={quizVideoRef}
               className="w-full h-full object-cover"
-              src="/src/assets/events/itquiz.mp4" 
+              src={itquizvideo}
               muted 
               playsInline
               loop
@@ -892,7 +921,7 @@ export function Events({ setGlobalVideoHovered }) {
             <video 
               ref={mindsVideoRef}
               className="w-full h-full object-cover"
-              src="/src/assets/events/manager.mp4" 
+              src={managervideo}
               muted 
               playsInline
               loop
@@ -907,7 +936,22 @@ export function Events({ setGlobalVideoHovered }) {
             <video 
               ref={awardVideoRef}
               className="w-full h-full object-cover"
-              src="/src/assets/events/awardwinning.mp4" 
+              src={awardwinning}
+              muted 
+              playsInline
+              loop
+              preload="auto"
+            />
+          </div>
+        )}
+
+        {/* Video background for senhacks card */}
+        {id === 'senhacks' && (
+          <div className="absolute inset-0 w-full h-full z-0 pointer-events-none opacity-0 group-hover:opacity-40 transition-opacity duration-300 ">
+            <video 
+              ref={senhacksVideoRef}
+              className="w-full h-full object-cover"
+              src={senhacksvideo}
               muted 
               playsInline
               loop
@@ -1009,31 +1053,31 @@ export function Events({ setGlobalVideoHovered }) {
                     <div className="flex items-center">
                       <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center mr-3 md:mr-4 flex-shrink-0">
                         {id === 'fashion-walk' && (
-                          <img src="/src/assets/eventslogo/fashionlogo.jpeg" alt="Fashion Walk" className="w-9 h-9 rounded-full object-cover" />
+                          <img src={fashionlogo} alt="Fashion Walk" className="w-9 h-9 rounded-full object-cover" />
                         )}
                         {id === 'battle-of-bands' && (
-                          <img src="/src/assets/eventslogo/bandicon.jpeg" alt="Battle of Bands" className="w-9 h-9 rounded-full object-cover" />
+                          <img src={bandicon} alt="Battle of Bands" className="w-9 h-9 rounded-full object-cover" />
                         )}
                         {id === 'robo-wars' && (
-                          <img src="/src/assets/eventslogo/robowars.png" alt="Robo Wars" className="w-9 h-9 rounded-full object-cover" />
+                          <img src={robowarslogo} alt="Robo Wars" className="w-9 h-9 rounded-full object-cover" />
                         )}
                         {id === 'robo-soccer' && (
-                          <img src="/src/assets/eventslogo/robosoccer.png" alt="Robo Soccer" className="w-9 h-9 rounded-full object-cover" />
+                          <img src={robowarslogo} alt="Robo Soccer" className="w-9 h-9 rounded-full object-cover" />
                         )}
                         {id === 'eastern-dance' && (
-                          <img src="/src/assets/eventslogo/easterndance.jpeg" alt="Eastern Dance" className="w-9 h-9 rounded-full object-cover" />
+                          <img src={easterndance} alt="Eastern Dance" className="w-9 h-9 rounded-full object-cover" />
                         )}
                         {id === 'western-dance' && (
-                          <img src="/src/assets/eventslogo/westerndance.jpeg" alt="Western Dance" className="w-9 h-9 rounded-full object-cover" />
+                          <img src={westerndance} alt="Western Dance" className="w-9 h-9 rounded-full object-cover" />
                         )}
                         {id === 'quiz-quest' && (
-                          <img src="/src/assets/eventslogo/quiz.png" alt="Quiz" className="w-9 h-9 rounded-full object-cover" />
+                          <img src={quizlogo} alt="Quiz" className="w-9 h-9 rounded-full object-cover" />
                         )}
                         {id === 'master-minds' && (
-                          <img src="/src/assets/eventslogo/mastermindlogo.png" alt="Master Minds" className="w-9 h-9 rounded-full object-cover" />
+                          <img src={mastermindlogo} alt="Master Minds" className="w-9 h-9 rounded-full object-cover" />
                         )}
                         {id === 'award-nite' && (
-                          <img src="/src/assets/eventslogo/awardwinning.jpeg" alt="Awards" className="w-9 h-9 rounded-full object-cover" />
+                          <img src={awardnite} alt="Awards" className="w-9 h-9 rounded-full object-cover" />
                         )}
                         {!['fashion-walk', 'battle-of-bands', 'robo-wars', 'robo-soccer', 'eastern-dance', 'western-dance', 'quiz-quest', 'master-minds', 'award-nite'].includes(id) && (
                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -1246,12 +1290,6 @@ export function Events({ setGlobalVideoHovered }) {
             >
               Day 2
             </button>
-            <button 
-              className={`px-6 py-2 rounded-full text-sm font-medium ${activeTab === 'day3' ? 'bg-white text-indigo-900' : 'text-white'}`}
-              onClick={() => setActiveTab('day3')}
-            >
-              Day 3
-            </button>
           </div>
         </div>
         
@@ -1268,7 +1306,7 @@ export function Events({ setGlobalVideoHovered }) {
             onMouseLeave={() => setIsDownloadHovered(false)}
           >
             <a 
-              href="/src/assets/Sentia2025Brochure.pdf" 
+              href={Sentia2025Brochure} 
               download="Sentia2025Brochure.pdf"
               className="flex flex-col items-center"
             >
