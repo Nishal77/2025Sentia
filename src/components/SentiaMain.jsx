@@ -20,27 +20,48 @@ import drum from '../assets/drum.mp4';
 import fashionwalk from '../assets/fashionwalk.mp4';
 import robowars from '../assets/robowars.mp4';
 import dance from '../assets/dance.mp4';
-import SentiaDressUpdate from '../assets/SentiaDressUpdate.mp4';
+// import SentiaDressUpdate from '../assets/SentiaDressUpdate.mp4'; // Removed local import
+
+// Cloudinary URL for SentiaDressUpdate
+const SentiaDressUpdate = 'https://res.cloudinary.com/dqmryiyhz/video/upload/v1742054083/sentia/sitpekusuf2gx3gcghse.mp4';
 
 import jonitha from '../assets/jonitha.png';
 import jonithaspotify from '../assets/jonithaspotify.jpeg';
 import mitecollege from '../assets/mitecollege.mp4';
 
-// Import event images
-import image1 from '../assets/sentia2024/image1.jpg';
-import image2 from '../assets/sentia2024/image2.jpg';
-import image3 from '../assets/sentia2024/image3.jpg';
-import image4 from '../assets/sentia2024/image4.jpg';
-import image5 from '../assets/sentia2024/image5.jpg';
-import image6 from '../assets/sentia2024/image6.jpg';
-import image7 from '../assets/sentia2024/image7.jpg';
-import image8 from '../assets/sentia2024/image8.jpg';
-import image9 from '../assets/sentia2024/image9.jpg';
-import image10 from '../assets/sentia2024/image10.jpg';
-import image11 from '../assets/sentia2024/image11.jpg';
-import image12 from '../assets/sentia2024/image12.jpg';
-import image13 from '../assets/sentia2024/image13.jpg';
-import image14 from '../assets/sentia2024/image14.jpg';
+// Remove local image imports
+// import image1 from '../assets/sentia2024/image1.jpg';
+// import image2 from '../assets/sentia2024/image2.jpg';
+// import image3 from '../assets/sentia2024/image3.jpg';
+// import image4 from '../assets/sentia2024/image4.jpg';
+// import image5 from '../assets/sentia2024/image5.jpg';
+// import image6 from '../assets/sentia2024/image6.jpg';
+// import image7 from '../assets/sentia2024/image7.jpg';
+// import image8 from '../assets/sentia2024/image8.jpg';
+// import image9 from '../assets/sentia2024/image9.jpg';
+// import image10 from '../assets/sentia2024/image10.jpg';
+// import image11 from '../assets/sentia2024/image11.jpg';
+// import image12 from '../assets/sentia2024/image12.jpg';
+// import image13 from '../assets/sentia2024/image13.jpg';
+// import image14 from '../assets/sentia2024/image14.jpg';
+
+// Cloudinary image URLs for event gallery
+const eventImageUrls = [
+  'https://res.cloudinary.com/dqmryiyhz/image/upload/v1742054299/sentia/dthrxfpl9giyiavfdvhv.jpg',
+  'https://res.cloudinary.com/dqmryiyhz/image/upload/v1742054298/sentia/vnlotdxrkpxdvzrgqkqe.jpg',
+  'https://res.cloudinary.com/dqmryiyhz/image/upload/v1742054298/sentia/ai9ds3vlcb2mhyexwcci.jpg',
+  'https://res.cloudinary.com/dqmryiyhz/image/upload/v1742054298/sentia/kwqu2czfo2l7tbh83u6c.jpg',
+  'https://res.cloudinary.com/dqmryiyhz/image/upload/v1742054298/sentia/gwytzgm2dksxe6lmiisu.jpg',
+  'https://res.cloudinary.com/dqmryiyhz/image/upload/v1742054297/sentia/bmqfjgpimh6ueqvwtblf.jpg',
+  'https://res.cloudinary.com/dqmryiyhz/image/upload/v1742054297/sentia/kxtpcfe7qro7ngmteueh.jpg',
+  'https://res.cloudinary.com/dqmryiyhz/image/upload/v1742054296/sentia/vwssyspanrnbomcs0wf5.jpg',
+  'https://res.cloudinary.com/dqmryiyhz/image/upload/v1742054296/sentia/piuhlqugrhnell8xmuls.jpg',
+  'https://res.cloudinary.com/dqmryiyhz/image/upload/v1742054296/sentia/bqm31eifyw9joqr7a85j.jpg',
+  'https://res.cloudinary.com/dqmryiyhz/image/upload/v1742054296/sentia/bc4gh9az5rolbh7vgvt6.jpg',
+  'https://res.cloudinary.com/dqmryiyhz/image/upload/v1742054296/sentia/ts0kbzxtgq9cw8wlvwpz.jpg',
+  'https://res.cloudinary.com/dqmryiyhz/image/upload/v1742054295/sentia/wg1fqejlgczxnkhogd2u.jpg',
+  'https://res.cloudinary.com/dqmryiyhz/image/upload/v1742054294/sentia/wfcmd8wftw5nuk2adsq2.jpg'
+];
 
 export function SentiaMain() {
   // Scroll to top when component mounts
@@ -62,23 +83,8 @@ export function SentiaMain() {
   const audioRef = useRef(null);
   const intervalRef = useRef(null);
   
-  // Array of event images for the slider
-  const eventImages = [
-    { url: image1 },
-    { url: image2 },
-    { url: image3 },
-    { url: image4 },
-    { url: image5 },
-    { url: image6 },
-    { url: image7 },
-    { url: image8 },
-    { url: image9 },
-    { url: image10 },
-    { url: image11 },
-    { url: image12 },
-    { url: image13 },
-    { url: image14 }
-  ];
+  // Replace the eventImages array with the Cloudinary URLs
+  const eventImages = eventImageUrls.map(url => ({ url }));
   
   // Effect to change the image every 2 seconds - but pause when videos are being hovered
   useEffect(() => {
@@ -591,6 +597,7 @@ export function SentiaMain() {
                   loop
                   muted
                   playsInline
+                  fetchpriority="high"
                 />
               </div>
               
