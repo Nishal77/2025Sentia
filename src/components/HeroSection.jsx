@@ -12,16 +12,24 @@ import ClubLogo from '../assets/clubmite.png';
 // Cloudinary configuration for video only
 const CLOUDINARY_CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || 'dqmryiyhz'; 
 
-// Direct video URL from Cloudinary
-const videoUrl = 'https://res.cloudinary.com/dqmryiyhz/video/upload/v1742035121/sentia/ixpbo4budsp7epswcf3u.mp4';
+// Check if the device is mobile
+const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-// Create thumbnail URL for poster (adding /e_preview:duration_2 to get a good frame)
-const posterUrl = 'https://res.cloudinary.com/dqmryiyhz/video/upload/e_preview:duration_2/v1742035121/sentia/ixpbo4budsp7epswcf3u.jpg';
+// Create optimized Cloudinary URLs for different devices
+const videoUrlDesktop = 'https://res.cloudinary.com/dqmryiyhz/video/upload/q_auto,vc_auto/v1742035121/sentia/ixpbo4budsp7epswcf3u.mp4';
+const videoUrlMobile = 'https://res.cloudinary.com/dqmryiyhz/video/upload/q_auto,vc_auto,w_640/v1742035121/sentia/ixpbo4budsp7epswcf3u.mp4';
+const videoUrlWebM = 'https://res.cloudinary.com/dqmryiyhz/video/upload/q_auto,vc_auto,f_webm/v1742035121/sentia/ixpbo4budsp7epswcf3u.webm';
+const videoUrlFallback = 'https://res.cloudinary.com/dqmryiyhz/video/upload/q_auto,vc_auto/v1742035121/sentia/ixpbo4budsp7epswcf3u.mp4';
+
+// Create optimized poster image
+const posterUrl = 'https://res.cloudinary.com/dqmryiyhz/video/upload/e_preview:duration_2,q_auto/v1742035121/sentia/ixpbo4budsp7epswcf3u.jpg';
 
 export function HeroSection() {
   const [videoLoaded, setVideoLoaded] = useState(false);
   const [videoError, setVideoError] = useState(false);
+  const [userInteracted, setUserInteracted] = useState(false);
   const videoRef = useRef(null);
+  const containerRef = useRef(null);
 
   // Function to scroll to page content
   const scrollToContent = () => {
@@ -31,51 +39,94 @@ export function HeroSection() {
     });
   };
 
-  // Handle video playback issues that can occur on mobile devices
-  const handleCanPlay = () => {
-    setVideoLoaded(true);
+  // Try to play video - this helps with mobile browsers
+  const attemptPlay = () => {
     if (videoRef.current) {
-      // Try to play the video now that it can play
+      setUserInteracted(true);
       const playPromise = videoRef.current.play();
       if (playPromise !== undefined) {
         playPromise.catch(error => {
-          console.log('Auto-play was prevented, user interaction may be needed');
-          // Don't set error state, just log it - the poster will show
+          console.log('Auto-play was prevented:', error);
         });
       }
     }
   };
 
-  // Preload the video when component mounts
+  // Handle video events
+  const handleCanPlay = () => {
+    setVideoLoaded(true);
+    // Only try to autoplay if we're not on mobile or user has interacted
+    if (!isMobile || userInteracted) {
+      attemptPlay();
+    }
+  };
+
+  // Add interaction detection to trigger playback on mobile
   useEffect(() => {
-    // Create a new video element to preload the video
-    const videoPreload = document.createElement('video');
-    
-    // Set up event listeners
-    videoPreload.onloadeddata = () => setVideoLoaded(true);
-    videoPreload.onerror = () => setVideoError(true);
-    
-    // Set the source
-    videoPreload.src = videoUrl;
-    videoPreload.load();
-    
-    // Clean up
-    return () => {
-      videoPreload.onloadeddata = null;
-      videoPreload.onerror = null;
+    const handleInteraction = () => {
+      setUserInteracted(true);
+      attemptPlay();
     };
+    
+    // Detect any user interaction with the page
+    document.addEventListener('touchstart', handleInteraction, { once: true });
+    document.addEventListener('click', handleInteraction, { once: true });
+    
+    return () => {
+      document.removeEventListener('touchstart', handleInteraction);
+      document.removeEventListener('click', handleInteraction);
+    };
+  }, []);
+
+  // Add window resize handler to ensure the video fills the screen
+  useEffect(() => {
+    const handleResize = () => {
+      if (containerRef.current && videoRef.current) {
+        const { width, height } = containerRef.current.getBoundingClientRect();
+        videoRef.current.style.width = `${width}px`;
+        videoRef.current.style.height = `${height}px`;
+      }
+    };
+
+    // Set size initially and on resize
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Optimize performance
+  useEffect(() => {
+    if (isMobile) {
+      // Create a lightweight preloader for mobile
+      const img = new Image();
+      img.src = posterUrl;
+      img.onload = () => console.log('Poster loaded');
+    } else {
+      // On desktop, preload the video
+      const videoPreload = document.createElement('video');
+      videoPreload.onloadeddata = () => setVideoLoaded(true);
+      videoPreload.onerror = () => setVideoError(true);
+      videoPreload.src = videoUrlDesktop;
+      videoPreload.load();
+      
+      return () => {
+        videoPreload.onloadeddata = null;
+        videoPreload.onerror = null;
+      };
+    }
   }, []);
 
   return (
     <section className="relative min-h-screen overflow-hidden">
-      {/* Video background with Cloudinary URL */}
-      <div className="absolute inset-0 z-0 bg-black/50"> {/* Dark background while loading */}
+      {/* Video background with optimized sources */}
+      <div ref={containerRef} className="absolute inset-0 z-0 bg-black/60"> {/* Darker background for better visibility */}
         {!videoError && (
           <video
             ref={videoRef}
-            src={videoUrl}
             className={`w-full h-full object-cover transition-opacity duration-500 ${videoLoaded ? 'opacity-100' : 'opacity-80'}`}
             style={{ 
+              objectPosition: 'center center',
               minHeight: '100vh',
               width: '100%',
               height: '100%',
@@ -84,18 +135,24 @@ export function HeroSection() {
               top: '0'
             }}
             poster={posterUrl}
-            autoPlay
+            autoPlay={!isMobile} // Only autoplay on desktop
             loop
             muted
             playsInline
-            preload="auto"
+            preload={isMobile ? "metadata" : "auto"} // Only preload metadata on mobile
             fetchpriority="high"
             onCanPlay={handleCanPlay}
             onLoadedData={() => setVideoLoaded(true)}
             onError={() => setVideoError(true)}
-          />
+            onClick={attemptPlay} // Enable play on click (helps with mobile)
+          >
+            {/* Multiple source formats for better compatibility */}
+            <source src={videoUrlWebM} type="video/webm" />
+            <source src={isMobile ? videoUrlMobile : videoUrlDesktop} type="video/mp4" />
+            <source src={videoUrlFallback} type="video/mp4" /> {/* Fallback */}
+          </video>
         )}
-        <div className="absolute inset-0 bg-black/20"></div>
+        <div className="absolute inset-0 bg-black/30"></div>
       </div>
       
       {/* College Logo and MITE Description - Top Left */}
