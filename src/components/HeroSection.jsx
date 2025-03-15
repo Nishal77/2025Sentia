@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from './ui/button';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 // Import the background image using Vite's static asset handling
 import bgHero from '../assets/MainIntro.mp4';
@@ -10,6 +11,14 @@ import SentiaLogo from '../assets/sentialogo.png'
 import ClubLogo from '../assets/clubmite.png'
 
 export function HeroSection() {
+  // Function to scroll to page content
+  const scrollToContent = () => {
+    window.scrollTo({
+      top: window.innerHeight,
+      behavior: 'smooth'
+    });
+  };
+
   return (
     <section className="relative min-h-screen overflow-hidden">
       {/* Video background */}
@@ -115,6 +124,52 @@ export function HeroSection() {
               <div className="absolute -bottom-1 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#93c5fd]/40 to-transparent"></div>
             </Link>
           </div>
+        </div>
+        
+        {/* Scroll indicator at the bottom of the screen */}
+        <div className="absolute bottom-6 left-0 right-0 flex flex-col items-center justify-center z-20">
+          
+          <motion.div 
+            className="flex flex-col items-center cursor-pointer"
+            onClick={scrollToContent}
+            whileHover={{ scale: 1.1 }}
+          >
+            <motion.div
+              className="bg-white/30 backdrop-blur-sm p-2 rounded-full shadow-lg border border-white/20"
+              initial={{ y: 0 }}
+              animate={{ y: [0, 6, 0] }}
+              transition={{ 
+                repeat: Infinity, 
+                duration: 1.5,
+                ease: "easeInOut"
+              }}
+            >
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                fill="none" 
+                viewBox="0 0 24 24" 
+                stroke="white" 
+                className="w-5 h-5 sm:w-6 sm:h-6"
+                strokeWidth="2"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 13l-7 7-7-7m14-8l-7 7-7-7" />
+              </svg>
+            </motion.div>
+            <motion.div 
+              className="mt-1 flex space-x-1"
+              initial={{ opacity: 0.5 }}
+              animate={{ opacity: [0.5, 1, 0.5] }}
+              transition={{ 
+                repeat: Infinity, 
+                duration: 2,
+                ease: "easeInOut"
+              }}
+            >
+              <div className="w-1 h-1 bg-white rounded-full"></div>
+              <div className="w-1 h-1 bg-white rounded-full"></div>
+              <div className="w-1 h-1 bg-white rounded-full"></div>
+            </motion.div>
+          </motion.div>
         </div>
       
     </section>

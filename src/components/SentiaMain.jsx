@@ -5,6 +5,37 @@ import Events from './events';
 import { Link } from 'react-router-dom';
 import Footer from './Footer';
 
+import Sonisoni from '../assets/Songs/Sonisoni.mp3';
+import devadeva from '../assets/Songs/devadeva.mp3';
+import whatjhumka from '../assets/Songs/whatjhumka.mp3';
+
+import Sentia2025 from '../assets/Sentia2025.mp4';
+import drum from '../assets/drum.mp4';
+import fashionwalk from '../assets/fashionwalk.mp4';
+import robowars from '../assets/robowars.mp4';
+import dance from '../assets/dance.mp4';
+import SentiaDressUpdate from '../assets/SentiaDressUpdate.mp4';
+
+import jonitha from '../assets/jonitha.png';
+import jonithaspotify from '../assets/jonithaspotify.jpeg';
+import mitecollege from '../assets/mitecollege.mp4';
+
+// Import event images
+import image1 from '../assets/sentia2024/image1.jpg';
+import image2 from '../assets/sentia2024/image2.jpg';
+import image3 from '../assets/sentia2024/image3.jpg';
+import image4 from '../assets/sentia2024/image4.jpg';
+import image5 from '../assets/sentia2024/image5.jpg';
+import image6 from '../assets/sentia2024/image6.jpg';
+import image7 from '../assets/sentia2024/image7.jpg';
+import image8 from '../assets/sentia2024/image8.jpg';
+import image9 from '../assets/sentia2024/image9.jpg';
+import image10 from '../assets/sentia2024/image10.jpg';
+import image11 from '../assets/sentia2024/image11.jpg';
+import image12 from '../assets/sentia2024/image12.jpg';
+import image13 from '../assets/sentia2024/image13.jpg';
+import image14 from '../assets/sentia2024/image14.jpg';
+
 export function SentiaMain() {
   // Scroll to top when component mounts
   useEffect(() => {
@@ -19,7 +50,7 @@ export function SentiaMain() {
     id: 0,
     name: 'Soni Soni (From "ishq vishk rebound")',
     artist: 'Jonita Gandhi',
-    src: '/src/assets/Songs/Sonisoni.mp3',
+    src: {Sonisoni},
     duration: '2:56'
   });
   const audioRef = useRef(null);
@@ -27,20 +58,20 @@ export function SentiaMain() {
   
   // Array of event images for the slider
   const eventImages = [
-    { url: "/src/assets/sentia2024/image1.jpg" },
-    { url: "/src/assets/sentia2024/image2.jpg" },
-    { url: "/src/assets/sentia2024/image3.jpg" },
-    { url: "/src/assets/sentia2024/image4.jpg" },
-    { url: "/src/assets/sentia2024/image5.jpg" },
-    { url: "/src/assets/sentia2024/image6.jpg" },
-    { url: "/src/assets/sentia2024/image7.jpg" },
-    { url: "/src/assets/sentia2024/image8.jpg" },
-    { url: "/src/assets/sentia2024/image9.jpg" },
-    { url: "/src/assets/sentia2024/image10.jpg" },
-    { url: "/src/assets/sentia2024/image11.jpg" },
-    { url: "/src/assets/sentia2024/image12.jpg" },
-    { url: "/src/assets/sentia2024/image13.jpg" },
-    { url: "/src/assets/sentia2024/image14.jpg" }
+    { url: image1 },
+    { url: image2 },
+    { url: image3 },
+    { url: image4 },
+    { url: image5 },
+    { url: image6 },
+    { url: image7 },
+    { url: image8 },
+    { url: image9 },
+    { url: image10 },
+    { url: image11 },
+    { url: image12 },
+    { url: image13 },
+    { url: image14 }
   ];
   
   // Effect to change the image every 2 seconds - but pause when videos are being hovered
@@ -149,21 +180,21 @@ export function SentiaMain() {
       id: 1,
       name: 'Soni Soni (From "ishq vishk rebound")',
       artist: 'Jonita Gandhi',
-      src: '/src/assets/Songs/Sonisoni.mp3',
+      src: {Sonisoni},
       duration: '2:56'
     },
     {
       id: 2,
       name: 'Deva Deva',
       artist: 'Jonita Gandhi',
-      src: '/src/assets/Songs/devadeva.mp3',
+      src: {devadeva},
       duration: '4:39'
     },
     {
       id: 3,
       name: 'Gilehriyaan',
       artist: 'Jonita Gandhi',
-      src: '/src/assets/Songs/whatjhumka.mp3',
+      src: {whatjhumka},
       duration: '3:42'
     }
   ];
@@ -222,7 +253,7 @@ export function SentiaMain() {
                 
                 <div className="h-full w-full">
                   <video 
-                    src="/src/assets/Sentia2025.mp4" 
+                    src={Sentia2025} 
                     alt="Sentia 2025" 
                     className="w-full h-full object-cover rounded-lg cursor-pointer"
                     autoPlay
@@ -298,7 +329,7 @@ export function SentiaMain() {
                 >
                   <div className="w-10 h-10 rounded-md flex-shrink-0 overflow-hidden">
                     <video 
-                      src="/src/assets/drum.mp4" 
+                      src={drum} 
                       className="w-full h-full object-cover"
                       muted
                       loop
@@ -351,7 +382,7 @@ export function SentiaMain() {
                 >
                   <div className="w-10 h-10 rounded-md flex-shrink-0 overflow-hidden">
                     <video 
-                      src="/src/assets/fashionwalk.mp4" 
+                      src={fashionwalk}
                       className="w-full h-full object-cover"
                       muted
                       loop
@@ -404,7 +435,7 @@ export function SentiaMain() {
                 >
                   <div className="w-10 h-10 rounded-md flex-shrink-0 overflow-hidden">
                     <video 
-                      src="/src/assets/robowars.mp4" 
+                      src={robowars} 
                       className="w-full h-full object-cover"
                       muted
                       loop
@@ -455,7 +486,7 @@ export function SentiaMain() {
                 >
                   <div className="w-10 h-10 rounded-md flex-shrink-0 overflow-hidden">
                     <video 
-                      src="/src/assets/dance.mp4" 
+                      src={dance}
                       className="w-full h-full object-cover" 
                       muted 
                       loop 
@@ -547,7 +578,7 @@ export function SentiaMain() {
               
               <div className="relative w-full h-[350px] rounded-lg overflow-hidden">
                 <video
-                  src="/src/assets/SentiaDressUpdate.mp4"
+                  src={SentiaDressUpdate}
                   className="w-full h-full object-cover"
                   autoPlay
                   loop
@@ -609,7 +640,7 @@ export function SentiaMain() {
               </div>
               <div className="relative w-full h-52 rounded-lg overflow-hidden">
                 <img 
-                  src="/src/assets/jonitha.png"
+                  src={jonitha}
                   alt="Jonita Gandhi"
                   className="w-full h-full object-cover"
                 />
@@ -634,7 +665,7 @@ export function SentiaMain() {
                   <div className="flex items-center gap-4 p-4 pb-3 bg-gradient-to-b from-[#303030] to-black">
                     <div className="w-24 h-24 rounded-md overflow-hidden flex-shrink-0 shadow-[0_8px_24px_rgba(0,0,0,0.5)] hover:shadow-[0_8px_28px_rgba(0,0,0,0.8)] ">
                       <img 
-                        src="/src/assets/jonithaspotify.jpeg" 
+                        src={jonithaspotify}
                         alt="Jonita Gandhi" 
                         className="w-full h-full object-cover"
                       />
@@ -799,7 +830,7 @@ export function SentiaMain() {
                   muted
                   loop
                   playsInline
-                  src="/src/assets/mitecollege.mp4"
+                  src={mitecollege}
                   onClick={() => {
                     // Create fullscreen modal when video is clicked
                     const modal = document.createElement('div');
@@ -821,7 +852,7 @@ export function SentiaMain() {
                     };
                     
                     const videoElement = document.createElement('video');
-                    videoElement.src = '/src/assets/mitecollege.mp4';
+                    videoElement.src = {mitecollege};
                     videoElement.className = 'w-full h-full rounded-lg';
                     videoElement.controls = true;
                     videoElement.autoplay = true;
@@ -944,7 +975,7 @@ export function SentiaMain() {
             
             {/* Full-size video with controls */}
             <video 
-              src="/src/assets/Sentia2025.mp4" 
+              src={Sentia2025}
               className="w-full rounded-lg shadow-2xl"
               autoPlay
               controls

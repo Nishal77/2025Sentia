@@ -12,6 +12,7 @@ import {
 } from "./ui/alert-dialog";
 
 import Senhacks from "../assets/eventslogo/Hackathon.jpeg";
+import { Link } from 'react-router-dom';
 
 export function Events({ setGlobalVideoHovered }) {
   const [activeTab, setActiveTab] = useState('home');
@@ -601,7 +602,6 @@ export function Events({ setGlobalVideoHovered }) {
     // Add useEffect to prevent unexpected dialog closing
     React.useEffect(() => {
       // This effect maintains the dialog state once opened
-      // No automatic timeout should close it
       if (isDialogOpen) {
         // Add a handler to prevent accidental closure
         const handleKeyDown = (e) => {
@@ -615,6 +615,8 @@ export function Events({ setGlobalVideoHovered }) {
         
         // Add event listener
         window.addEventListener('keydown', handleKeyDown);
+        
+        // Remove auto-close timer
         
         // Cleanup
         return () => {
@@ -990,6 +992,7 @@ export function Events({ setGlobalVideoHovered }) {
                     style={{ transform: 'none' }}
                     onClick={(e) => {
                       e.preventDefault();
+                      e.stopPropagation(); // Prevent event bubbling
                       setIsDialogOpen(true);
                     }}
                   >
@@ -1000,11 +1003,11 @@ export function Events({ setGlobalVideoHovered }) {
                   </button>
                 </AlertDialogTrigger>
                 
-                <AlertDialogContent className="max-w-[100rem] w-[99vw] md:w-[1400px] rounded-xl overflow-hidden p-0 border border-gray-200 shadow-2xl bg-white">
+                <AlertDialogContent className="max-w-[95vw] md:max-w-[85vw] lg:max-w-[1400px] w-auto rounded-xl overflow-hidden p-0 border border-gray-200 shadow-2xl bg-white fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                   {/* Header - Fixed at top with gradient background */}
-                  <div className="p-6 bg-gradient-to-r from-gray-900 to-gray-800 text-white sticky top-0 z-10 flex items-center justify-between">
+                  <div className="p-4 md:p-6 bg-gradient-to-r from-gray-900 to-gray-800 text-white sticky top-0 z-10 flex items-center justify-between">
                     <div className="flex items-center">
-                      <div className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center mr-4 flex-shrink-0">
+                      <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center mr-3 md:mr-4 flex-shrink-0">
                         {id === 'fashion-walk' && (
                           <img src="/src/assets/eventslogo/fashionlogo.jpeg" alt="Fashion Walk" className="w-9 h-9 rounded-full object-cover" />
                         )}
@@ -1045,17 +1048,27 @@ export function Events({ setGlobalVideoHovered }) {
                         <p className="text-white/70 text-sm">Sentia 2025 • Event Guidelines</p>
                       </div>
                     </div>
-                    <AlertDialogCancel 
-                      className="rounded-full w-8 h-8 bg-white/10 hover:bg-white/20 text-white flex items-center justify-center border-none"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setIsDialogOpen(false);
-                      }}
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                      </svg>
-                    </AlertDialogCancel>
+                    <AlertDialogFooter className="flex justify-end items-center gap-2 p-4 bg-gray-50 border-t border-gray-200 rounded-xl">
+                      
+                      <AlertDialogCancel 
+                        className="rounded-lg px-3 py-2 text-sm bg-white border border-gray-300 text-gray-700 hover:bg-gray-100 transition-colors"
+                        onClick={() => setIsDialogOpen(false)}
+                      >
+                        Close
+                      </AlertDialogCancel>
+                      
+                      {/* For events that support registration, include Register button */}
+                      {(id === 'battle-of-bands' || id === 'fashion-walk' || id === 'senhacks') && (
+                        <Link to="/register">
+                          <AlertDialogAction 
+                            className="rounded-lg px-4 py-2 text-sm bg-indigo-600 text-white hover:bg-indigo-700 transition-colors"
+                            onClick={() => setIsDialogOpen(false)}
+                          >
+                            Register Now
+                          </AlertDialogAction>
+                        </Link>
+                      )}
+                    </AlertDialogFooter>
                   </div>
                   
                   {/* Add the AlertDialogDescription component for accessibility */}
@@ -1068,28 +1081,28 @@ export function Events({ setGlobalVideoHovered }) {
                     {/* Subtle background pattern */}
                     <div className="absolute inset-0 bg-grid-pattern opacity-5 pointer-events-none z-0"></div>
                     
-                    <div className="relative z-10 p-8 space-y-6">
+                    <div className="relative z-10 p-4 md:p-8 space-y-4 md:space-y-6">
                       {/* Coordinators Section with enhanced styling */}
                       {eventRules[id]?.coordinators && (
-                        <div className="bg-gradient-to-br from-gray-50 to-gray-100 p-4 rounded-xl border border-gray-200 shadow-sm">
-                          <h3 className="font-semibold text-gray-800 text-sm uppercase tracking-wide mb-3 flex items-center">
-                            <div className="bg-indigo-100 p-1.5 rounded-lg mr-2">
-                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 text-indigo-600">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
+                        <div className="bg-gradient-to-br from-gray-50 to-gray-100 p-3 md:p-4 rounded-xl border border-gray-200 shadow-sm">
+                          <h3 className="font-semibold text-gray-800 text-xs md:text-sm uppercase tracking-wide mb-2 md:mb-3 flex items-center">
+                            <div className="bg-indigo-100 p-1 md:p-1.5 rounded-lg mr-2">
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-3 h-3 md:w-4 md:h-4 text-indigo-600">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75a2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" />
                               </svg>
                             </div>
                             EVENT COORDINATORS
                           </h3>
-                          <div className="flex flex-col space-y-3 max-w-xl mx-auto">
+                          <div className="flex flex-col space-y-2 md:space-y-3 max-w-xl mx-auto">
                             {eventRules[id].coordinators.map((coordinator, index) => (
-                              <div key={index} className="flex items-center p-3 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow border border-gray-100 w-full">
-                                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center text-white mr-3 flex-shrink-0">
-                                  <span className="font-bold text-base">{coordinator.name.charAt(0)}</span>
+                              <div key={index} className="flex items-center p-2 md:p-3 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow border border-gray-100 w-full">
+                                <div className="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center text-white mr-2 md:mr-3 flex-shrink-0">
+                                  <span className="font-bold text-sm md:text-base">{coordinator.name.charAt(0)}</span>
                                 </div>
                                 <div className="flex flex-col">
-                                  <p className="font-semibold text-gray-800 text-base">{coordinator.name}</p>
-                                  <a href={`tel:${coordinator.phone.replace(/\s+/g, '')}`} className="flex items-center text-indigo-600 hover:text-indigo-800 text-sm font-medium mt-1 transition-colors">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mr-1 flex-shrink-0">
+                                  <p className="font-semibold text-gray-800 text-sm md:text-base">{coordinator.name}</p>
+                                  <a href={`tel:${coordinator.phone.replace(/\s+/g, '')}`} className="flex items-center text-indigo-600 hover:text-indigo-800 text-xs md:text-sm font-medium mt-0.5 md:mt-1 transition-colors">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-3 h-3 md:w-4 md:h-4 mr-1 flex-shrink-0">
                                       <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.034 12.034 0 01-7.381-7.38c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
                                     </svg>
                                     <span className="font-mono tracking-wide">{coordinator.phone}</span>
@@ -1102,27 +1115,37 @@ export function Events({ setGlobalVideoHovered }) {
                       )}
                       
                       {/* Rules Section with enhanced card styling */}
-                      <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
-                        <h3 className="font-semibold text-gray-800 text-base uppercase tracking-wide mb-5 flex items-center">
-                          <div className="bg-yellow-100 p-2 rounded-lg mr-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 text-yellow-600">
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" />
+                      <div className="bg-white p-3 md:p-5 rounded-xl border border-gray-200 shadow-sm">
+                        <h3 className="font-semibold text-gray-800 text-xs md:text-sm uppercase tracking-wide mb-3 flex items-center">
+                          <div className="bg-indigo-100 p-1 md:p-1.5 rounded-lg mr-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-3 h-3 md:w-4 md:h-4 text-indigo-600">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75a2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z" />
                             </svg>
                           </div>
                           RULES & GUIDELINES
                         </h3>
                         
-                        <div className="space-y-4">
-                          {eventRules[id]?.rules.map((rule, index) => (
-                            <div key={index} className="flex items-start p-5 rounded-lg transition-colors hover:bg-gray-50 border border-gray-100 shadow-sm">
-                              <div className="flex-shrink-0 bg-indigo-100 text-indigo-600 font-semibold rounded-full w-7 h-7 flex items-center justify-center mr-4 mt-0.5">
-                                {index + 1}
+                        <div className="space-y-1 md:space-y-2">
+                          {eventRules[id]?.rules.map((rule, index) => {
+                            // Special handling for headers (lines starting with ###)
+                            if (rule.startsWith('###')) {
+                              return (
+                                <h4 key={index} className="font-bold text-sm md:text-base text-indigo-800 mt-3 mb-1">{rule.replace('###', '').trim()}</h4>
+                              );
+                            }
+                            
+                            // Regular rule
+                            return (
+                              <div key={index} className="flex items-start bg-white rounded-lg p-1 md:p-2 hover:bg-gray-50 transition-colors">
+                                <div className="w-5 h-5 md:w-6 md:h-6 bg-indigo-100 rounded-full flex items-center justify-center flex-shrink-0 mr-3 mt-0.5">
+                                  <span className="text-indigo-700 text-xs md:text-sm font-semibold">{rule.startsWith('•') ? '•' : index + 1}</span>
+                                </div>
+                                <p className="text-gray-700 text-xs md:text-sm flex-1">
+                                  {rule.startsWith('•') ? rule.substring(1).trim() : rule}
+                                </p>
                               </div>
-                              <div className="text-gray-700 flex-1">
-                                {rule}
-                              </div>
-                            </div>
-                          ))}
+                            );
+                          })}
                         </div>
                       </div>
                       
@@ -1140,38 +1163,6 @@ export function Events({ setGlobalVideoHovered }) {
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                  
-                  {/* Footer with enhanced buttons */}
-                  <div className="p-6 bg-gray-50 border-t border-gray-200 flex justify-between items-center sticky bottom-0 z-10">
-                    <div className="text-gray-500 text-sm hidden md:block">
-                      <span className="flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 mr-1">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        Last updated: March 15, 2025
-                      </span>
-                    </div>
-                    <div className="flex gap-3 ml-auto">
-                      <AlertDialogCancel 
-                        className="px-6 py-2.5 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-medium rounded-lg transition-colors"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          setIsDialogOpen(false);
-                        }}
-                      >
-                        Close
-                      </AlertDialogCancel>
-                      <AlertDialogAction 
-                        className="px-6 py-2.5 bg-black hover:from-indigo-700 hover:to-indigo-800 text-white font-medium rounded-lg transition-all shadow-sm hover:shadow-md"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          setIsDialogOpen(false);
-                        }}
-                      >
-                        I understand
-                      </AlertDialogAction>
                     </div>
                   </div>
                 </AlertDialogContent>

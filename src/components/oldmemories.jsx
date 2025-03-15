@@ -278,6 +278,14 @@ export function OldMemories() {
     });
   };
 
+  // Function to scroll to content section
+  const scrollToContent = () => {
+    const contentSection = document.getElementById('content-section');
+    if (contentSection) {
+      contentSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   // Show button when page is scrolled down
   useEffect(() => {
     const checkScrollTop = () => {
@@ -298,7 +306,7 @@ export function OldMemories() {
   return (
     <div className="min-h-screen bg-[#f7f7f7]">
       {/* Hero Section with Image */}
-      <div className="relative h-[60vh] overflow-hidden mt-4 mx-4 md:mx-8 rounded-xl shadow-xl">
+      <div className="relative h-[60vh] w-full overflow-hidden">
         {/* Back to Home Button - Now positioned at top left */}
         <div className="absolute top-4 left-4 z-30">
           <Link to="/">
@@ -315,17 +323,41 @@ export function OldMemories() {
           </Link>
         </div>
 
-        
-
-        {/* <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60 z-10"></div> */}
         <img
-          src="/src/assets/SentiaMemories2025.png"
+          src="/src/assets/SentiaMemo.png"
           alt="Sentia Memories"
-          className="absolute inset-0 w-full h-full transition-transform duration-10000"
+          className="absolute inset-0 w-full h-full"
         />
         
+        {/* Scroll indicator at the bottom of the hero section */}
+        <div className="absolute bottom-4 left-0 right-0 flex justify-center items-center z-30">
+          <motion.div
+            className="p-2 bg-white/20 backdrop-blur-sm rounded-full cursor-pointer shadow-lg"
+            onClick={scrollToContent}
+            initial={{ y: 0 }}
+            animate={{ y: [0, 10, 0] }}
+            transition={{ 
+              repeat: Infinity, 
+              duration: 1.5,
+              ease: "easeInOut"
+            }}
+          >
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              viewBox="0 0 24 24" 
+              fill="none" 
+              stroke="white" 
+              strokeWidth="2" 
+              strokeLinecap="round" 
+              strokeLinejoin="round" 
+              className="w-6 h-6"
+            >
+              <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
+            </svg>
+          </motion.div>
+        </div>
       </div>
-        <div className="container mx-auto max-w-6xl py-12 px-4">
+        <div id="content-section" className="container mx-auto max-w-6xl py-12 px-4">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">About SENTIA</h2>
           <p className="text-sm md:text-xl text-gray-700 mx-auto leading-relaxed">
             SENTIA, the flagship technical and cultural fest of Mangalore Institute of Technology & Engineering (MITE), 
@@ -343,23 +375,46 @@ export function OldMemories() {
 
       
       
-      {/* Scroll to top button */}
-      {showScrollTop && (
-        <motion.button
-          className="fixed bottom-6 right-6 z-50 p-3 rounded-full bg-indigo-600 text-white shadow-lg hover:bg-indigo-700 focus:outline-none"
-          onClick={scrollToTop}
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.5 }}
-          transition={{ duration: 0.3 }}
-          whileHover={{ scale: 1.1 }}
-          aria-label="Scroll to top"
+      {/* Improved Scroll to top button - now fixed position regardless of scroll */}
+      <motion.button
+        className="fixed bottom-6 right-6 z-50 p-3 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-xl hover:shadow-2xl focus:outline-none border border-white/10"
+        onClick={scrollToTop}
+        initial={{ opacity: 0.7, scale: 1 }}
+        animate={{ 
+          opacity: showScrollTop ? 1 : 0.7,
+          scale: showScrollTop ? 1 : 0.9,
+          y: showScrollTop ? 0 : 10
+        }}
+        transition={{ duration: 0.3 }}
+        whileHover={{ 
+          scale: 1.1,
+          opacity: 1,
+          boxShadow: "0 0 15px rgba(99, 102, 241, 0.5)"
+        }}
+        aria-label="Scroll to top"
+      >
+        <motion.div
+          animate={{ y: [0, -3, 0] }}
+          transition={{ 
+            repeat: Infinity, 
+            duration: 2,
+            ease: "easeInOut"
+          }}
         >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+          <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="currentColor" 
+            strokeWidth="2.5" 
+            strokeLinecap="round" 
+            strokeLinejoin="round" 
+            className="w-6 h-6"
+          >
+            <polyline points="18 15 12 9 6 15"></polyline>
           </svg>
-        </motion.button>
-      )}
+        </motion.div>
+      </motion.button>
       
       <Footer />
 
@@ -372,4 +427,4 @@ export function OldMemories() {
   );
 }
 
-export default OldMemories; 
+export default OldMemories;
