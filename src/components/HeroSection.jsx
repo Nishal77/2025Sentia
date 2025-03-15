@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from './ui/button';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -11,6 +11,9 @@ import SentiaLogo from '../assets/sentialogo.png'
 import ClubLogo from '../assets/clubmite.png'
 
 export function HeroSection() {
+  const [videoLoaded, setVideoLoaded] = useState(false);
+  const [videoError, setVideoError] = useState(false);
+
   // Function to scroll to page content
   const scrollToContent = () => {
     window.scrollTo({
@@ -19,19 +22,45 @@ export function HeroSection() {
     });
   };
 
+  // Preload the video when component mounts
+  useEffect(() => {
+    // Create a new video element to preload the video
+    const videoPreload = document.createElement('video');
+    
+    // Set up event listeners
+    videoPreload.onloadeddata = () => setVideoLoaded(true);
+    videoPreload.onerror = () => setVideoError(true);
+    
+    // Set the source
+    videoPreload.src = bgHero;
+    videoPreload.load();
+    
+    // Clean up
+    return () => {
+      videoPreload.onloadeddata = null;
+      videoPreload.onerror = null;
+    };
+  }, []);
+
   return (
     <section className="relative min-h-screen overflow-hidden">
-      {/* Video background */}
-      <div className="absolute inset-0 z-0">
-        <video
-          src={bgHero}
-          className="w-full h-full object-cover md:object-fill"
-          style={{ minHeight: '100vh' }}
-          autoPlay
-          loop
-          muted
-          playsInline
-        />
+      {/* Video background with optimized loading */}
+      <div className="absolute inset-0 z-0 bg-black/50"> {/* Dark background while loading */}
+        {!videoError && (
+          <video
+            src={bgHero}
+            className={`w-full h-full object-cover md:object-fill transition-opacity duration-500 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
+            style={{ minHeight: '100vh' }}
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+            fetchpriority="high"
+            onLoadedData={() => setVideoLoaded(true)}
+            onError={() => setVideoError(true)}
+          />
+        )}
         <div className="absolute inset-0 bg-black/20"></div>
       </div>
       
