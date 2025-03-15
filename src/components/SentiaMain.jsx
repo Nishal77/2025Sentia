@@ -50,7 +50,7 @@ export function SentiaMain() {
     id: 0,
     name: 'Soni Soni (From "ishq vishk rebound")',
     artist: 'Jonita Gandhi',
-    src: {Sonisoni},
+    src: Sonisoni,
     duration: '2:56'
   });
   const audioRef = useRef(null);
