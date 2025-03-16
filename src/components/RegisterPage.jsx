@@ -192,29 +192,20 @@ const SimpleEventCard = ({ id, title, description, time, building, roomNumber, d
         <button 
           className="w-full mt-4 bg-black hover:bg-gray-800 text-white py-2 text-sm font-medium transition-colors rounded-lg"
           onClick={() => {
-            // For Quiz Quest, redirect to the specific Google Form
             if (id === 'quiz-quest') {
               window.open('https://docs.google.com/forms/d/e/1FAIpQLSeDnWEjjGqzTYJNqLWi3PpTLEpAFrttBKYeLzVXzUaqRSYdzg/viewform', '_blank');
             } 
-            // For Master Minds, redirect to its specific Google Form
             else if (id === 'master-minds') {
               window.open('https://docs.google.com/forms/d/e/1FAIpQLSdeuPzFc9YTha_jDPjiFmo-4mR0e2UwOrcbQVgPNmYiusqHRA/viewform', '_blank');
             }
-            // For Robo Wars Soccer, redirect to its specific Google Form
             else if (id === 'robo-wars-soccer') {
               window.open('https://docs.google.com/forms/d/e/1FAIpQLSfzm5xRpxU4orOsUNbMElK5EAw42AaXIxSLPoamReaQkVkzfQ/viewform', '_blank');
             }
-            // For Robo Mania, redirect to its specific Google Form
             else if (id === 'robo-mania') {
               window.open('https://docs.google.com/forms/d/e/1FAIpQLScIg1ypq5jYG0SsBsZe5NxoZo67olTIm3WXkLr7cINXis6VdA/viewform', '_blank');
             }
-            // For Eastern & Western Dance, redirect to its specific Google Form
             else if (id === 'eastern-western-dance') {
               window.open('https://docs.google.com/forms/d/e/1FAIpQLSesYPBrk__OSN67xoUTqFhuZ00ULTKnDfD1rP6mroOIYc0nBQ/viewform', '_blank');
-            } 
-            // For all other events, use the default redirect
-            else {
-              window.open('http://sentia.mite.ac.in', '_blank');
             }
           }}
         >
