@@ -255,7 +255,7 @@ export function HeroSection() {
               disablePictureInPicture
               disableRemotePlayback
               preload="auto"
-              fetchpriority="high"
+              fetchPriority="high"
               onCanPlay={handleCanPlay}
               onLoadedData={handleLoadedData}
               onError={handleVideoError}
@@ -324,7 +324,7 @@ export function HeroSection() {
             alt="College Logo"
             className="w-16 h-10 sm:w-20 sm:h-14 md:w-16 md:h-16 object-contain"
             loading="eager"
-            fetchpriority="high"
+            fetchPriority="high"
           />
           <img
             src={MiteLogo}
@@ -368,7 +368,7 @@ export function HeroSection() {
             alt="Sentia 2025 Logo"
             className="w-[320px] sm:w-[450px] md:w-[600px] lg:w-[750px] xl:w-[900px] h-auto mb-8 mx-auto"
             loading="eager"
-            fetchpriority="high"
+            fetchPriority="high"
           />
         </div>
 

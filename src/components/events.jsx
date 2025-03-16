@@ -1350,7 +1350,7 @@ export function Events({ setGlobalVideoHovered }) {
       </div>
       
       {/* CSS for the subtle gradient animation */}
-      <style jsx>{`
+      <style jsx="true">{`
         @keyframes subtleGradient {
           0% { background-position: 0% 50%; }
           50% { background-position: 100% 50%; }

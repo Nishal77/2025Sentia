@@ -32,7 +32,7 @@ const allEvents = [
   },
   {
     id: "robo-wars-soccer",
-    title: "Robo Wars",
+    title: "Robo Soccer",
     description: "Battle of Titans! 🤖⚡ Witness an electrifying clash where innovation meets brute strength! Cutting-edge machines go head-to-head in a high-intensity showdown—only the smartest and strongest will survive. Will your bot reign supreme? 🏆💥",
     time: "10:30 - 11:00",
     building: "Main Building",
@@ -41,25 +41,16 @@ const allEvents = [
   },
   {
     id: "eastern-western-dance",
-    title: "Eastern Dance",
-    description: "Grace Meets Tradition!💃✨ Immerse yourself in the rich rhythms of Eastern dance, where elegance, storytelling, and tradition come alive. Feel the cultural essence in every move! 🎶🌏",
-    time: "11:00 - 12:00",
+    title: "Eastern & Western Dance",
+    description: "A cultural fusion of rhythms and styles! 💃🕺✨ From the graceful storytelling of Eastern traditions to the energetic beats of Western choreography. Express yourself through movement and showcase both elegance and attitude in this captivating dance competition! 🎶🌏🔥",
+    time: "11:00 - 13:00",
     building: "Main Building",
     roomNumber: "PHY303",
     day: 1
   },
   {
-    id: "western-dance",
-    title: "Western Dance",
-    description: "Feel the Rhythm, Unleash the Energy! 🕺💫 From contemporary to hip-hop, express yourself through captivating western dance styles. Let the music take control as you showcase your moves, attitude, and passion in this electrifying competition! 🎵🔥",
-    time: "12:00 - 13:00",
-    building: "Science Block",
-    roomNumber: "PHY304",
-    day: 1
-  },
-  {
     id: "robo-mania",
-    title: "Robo Mania",
+    title: "Robo Wars",
     description: "Innovation Unleashed! 🤖🔍 Dive into a world of robotics where your imagination and technical prowess come together. Design, build, and program robots to solve challenges and demonstrate your engineering excellence. Will your creation stand out from the crowd? 🛠️🚀",
     time: "14:00 - 16:00",
     building: "Engineering Block",
@@ -200,9 +191,34 @@ const SimpleEventCard = ({ id, title, description, time, building, roomNumber, d
         
         <button 
           className="w-full mt-4 bg-black hover:bg-gray-800 text-white py-2 text-sm font-medium transition-colors rounded-lg"
-          onClick={() => window.open('http://sentia.mite.ac.in', '_blank')}
+          onClick={() => {
+            // For Quiz Quest, redirect to the specific Google Form
+            if (id === 'quiz-quest') {
+              window.open('https://docs.google.com/forms/d/e/1FAIpQLSeDnWEjjGqzTYJNqLWi3PpTLEpAFrttBKYeLzVXzUaqRSYdzg/viewform', '_blank');
+            } 
+            // For Master Minds, redirect to its specific Google Form
+            else if (id === 'master-minds') {
+              window.open('https://docs.google.com/forms/d/e/1FAIpQLSdeuPzFc9YTha_jDPjiFmo-4mR0e2UwOrcbQVgPNmYiusqHRA/viewform', '_blank');
+            }
+            // For Robo Wars Soccer, redirect to its specific Google Form
+            else if (id === 'robo-wars-soccer') {
+              window.open('https://docs.google.com/forms/d/e/1FAIpQLSfzm5xRpxU4orOsUNbMElK5EAw42AaXIxSLPoamReaQkVkzfQ/viewform', '_blank');
+            }
+            // For Robo Mania, redirect to its specific Google Form
+            else if (id === 'robo-mania') {
+              window.open('https://docs.google.com/forms/d/e/1FAIpQLScIg1ypq5jYG0SsBsZe5NxoZo67olTIm3WXkLr7cINXis6VdA/viewform', '_blank');
+            }
+            // For Eastern & Western Dance, redirect to its specific Google Form
+            else if (id === 'eastern-western-dance') {
+              window.open('https://docs.google.com/forms/d/e/1FAIpQLSesYPBrk__OSN67xoUTqFhuZ00ULTKnDfD1rP6mroOIYc0nBQ/viewform', '_blank');
+            } 
+            // For all other events, use the default redirect
+            else {
+              window.open('http://sentia.mite.ac.in', '_blank');
+            }
+          }}
         >
-          View Details
+          Register Now
         </button>
       </div>
     </div>
@@ -244,27 +260,66 @@ export function RegisterPage() {
       </div>
 
       <div className="container mx-auto max-w-6xl py-10 px-4">
-      <div className="mb-7">
+      <div className="mb-7 space-y-4">
           <div className="bg-white p-3 rounded-lg border border-red-500">
-            <p className="text-red-600 font-medium text-sm">Disclaimer: Don't forget! Separate registrations are required for each event. Once your team is shortlisted, you will receive an email notification—so be sure to check your inbox. The shortlisted teams will be announced on March 31, 2025. If selected, visit this website for detailed instructions on the next steps.</p>
+            <p className="text-red-600 font-medium text-sm">Disclaimer: Separate registrations are required for each event. Shortlisted teams will receive an email notification, so ensure you check your inbox regularly. If selected, visit this website for detailed instructions on the next steps.</p>
+          </div>
+          <div className="bg-white p-3 rounded-lg border border-orange-500">
+            <p className="text-orange-600 font-medium text-sm">Refund Policy: All registrations are final, and no refunds will be issued under any circumstances. Please review all event details carefully before completing your registration.</p>
           </div>
         </div>
         {/* General Instructions Section */}
-        <div className="mb-8 bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
-          <h2 className="text-2xl font-bold text-black mb-4">General Instructions</h2>
-          <ul className="space-y-2 text-gray-700 list-disc pl-5">
-            <li>Every participant must bring a valid college identity card.</li>
-            <li>The decision of the judges will be final and binding on all.</li>
-            <li>Registrations are to be done online at <a href="http://sentia.mite.ac.in" className="text-blue-600 hover:underline">http://sentia.mite.ac.in</a>.</li>
-            <li>The registration fee should be sent through NEFT/RTGS/IMPS in favor of "EUPHORIA, MITE," payable at Moodbidri.</li>
-            <li>Complete rules for all events and updates will be posted on the event website.</li>
-            <li>Events will be canceled if the number of participating teams/participants is fewer than four.</li>
-            <li>The college authorities are not responsible for theft or loss of personal possessions and valuables.</li>
-            <li>Organizers reserve the right to abruptly stop any event in case of vulgarity or indecency.</li>
-            <li>Accommodation is available for participants from colleges that are 60 km or more away from MITE.</li>
-            <li className="font-semibold">NO SPOT REGISTRATION.</li>
-            <li className="font-semibold">Last date for online registration: March 24, 2025.</li>
+        <div className="mb-8 bg-white p-4 rounded-lg border border-gray-200 shadow-lg max-w-4xl mx-auto">
+          <h2 className="text-3xl font-bold text-center text-black mb-6 pb-4 border-b border-gray-200">
+            General Instructions
+          </h2>
+          <ul className="space-y-4 text-gray-700">
+            <li className="flex items-center gap-3 hover:bg-gray-50 rounded-md transition-colors">
+              <span className="text-blue-500">•</span>
+              Every participant must bring a valid college identity card.
+            </li>
+            <li className="flex items-center gap-3 hover:bg-gray-50 rounded-md transition-colors">
+              <span className="text-blue-500">•</span>
+              The decision of the judges will be final and binding on all.
+            </li>
+            <li className="flex items-center gap-3 hover:bg-gray-50 rounded-md transition-colors">
+              <span className="text-blue-500">•</span>
+              Registrations are to be done online at <a href="http://sentia.mite.ac.in" className="text-blue-600 hover:underline font-medium">http://sentia.mite.ac.in</a>.
+            </li>
+            <li className="flex items-center gap-3 hover:bg-gray-50 rounded-md transition-colors">
+              <span className="text-blue-500">•</span>
+              The registration fee should be sent through NEFT/RTGS/IMPS in favor of "EUPHORIA, MITE," payable at Moodbidri.
+            </li>
+            <li className="flex items-center gap-3 hover:bg-gray-50 rounded-md transition-colors">
+              <span className="text-blue-500">•</span>
+              Complete rules for all events and updates will be posted on the event website.
+            </li>
+            <li className="flex items-center gap-3 hover:bg-gray-50 rounded-md transition-colors bg-yellow-50">
+              <span className="text-yellow-500">⚠</span>
+              Events will be canceled if the number of participating teams/participants is fewer than four.
+            </li>
+            <li className="flex items-center gap-3 hover:bg-gray-50 rounded-md transition-colors">
+              <span className="text-blue-500">•</span>
+              The college authorities are not responsible for theft or loss of personal possessions and valuables.
+            </li>
+            <li className="flex items-center gap-3 hover:bg-gray-50 rounded-md transition-colors">
+              <span className="text-blue-500">•</span>
+              Organizers reserve the right to abruptly stop any event in case of vulgarity or indecency.
+            </li>
+            <li className="flex items-center gap-3 hover:bg-gray-50 rounded-md transition-colors bg-green-50">
+              <span className="text-green-500">✓</span>
+              Accommodation is available for participants from colleges that are 60 km or more away from MITE.
+            </li>
           </ul>
+
+          <div className="h-px bg-gray-200 my-6"></div>
+
+          <div className="space-y-4">
+            <div className="bg-red-50 p-4 rounded-md border border-red-100">
+              <p className="text-red-700 font-bold text-center text-lg">NO SPOT REGISTRATION</p>
+              <p className="text-blue-700 font-bold text-center text-lg">Last date for online registration: March 24, 2025</p>
+            </div>
+          </div>
         </div>
         
         <h2 className="text-2xl font-bold text-black mb-6 flex items-center gap-2">

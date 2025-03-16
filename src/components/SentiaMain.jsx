@@ -25,9 +25,9 @@ import dance from '../assets/dance.mp4';
 // Cloudinary URL for SentiaDressUpdate
 const SentiaDressUpdate = 'https://res.cloudinary.com/dqmryiyhz/video/upload/v1742054083/sentia/sitpekusuf2gx3gcghse.mp4';
 
-import jonithaspotify from '/assets/jonithaspotify.jpeg';
 import jonitha from '/assets/JonithagandhiUpdated.png';
-import mitecollege from '/assets/mitecollege.mp4';
+import jonithaspotify from '/assets/jonithaspotify.jpeg';
+const mitecollege = 'https://res.cloudinary.com/dqmryiyhz/video/upload/v1742093020/sentia/dzgpzavqxje9habco5re.mp4';
 
 // Remove local image imports
 // import image1 from '../assets/sentia2024/image1.jpg';
@@ -274,7 +274,7 @@ export function SentiaMain() {
                     playsInline
                     preload="auto"
                     onClick={() => setIsVideoModalOpen(true)}
-                    fetchpriority="high"
+                    fetchPriority="high"
                   />
                 </div>
               </div>
@@ -597,7 +597,7 @@ export function SentiaMain() {
                   loop
                   muted
                   playsInline
-                  fetchpriority="high"
+                  fetchPriority="high"
                 />
               </div>
               
@@ -866,7 +866,7 @@ export function SentiaMain() {
                     };
                     
                     const videoElement = document.createElement('video');
-                    videoElement.src = {mitecollege};
+                    videoElement.src = mitecollege;
                     videoElement.className = 'w-full h-full rounded-lg';
                     videoElement.controls = true;
                     videoElement.autoplay = true;
