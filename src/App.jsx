@@ -6,7 +6,7 @@ import Footer from './components/Footer'
 import RegisterPage from './components/RegisterPage'
 import { OldMemories } from './components/oldmemories'
 import { AdminLogin } from './components/AdminLogin'
-import { AdminDashboard } from './components/AdminDashboard'
+import { AdminHome } from './components/AdminHome'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 
 function App() {
@@ -20,7 +20,7 @@ function App() {
         {/* Admin Routes */}
         <Route path="/adminpanel" element={<Navigate to="/admin/login" replace />} />
         <Route path="/admin/login" element={<AdminLogin />} />
-        <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        <Route path="/admin/dashboard" element={<AdminHome />} />
       </Routes>
     </Router>
   )

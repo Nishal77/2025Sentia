@@ -55,10 +55,11 @@ export function AdminLogin() {
     
     // Check credentials
     if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
-      // Save auth status to localStorage with timestamp
+      // Save auth status to localStorage with timestamp and email
       localStorage.setItem('sentiaAdminAuth', JSON.stringify({
         isLoggedIn: true,
-        timestamp: Date.now()
+        timestamp: Date.now(),
+        email: email
       }));
       
       navigate('/admin/dashboard');

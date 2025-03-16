@@ -3,12 +3,12 @@ import { Button } from "./ui/button";
 import Footer from './Footer';
 import { Link } from 'react-router-dom';
 
-import bandicon from '../assets/eventslogo/bandicon.jpeg';
-import fashionlogo from '../assets/eventslogo/fashionlogo.jpeg';
-import robowarslogo from '../assets/eventslogo/robowars.png';
-import dancelogo from '../assets/eventslogo/dancelogo.jpeg';
-import quizlogo from '../assets/eventslogo/quiz.png';
-import mastermindlogo from '../assets/eventslogo/mastermindlogo.png';
+import bandicon from '/assets/eventslogo/bandicon.jpeg';
+import fashionlogo from '/assets/eventslogo/fashionlogo.jpeg';
+import robowarslogo from '/assets/eventslogo/robowars.png';
+import dancelogo from '/assets/eventslogo/dancelogo.jpeg';
+import quizlogo from '/assets/eventslogo/quiz.png';
+import mastermindlogo from '/assets/eventslogo/mastermindlogo.png';
 
 // Define all events
 const allEvents = [

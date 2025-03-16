@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AdminHome } from './AdminHome';
 
 export function AdminDashboard() {
   const [activeTab, setActiveTab] = useState('events');
@@ -153,124 +154,8 @@ export function AdminDashboard() {
         
         {/* Tab Content */}
         <div className="bg-white rounded-lg shadow-sm p-6">
-          {/* Events Tab */}
-          {activeTab === 'events' && (
-            <div>
-              <div className="flex justify-between items-center mb-6">
-                <h2 className="text-xl font-bold text-gray-800">Live Events Management</h2>
-                <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium flex items-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                  </svg>
-                  Add New Event
-                </button>
-              </div>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
-                <div className="bg-green-50 border-l-4 border-green-500 p-4 rounded-md">
-                  <div className="flex justify-between">
-                    <h3 className="font-bold text-green-800">Live Now</h3>
-                    <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full font-medium">
-                      {events.filter(event => event.status === 'live').length} Events
-                    </span>
-                  </div>
-                </div>
-                
-                <div className="bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded-md">
-                  <div className="flex justify-between">
-                    <h3 className="font-bold text-yellow-800">Coming Up</h3>
-                    <span className="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full font-medium">
-                      {events.filter(event => event.status === 'upcoming').length} Events
-                    </span>
-                  </div>
-                </div>
-                
-                <div className="bg-gray-50 border-l-4 border-gray-500 p-4 rounded-md">
-                  <div className="flex justify-between">
-                    <h3 className="font-bold text-gray-800">Ended</h3>
-                    <span className="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded-full font-medium">
-                      {events.filter(event => event.status === 'ended').length} Events
-                    </span>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-gray-200">
-                  <thead className="bg-gray-50">
-                    <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Event
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Location
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Time
-                      </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Status
-                      </th>
-                      <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Actions
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
-                    {events.map(event => (
-                      <tr key={event.id} className="hover:bg-gray-50">
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm font-medium text-gray-900">{event.title}</div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-500">{event.location}</div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-500">
-                            {event.startTime} - {event.endTime}
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                            event.status === 'live'
-                              ? 'bg-green-100 text-green-800'
-                              : event.status === 'upcoming'
-                                ? 'bg-yellow-100 text-yellow-800'
-                                : 'bg-gray-100 text-gray-800'
-                          }`}>
-                            {event.status === 'live' ? 'Live' : event.status === 'upcoming' ? 'Upcoming' : 'Ended'}
-                          </span>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                          <div className="flex justify-end space-x-2">
-                            {event.status === 'upcoming' && (
-                              <button 
-                                onClick={() => updateEventStatus(event.id, 'live')}
-                                className="text-green-600 hover:text-green-900 bg-green-50 hover:bg-green-100 rounded px-2 py-1 transition-colors duration-150"
-                              >
-                                Start Live
-                              </button>
-                            )}
-                            {event.status === 'live' && (
-                              <button 
-                                onClick={() => updateEventStatus(event.id, 'ended')}
-                                className="text-red-600 hover:text-red-900 bg-red-50 hover:bg-red-100 rounded px-2 py-1 transition-colors duration-150"
-                              >
-                                End Event
-                              </button>
-                            )}
-                            <button className="text-indigo-600 hover:text-indigo-900 bg-indigo-50 hover:bg-indigo-100 rounded px-2 py-1 transition-colors duration-150">
-                              Edit
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          )}
+          {/* Events Tab - Now using AdminHome component */}
+          {activeTab === 'events' && <AdminHome />}
           
           {/* Gallery Tab */}
           {activeTab === 'gallery' && (

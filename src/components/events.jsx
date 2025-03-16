@@ -11,27 +11,27 @@ import {
   AlertDialogTrigger,
 } from "./ui/alert-dialog";
 
-import bandicon from '../assets/eventslogo/bandicon.jpeg';
-import fashionlogo from '../assets/eventslogo/fashionlogo.jpeg';
-import robowarslogo from '../assets/eventslogo/robowars.png';
-import robosccer from '../assets/eventslogo/robosoccer.webp'
-import easterndance from '../assets/eventslogo/eastern.png'
-import westerndance from '../assets/eventslogo/western.png'
-import Senhacks from "../assets/eventslogo/Hackathon.jpeg";
-import quizlogo from '../assets/eventslogo/quiz.png';
-import mastermindlogo from '../assets/eventslogo/mastermindlogo.png';
-import awardnite from '../assets/eventslogo/awardwinning.jpeg'
+import bandicon from '/assets/eventslogo/bandicon.jpeg';
+import fashionlogo from '/assets/eventslogo/fashionlogo.jpeg';
+import robowarslogo from '/assets/eventslogo/robowars.png';
+import robosccer from '/assets/eventslogo/robosoccer.webp'
+import easterndance from '/assets/eventslogo/eastern.png'
+import westerndance from '/assets/eventslogo/western.png'
+import Senhacks from "/assets/eventslogo/Hackathon.jpeg";
+import quizlogo from '/assets/eventslogo/quiz.png';
+import mastermindlogo from '/assets/eventslogo/mastermindlogo.png';
+import awardnite from '/assets/eventslogo/awardwinning.jpeg'
 
-import fashionwalkvideo from '../assets/events/fashionwalk.mp4'
-import battleofbands from '../assets/events/battleofband1.mp4'
-import easterndancevideo from '../assets/events/easterdance.mp4'
-import westerndancevideo from '../assets/events/westerndance.mp4'
-import robowarvideo from '../assets/events/robowars.mov'
-import robosoccervideo from '../assets/events/robo_soccer.mov'
-import itquizvideo from '../assets/events/itquiz.mp4'
-import managervideo from '../assets/events/manager.mp4'
-import awardwinning from '../assets/events/awardwinning.mp4'
-import senhacksvideo from '../assets/events/hackthon.mp4'
+import fashionwalkvideo from '/assets/events/fashionwalk.mp4'
+import battleofbands from '/assets/events/battleofband1.mp4'
+import easterndancevideo from '/assets/events/easterdance.mp4'
+import westerndancevideo from '/assets/events/westerndance.mp4'
+import robowarvideo from '/assets/events/robowars.mov'
+import robosoccervideo from '/assets/events/robo_soccer.mov'
+import itquizvideo from '/assets/events/itquiz.mp4'
+import managervideo from '/assets/events/manager.mp4'
+import awardwinning from '/assets/events/awardwinning.mp4'
+import senhacksvideo from '/assets/events/hackthon.mp4'
 
 import Sentia2025Brochure from '../assets/Sentia2025_Brochure.pdf'
 
