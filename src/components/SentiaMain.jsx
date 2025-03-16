@@ -25,9 +25,9 @@ import dance from '../assets/dance.mp4';
 // Cloudinary URL for SentiaDressUpdate
 const SentiaDressUpdate = 'https://res.cloudinary.com/dqmryiyhz/video/upload/v1742054083/sentia/sitpekusuf2gx3gcghse.mp4';
 
-import jonitha from '../assets/jonitha.png';
-import jonithaspotify from '../assets/jonithaspotify.jpeg';
-import mitecollege from '../assets/mitecollege.mp4';
+import jonithaspotify from '/assets/jonithaspotify.jpeg';
+import jonitha from '/assets/JonithagandhiUpdated.png';
+import mitecollege from '/assets/mitecollege.mp4';
 
 // Remove local image imports
 // import image1 from '../assets/sentia2024/image1.jpg';
@@ -75,8 +75,8 @@ export function SentiaMain() {
   const [isAnyVideoHovered, setIsAnyVideoHovered] = useState(false);
   const [currentSong, setCurrentSong] = useState({
     id: 0,
-    name: 'Soni Soni (From "ishq vishk rebound")',
-    artist: 'Jonita Gandhi',
+    name: 'Soni Soni (From "Ishq Vishk Rebound")',
+    artist: 'Darshan Raval, Jonita Gandhi, Rochak Kohli,Gurpreet Saini',
     src: Sonisoni,
     duration: '2:56'
   });
@@ -190,24 +190,24 @@ export function SentiaMain() {
   const songsData = [
     {
       id: 1,
-      name: 'Soni Soni (From "ishq vishk rebound")',
-      artist: 'Jonita Gandhi',
+      name: 'Soni Soni (From "Ishq Vishk Rebound")',
+      artist: 'Darshan Raval, Jonita Gandhi, Rochak Kohli,Gurpreet Saini',
       src: Sonisoni,
       duration: '2:56'
     },
     {
       id: 2,
-      name: 'Deva Deva',
-      artist: 'Jonita Gandhi',
+      name: 'What Jhumka? (From "Rocky Aur Rani Kii Prem Kahaani")',
+      artist: 'Jonita Gandhi, Arijit Singh, Amitabh Bhattacharya, Ranveer Singh, Pritam Chakraborty',
       src: devadeva,
-      duration: '4:39'
+      duration: '3:33'
     },
     {
       id: 3,
-      name: 'Gilehriyaan',
-      artist: 'Jonita Gandhi',
+      name: 'The Breakup Song',
+      artist: ' Arijit Singh, Jonita Gandhi, Nakash Aziz, Badshah',
       src: {whatjhumka},
-      duration: '3:42'
+      duration: '4:12'
     }
   ];
 
@@ -282,7 +282,7 @@ export function SentiaMain() {
             
             {/* Right Card - Description */}
             <div className="bg-white p-6 rounded-lg shadow-sm">
-              <h3 className="text-xl font-bold text-black/80 mb-4">SENTIA, the institute's premier inter-collegiate festival, unites thousands of students in a three-day celebration of literature, culture, art, and innovation, creating an electrifying and unforgettable experience.</h3>
+              <h3 className="text-xl font-bold text-black/80 mb-4">SENTIA—The institute's premier inter-collegiate festival—brings together thousands of students for a thrilling three-day celebration of literature, culture, art, and innovation, delivering an electrifying and unforgettable experience.</h3>
               <p className="text-gray-500">Join us at SENTIA to celebrate creativity, talent, and vibrant expressions of art and culture.</p>
             </div>
           </div>
@@ -561,7 +561,7 @@ export function SentiaMain() {
                     </div>
                     <div>
                       <p className="text-gray-700">
-                        Industry talks, Startup pitches, Tech sessions, Battle of Bands, Fashion Walk, Management events. Industry talks, Startup pitches, Tech sessions, Battle of Bands
+                      Enjoy a dynamic Inter-Branch Variety Show, a stylish Fashion Walk, and a thrilling Celebrity Night—an unforgettable blend of talent, style, and entertainment!
                       </p>
                     </div>
                   </div>
@@ -575,7 +575,7 @@ export function SentiaMain() {
                     </div>
                     <div>
                       <p className="text-gray-700">
-                        Hackathon finals, Innovation showcase, Awards, Celebrity Night, Closing ceremony.
+                      Celebrate Ethnic Day, Annual Day, and DJ Night—featuring special alumni performances!
                       </p>
                     </div>
                   </div>
