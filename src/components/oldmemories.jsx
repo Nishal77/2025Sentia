@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import { motion } from "framer-motion";
 import { Timeline } from "./ui/timeline";
 
+import HeroImage from '/assets/mite123.png';
+
 // Create the TimelineDemo component inline
 const TimelineDemo = () => {
   const data = [
@@ -324,7 +326,7 @@ export function OldMemories() {
         </div>
 
         <img
-          src="/src/assets/mite123.png"
+          src={HeroImage}
           alt="Sentia Memories"
           className="absolute inset-0 w-full h-full"
         />

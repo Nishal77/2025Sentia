@@ -59,13 +59,13 @@ export function Footer() {
                   </a>
                 </li>
                 <li>
-                  <a href="https://www.linkedin.com/school/nmamit/" className="text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white">
+                  <a href="https://www.linkedin.com/company/miteedu/" className="text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white">
                     LinkedIn
                   </a>
                 </li>
                 <li>
-                  <a href="https://twitter.com/nmamit_nitte" className="text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white">
-                    Twitter
+                  <a href="https://www.facebook.com/MITEedu/" className="text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white">
+                    Facebook
                   </a>
                 </li>
                 <li>
