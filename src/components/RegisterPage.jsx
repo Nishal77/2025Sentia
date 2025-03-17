@@ -17,7 +17,7 @@ const allEvents = [
     title: "Battle of bands",
     description: "Where music ignites passion and talent takes the stage 🎸🎤. Let the rhythm of your soul lead the way! 🌟 A fierce competition where every note counts, and every band aims to leave a mark 🎶. Who will claim the crown of musical greatness? 👑",
     time: "9:00 - 10:00",
-    building: "Main Building",
+    building: "Main Stage",
     roomNumber: "MCA101",
     day: 1
   },
@@ -26,7 +26,7 @@ const allEvents = [
     title: "Fashion walk",
     description: "Strut, shine, and make a statement 💃✨. The runway awaits your style to steal the spotlight! 🌟 Showcase your unique sense of fashion, blending elegance 👗, boldness 💥, and creativity 🎨. It's not just a walk; it's a powerful display of individuality and flair! 🔥",
     time: "10:00 - 10:30",
-    building: "Main Building",
+    building: "Mite Greens",
     roomNumber: "CSE202",
     day: 1
   },
@@ -35,7 +35,7 @@ const allEvents = [
     title: "Robo Soccer",
     description: "Battle of Titans! 🤖⚡ Witness an electrifying clash where innovation meets brute strength! Cutting-edge machines go head-to-head in a high-intensity showdown—only the smartest and strongest will survive. Will your bot reign supreme? 🏆💥",
     time: "10:30 - 11:00",
-    building: "Main Building",
+    building: "Mite Greens",
     roomNumber: "SC105",
     day: 1
   },
@@ -44,7 +44,7 @@ const allEvents = [
     title: "Eastern & Western Dance",
     description: "A cultural fusion of rhythms and styles! 💃🕺✨ From the graceful storytelling of Eastern traditions to the energetic beats of Western choreography. Express yourself through movement and showcase both elegance and attitude in this captivating dance competition! 🎶🌏🔥",
     time: "11:00 - 13:00",
-    building: "Main Building",
+    building: "Main Stage",
     roomNumber: "PHY303",
     day: 1
   },
@@ -53,7 +53,7 @@ const allEvents = [
     title: "Robo Wars",
     description: "Innovation Unleashed! 🤖🔍 Dive into a world of robotics where your imagination and technical prowess come together. Design, build, and program robots to solve challenges and demonstrate your engineering excellence. Will your creation stand out from the crowd? 🛠️🚀",
     time: "14:00 - 16:00",
-    building: "Engineering Block",
+    building: "Mite Greens",
     roomNumber: "ECE101",
     day: 2
   },
@@ -258,7 +258,7 @@ export function RegisterPage() {
         </div>
       </div>
         {/* General Instructions Section */}
-        <div className="mb-8 bg-white p-4 rounded-lg border border-gray-200 shadow-lg ">
+        <div className="mb-8 bg-white p-4 rounded-lg border border-gray-200 shadow-lg mx-auto">
           <h2 className="text-3xl font-bold text-center text-black mb-6 pb-4 border-b border-gray-200">
             General Instructions
           </h2>

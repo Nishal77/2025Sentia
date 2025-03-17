@@ -21,6 +21,12 @@ import Memories20192 from '/assets/Memories/2019/image5.jpg';
 import Memories20193 from '/assets/Memories/2019/image3.jpg';
 import Memories20194 from '/assets/Memories/2019/image2.jpg';
 
+import Memories20221 from '/assets/Memories/2022/image4.jpg';
+import Memories20222 from '/assets/Memories/2022/image2.jpg';
+import Memories20223 from '/assets/Memories/2022/image3.jpg';
+import Memories20231 from '/assets/Memories/2023/image1.png';
+import Memories20232 from '/assets/Memories/2023/image4.png';
+
 import Memories20241 from '/assets/sentia2024/image7.jpg';
 import Memories20242 from '/assets/sentia2024/image9.jpg';
 import Memories20243 from '/assets/sentia2024/image2.jpg';
@@ -203,7 +209,7 @@ const TimelineDemo = () => {
           </p>
           <div className="grid grid-cols-2 gap-2">
             <motion.img
-              src="/src/assets/sentia2024/image1.jpg"
+              src={Memories20221}
               alt="Sentia 2023-2024"
               className="rounded-lg object-cover h-20 md:h-44 w-full"
               initial={{ opacity: 0, scale: 0.8 }}
@@ -212,7 +218,7 @@ const TimelineDemo = () => {
               viewport={{ once: true }}
             />
             <motion.img
-              src="/src/assets/sentia2024/image3.jpg"
+              src={Memories20222}
               alt="Sentia 2023-2024"
               className="rounded-lg object-cover h-20 md:h-44 w-full"
               initial={{ opacity: 0, scale: 0.8 }}
@@ -221,7 +227,7 @@ const TimelineDemo = () => {
               viewport={{ once: true }}
             />
             <motion.img
-              src="/src/assets/sentia2024/image4.jpg"
+              src={Memories20223}
               alt="Sentia 2023-2024"
               className="rounded-lg object-cover h-20 md:h-44 w-full"
               initial={{ opacity: 0, scale: 0.8 }}
@@ -230,7 +236,7 @@ const TimelineDemo = () => {
               viewport={{ once: true }}
             />
             <motion.img
-              src="/src/assets/sentia2024/image5.jpg"
+              src={Memories20231}
               alt="Sentia 2023-2024"
               className="rounded-lg object-cover h-20 md:h-44 w-full"
               initial={{ opacity: 0, scale: 0.8 }}
@@ -239,9 +245,9 @@ const TimelineDemo = () => {
               viewport={{ once: true }}
             />
             <motion.img
-              src="/src/assets/sentia2024/image6.jpg"
+              src={Memories20232}
               alt="Sentia 2023-2024"
-              className="rounded-lg object-cover h-20 md:h-44 w-full"
+              className="rounded-lg object-cover h-20 md:h-44 w-full col-span-2"
               initial={{ opacity: 0, scale: 0.8 }}
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.5 }}
@@ -373,7 +379,7 @@ export function OldMemories() {
           <Link to="/">
             <Button 
               variant="outline" 
-              className="bg-black/20 hover:bg-white/30 text-white border-white/40 backdrop-blur-sm shadow-lg text-xs sm:text-sm py-1 px-2 sm:py-2 sm:px-3"
+              className="bg-black/80 hover:bg-black/60 text-white border-white/40 backdrop-blur-sm shadow-lg text-xs sm:text-sm py-1 px-2 sm:py-2 sm:px-3"
             >
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 sm:w-5 sm:h-5 mr-1 sm:mr-2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
@@ -387,7 +393,7 @@ export function OldMemories() {
         <img
           src={HeroImage}
           alt="Sentia Memories"
-          className="absolute inset-0 w-full h-full"
+          className="absolute inset-0 w-full h-full mt-20"
         />
         
         {/* Scroll indicator at the bottom of the hero section */}

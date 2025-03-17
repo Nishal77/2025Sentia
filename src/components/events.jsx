@@ -996,18 +996,27 @@ export function Events({ setGlobalVideoHovered }) {
               </div>
             )}
             
-            {/* Show "Register Here" button for robo-wars and robo-soccer */}
+            {/* Show "Download Guidelines" button for robo-wars and robo-soccer */}
             {(id === 'robo-wars' || id === 'robo-soccer') && (
-              <a 
-                href="/register" 
+              <button 
+                onClick={() => {
+                  const fileName = id === 'robo-wars' ? 'RoboWarSentia2025Copy.pdf' : 'RoboSoccerSentia2025-Copy.pdf';
+                  const filePath = `/assets/${fileName}`;
+                  const link = document.createElement('a');
+                  link.href = filePath;
+                  link.download = fileName;
+                  document.body.appendChild(link);
+                  link.click();
+                  document.body.removeChild(link);
+                }}
                 className="w-auto h-10 bg-black hover:bg-gray-800 rounded-full flex items-center justify-center text-white transition-colors px-4"
                 style={{ transform: 'none' }}
               >
-                <span className="mr-2 text-sm">Register Here</span>
+                <span className="mr-2 text-sm">Download Guidelines</span>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
                 </svg>
-              </a>
+              </button>
             )}
             
             {/* Show "Rules" button for all other events except award-nite, robo-wars, and robo-soccer */}
@@ -1031,7 +1040,7 @@ export function Events({ setGlobalVideoHovered }) {
                       setIsDialogOpen(true);
                     }}
                   >
-                    <span className="mr-2 text-sm">Rules</span>
+                    <span className="mr-2 text-sm">Guidelines</span>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-4 h-4">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
                     </svg>

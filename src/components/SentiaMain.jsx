@@ -30,8 +30,7 @@ import SentiaDressUpdate from '/assets/SentiaDressUpdate.mp4';
 
 import jonitha from '/assets/JonithagandhiUpdated.png';
 import jonithaspotify from '/assets/jonithaspotify.jpeg';
-import mitecollege from '/assets/mitecollegeupdated.mp4';
-//const mitecollege = 'https://res.cloudinary.com/dqmryiyhz/video/upload/v1742093020/sentia/dzgpzavqxje9habco5re.mp4';
+const mitecollege = 'https://res.cloudinary.com/dqmryiyhz/video/upload/v1742093020/sentia/dzgpzavqxje9habco5re.mp4';
 
 // Remove local image imports
 // import image1 from '../assets/sentia2024/image1.jpg';
