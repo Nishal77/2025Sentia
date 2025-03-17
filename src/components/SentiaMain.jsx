@@ -349,131 +349,342 @@ export function SentiaMain() {
       );
     }
 
-    // Get live, ended and upcoming events
-    const liveEvents = performingTeams.filter(event => event.status === 'LIVE');
-    const endedEvents = performingTeams.filter(event => event.status === 'ENDED');
-    const upNextEvents = performingTeams.filter(event => event.status === 'UP NEXT');
+    // Filter for main events only (if we have type field)
+    const mainEvents = performingTeams.filter(event => event.type === 'mainEvent' || !event.type);
+    
+    // If no main events, show only the teams
+    if (mainEvents.length === 0) {
+      // Get live, ended and upcoming events from teams
+      const liveEvents = performingTeams.filter(event => event.status === 'LIVE');
+      const endedEvents = performingTeams.filter(event => event.status === 'ENDED');
+      const upNextEvents = performingTeams.filter(event => event.status === 'UP NEXT');
+
+      return (
+        <div className="space-y-3 h-full overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
+          {/* Main Heading */}
+          <div className="sticky top-0 bg-white z-10 py-2 border-b border-gray-100">
+            <h2 className="text-sm font-semibold text-gray-800 flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1.5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              CURRENT EVENTS
+            </h2>
+          </div>
+
+          {/* Live Events Section */}
+          {liveEvents.length > 0 && (
+            <div className="mb-3">
+              <h3 className="text-xs uppercase text-green-800 font-medium mb-2 flex items-center">
+                <span className="w-2 h-2 bg-green-500 rounded-full mr-1.5 relative">
+                  <span className="absolute inset-0 bg-green-500 rounded-full animate-ping opacity-75"></span>
+                </span>
+                Live Now
+              </h3>
+              <div className="space-y-2">
+                {liveEvents.map((event) => (
+                  <div 
+                    key={`live-${event.id}`}
+                    className="flex items-center gap-2 bg-gradient-to-r from-green-50 to-transparent p-2.5 rounded-lg border-l-3 border-green-600 hover:shadow-md transition-all duration-300 group"
+                    onMouseEnter={(e) => {
+                      // Set global hovering state to pause slider
+                      setIsAnyVideoHovered(true);
+                      
+                      const video = e.currentTarget.querySelector('video');
+                      if (video) {
+                        video.currentTime = 0;
+                        const playPromise = video.play();
+                        if (playPromise !== undefined) {
+                          playPromise.catch(error => {
+                            console.error("Error playing video:", error);
+                          });
+                        }
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      // Reset global hovering state to resume slider
+                      setIsAnyVideoHovered(false);
+                      
+                      const video = e.currentTarget.querySelector('video');
+                      if (video) {
+                        video.pause();
+                        video.currentTime = 0;
+                      }
+                    }}
+                  >
+                    <div className="w-10 h-10 rounded-md flex-shrink-0 overflow-hidden">
+                      <video 
+                        src={getVideoSource(event.video)}
+                        className="w-full h-full object-cover"
+                        muted
+                        loop
+                        playsInline
+                        preload="auto"
+                      ></video>
+                    </div>
+                    <div className="flex-grow">
+                      <div className="flex items-center justify-between">
+                        <h3 className="font-semibold text-sm">{event.event || event.name}</h3>
+                        <div className="flex items-center gap-1 bg-green-100 px-1.5 py-0.5 rounded-full">
+                          <span className="w-2 h-2 bg-green-500 rounded-full relative flex-shrink-0">
+                            <span className="absolute inset-0 bg-green-500 rounded-full animate-ping opacity-75"></span>
+                          </span>
+                          <span className="text-xs font-medium text-green-800">LIVE</span>
+                        </div>
+                      </div>
+                      <p className="text-gray-500 text-xs">{event.location}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+          
+          {/* Ended Events Section */}
+          {endedEvents.length > 0 && (
+            <div className="mb-3">
+              <h3 className="text-xs uppercase text-red-800 font-medium mb-2 flex items-center">
+                <span className="w-2 h-2 bg-red-500 rounded-full mr-1.5"></span>
+                Ended Events
+              </h3>
+              <div className="space-y-2">
+                {endedEvents.map((event) => (
+                  <div 
+                    key={`ended-${event.id}`}
+                    className="flex items-center gap-2 bg-gradient-to-r from-red-50 to-transparent p-2.5 rounded-lg border-l-3 border-red-600 hover:shadow-md transition-all duration-300 opacity-80 group"
+                    onMouseEnter={(e) => {
+                      // Set global hovering state to pause slider
+                      setIsAnyVideoHovered(true);
+                      
+                      const video = e.currentTarget.querySelector('video');
+                      if (video) {
+                        video.currentTime = 0;
+                        const playPromise = video.play();
+                        if (playPromise !== undefined) {
+                          playPromise.catch(error => {
+                            console.error("Error playing video:", error);
+                          });
+                        }
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      // Reset global hovering state to resume slider
+                      setIsAnyVideoHovered(false);
+                      
+                      const video = e.currentTarget.querySelector('video');
+                      if (video) {
+                        video.pause();
+                        video.currentTime = 0;
+                      }
+                    }}
+                  >
+                    <div className="w-10 h-10 rounded-md flex-shrink-0 overflow-hidden">
+                      <video 
+                        src={getVideoSource(event.video)}
+                        className="w-full h-full object-cover"
+                        muted
+                        loop
+                        playsInline
+                        preload="auto"
+                      ></video>
+                    </div>
+                    <div className="flex-grow">
+                      <div className="flex items-center justify-between">
+                        <h3 className="font-semibold text-sm">{event.event || event.name}</h3>
+                        <div className="flex items-center gap-1 bg-red-100 px-1.5 py-0.5 rounded-full">
+                          <span className="w-2 h-2 bg-red-500 rounded-full flex-shrink-0"></span>
+                          <span className="text-xs font-medium text-red-800">ENDED</span>
+                        </div>
+                      </div>
+                      <p className="text-gray-500 text-xs">{event.location}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+          
+          {/* Coming up next banner */}
+          {upNextEvents.length > 0 && (
+            <div>
+              <h3 className="text-xs uppercase text-amber-800 font-medium mb-2 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-3.5 h-3.5 mr-1.5 text-amber-700">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+                Coming Up Next
+              </h3>
+              <div className="bg-gradient-to-r from-amber-50 to-transparent p-2.5 rounded-lg border-l-3 border-amber-500">
+                <div className="flex items-center text-xs font-medium text-amber-900">
+                  {upNextEvents[0].event || upNextEvents[0].name} at {upNextEvents[0].location}
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    // Get live, ended and upcoming events from main events
+    const liveEvents = mainEvents.filter(event => event.status === 'LIVE');
+    const endedEvents = mainEvents.filter(event => event.status === 'ENDED');
+    const upNextEvents = mainEvents.filter(event => event.status === 'UP NEXT');
 
     return (
-      <div className="space-y-2.5 h-full overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
-        {/* Live Events */}
-        {liveEvents.map((event) => (
-          <div 
-            key={`live-${event.id}`}
-            className="flex items-center gap-2 bg-gradient-to-r from-green-50 to-transparent p-2.5 rounded-lg border-l-3 border-green-600 hover:shadow-md transition-all duration-300 group"
-            onMouseEnter={(e) => {
-              // Set global hovering state to pause slider
-              setIsAnyVideoHovered(true);
-              
-              const video = e.currentTarget.querySelector('video');
-              if (video) {
-                video.currentTime = 0;
-                const playPromise = video.play();
-                if (playPromise !== undefined) {
-                  playPromise.catch(error => {
-                    console.error("Error playing video:", error);
-                  });
-                }
-              }
-            }}
-            onMouseLeave={(e) => {
-              // Reset global hovering state to resume slider
-              setIsAnyVideoHovered(false);
-              
-              const video = e.currentTarget.querySelector('video');
-              if (video) {
-                video.pause();
-                video.currentTime = 0;
-              }
-            }}
-          >
-            <div className="w-10 h-10 rounded-md flex-shrink-0 overflow-hidden">
-              <video 
-                src={getVideoSource(event.video)}
-                className="w-full h-full object-cover"
-                muted
-                loop
-                playsInline
-                preload="auto"
-              ></video>
-            </div>
-            <div className="flex-grow">
-              <div className="flex items-center justify-between">
-                <h3 className="font-semibold text-sm">{event.event}</h3>
-                <div className="flex items-center gap-1 bg-green-100 px-1.5 py-0.5 rounded-full">
-                  <span className="w-2 h-2 bg-green-500 rounded-full relative flex-shrink-0">
-                    <span className="absolute inset-0 bg-green-500 rounded-full animate-ping opacity-75"></span>
-                  </span>
-                  <span className="text-xs font-medium text-green-800">LIVE</span>
+      <div className="space-y-3 h-full overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
+        {/* Main Heading */}
+        <div className="sticky top-0 bg-white z-10 py-2 border-b border-gray-100">
+          <h2 className="text-sm font-semibold text-gray-800 flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1.5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            CURRENT EVENTS
+          </h2>
+        </div>
+
+        {/* Live Events Section */}
+        {liveEvents.length > 0 && (
+          <div className="mb-3">
+            <h3 className="text-xs uppercase text-green-800 font-medium mb-2 flex items-center">
+              <span className="w-2 h-2 bg-green-500 rounded-full mr-1.5 relative">
+                <span className="absolute inset-0 bg-green-500 rounded-full animate-ping opacity-75"></span>
+              </span>
+              Live Now
+            </h3>
+            <div className="space-y-2">
+              {liveEvents.map((event) => (
+                <div 
+                  key={`live-${event.id}`}
+                  className="flex items-center gap-2 bg-gradient-to-r from-green-50 to-transparent p-2.5 rounded-lg border-l-3 border-green-600 hover:shadow-md transition-all duration-300 group"
+                  onMouseEnter={(e) => {
+                    // Set global hovering state to pause slider
+                    setIsAnyVideoHovered(true);
+                    
+                    const video = e.currentTarget.querySelector('video');
+                    if (video) {
+                      video.currentTime = 0;
+                      const playPromise = video.play();
+                      if (playPromise !== undefined) {
+                        playPromise.catch(error => {
+                          console.error("Error playing video:", error);
+                        });
+                      }
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    // Reset global hovering state to resume slider
+                    setIsAnyVideoHovered(false);
+                    
+                    const video = e.currentTarget.querySelector('video');
+                    if (video) {
+                      video.pause();
+                      video.currentTime = 0;
+                    }
+                  }}
+                >
+                  <div className="w-10 h-10 rounded-md flex-shrink-0 overflow-hidden">
+                    <video 
+                      src={getVideoSource(event.video)}
+                      className="w-full h-full object-cover"
+                      muted
+                      loop
+                      playsInline
+                      preload="auto"
+                    ></video>
+                  </div>
+                  <div className="flex-grow">
+                    <div className="flex items-center justify-between">
+                      <h3 className="font-semibold text-sm">{event.name}</h3>
+                      <div className="flex items-center gap-1 bg-green-100 px-1.5 py-0.5 rounded-full">
+                        <span className="w-2 h-2 bg-green-500 rounded-full relative flex-shrink-0">
+                          <span className="absolute inset-0 bg-green-500 rounded-full animate-ping opacity-75"></span>
+                        </span>
+                        <span className="text-xs font-medium text-green-800">LIVE</span>
+                      </div>
+                    </div>
+                    <p className="text-gray-500 text-xs">{event.location}</p>
+                  </div>
                 </div>
-              </div>
-              <p className="text-gray-500 text-xs">{event.location}</p>
+              ))}
             </div>
           </div>
-        ))}
+        )}
         
-        {/* Ended Events */}
-        {endedEvents.map((event) => (
-          <div 
-            key={`ended-${event.id}`}
-            className="flex items-center gap-2 bg-gradient-to-r from-red-50 to-transparent p-2.5 rounded-lg border-l-3 border-red-600 hover:shadow-md transition-all duration-300 opacity-80 group"
-            onMouseEnter={(e) => {
-              // Set global hovering state to pause slider
-              setIsAnyVideoHovered(true);
-              
-              const video = e.currentTarget.querySelector('video');
-              if (video) {
-                video.currentTime = 0;
-                const playPromise = video.play();
-                if (playPromise !== undefined) {
-                  playPromise.catch(error => {
-                    console.error("Error playing video:", error);
-                  });
-                }
-              }
-            }}
-            onMouseLeave={(e) => {
-              // Reset global hovering state to resume slider
-              setIsAnyVideoHovered(false);
-              
-              const video = e.currentTarget.querySelector('video');
-              if (video) {
-                video.pause();
-                video.currentTime = 0;
-              }
-            }}
-          >
-            <div className="w-10 h-10 rounded-md flex-shrink-0 overflow-hidden">
-              <video 
-                src={getVideoSource(event.video)}
-                className="w-full h-full object-cover"
-                muted
-                loop
-                playsInline
-                preload="auto"
-              ></video>
-            </div>
-            <div className="flex-grow">
-              <div className="flex items-center justify-between">
-                <h3 className="font-semibold text-sm">{event.event}</h3>
-                <div className="flex items-center gap-1 bg-red-100 px-1.5 py-0.5 rounded-full">
-                  <span className="w-2 h-2 bg-red-500 rounded-full flex-shrink-0"></span>
-                  <span className="text-xs font-medium text-red-800">ENDED</span>
+        {/* Ended Events Section */}
+        {endedEvents.length > 0 && (
+          <div className="mb-3">
+            <h3 className="text-xs uppercase text-red-800 font-medium mb-2 flex items-center">
+              <span className="w-2 h-2 bg-red-500 rounded-full mr-1.5"></span>
+              Ended Events
+            </h3>
+            <div className="space-y-2">
+              {endedEvents.map((event) => (
+                <div 
+                  key={`ended-${event.id}`}
+                  className="flex items-center gap-2 bg-gradient-to-r from-red-50 to-transparent p-2.5 rounded-lg border-l-3 border-red-600 hover:shadow-md transition-all duration-300 opacity-80 group"
+                  onMouseEnter={(e) => {
+                    // Set global hovering state to pause slider
+                    setIsAnyVideoHovered(true);
+                    
+                    const video = e.currentTarget.querySelector('video');
+                    if (video) {
+                      video.currentTime = 0;
+                      const playPromise = video.play();
+                      if (playPromise !== undefined) {
+                        playPromise.catch(error => {
+                          console.error("Error playing video:", error);
+                        });
+                      }
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    // Reset global hovering state to resume slider
+                    setIsAnyVideoHovered(false);
+                    
+                    const video = e.currentTarget.querySelector('video');
+                    if (video) {
+                      video.pause();
+                      video.currentTime = 0;
+                    }
+                  }}
+                >
+                  <div className="w-10 h-10 rounded-md flex-shrink-0 overflow-hidden">
+                    <video 
+                      src={getVideoSource(event.video)}
+                      className="w-full h-full object-cover"
+                      muted
+                      loop
+                      playsInline
+                      preload="auto"
+                    ></video>
+                  </div>
+                  <div className="flex-grow">
+                    <div className="flex items-center justify-between">
+                      <h3 className="font-semibold text-sm">{event.name}</h3>
+                      <div className="flex items-center gap-1 bg-red-100 px-1.5 py-0.5 rounded-full">
+                        <span className="w-2 h-2 bg-red-500 rounded-full flex-shrink-0"></span>
+                        <span className="text-xs font-medium text-red-800">ENDED</span>
+                      </div>
+                    </div>
+                    <p className="text-gray-500 text-xs">{event.location}</p>
+                  </div>
                 </div>
-              </div>
-              <p className="text-gray-500 text-xs">{event.location}</p>
+              ))}
             </div>
           </div>
-        ))}
+        )}
         
         {/* Coming up next banner */}
         {upNextEvents.length > 0 && (
-          <div className="bg-gradient-to-r from-black/5 to-black/0 p-2 rounded-lg mt-3">
-            <div className="flex items-center text-xs font-medium text-black/70">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-3.5 h-3.5 mr-1.5">
+          <div>
+            <h3 className="text-xs uppercase text-amber-800 font-medium mb-2 flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-3.5 h-3.5 mr-1.5 text-amber-700">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
               </svg>
-              Coming up next: {upNextEvents[0].event} at {upNextEvents[0].location}
+              Coming Up Next
+            </h3>
+            <div className="bg-gradient-to-r from-amber-50 to-transparent p-2.5 rounded-lg border-l-3 border-amber-500">
+              <div className="flex items-center text-xs font-medium text-amber-900">
+                {upNextEvents[0].name} at {upNextEvents[0].location}
+              </div>
             </div>
           </div>
         )}
@@ -498,62 +709,115 @@ export function SentiaMain() {
       );
     }
 
+    // Filter for team events only (if we have type field)
+    const teams = performingTeams.filter(event => event.type === 'team' || (!event.type && event.parentEvent));
+
+    // Get live, upcoming and ended teams
+    const liveTeams = teams.filter(team => team.status === 'LIVE');
+    const upNextTeams = teams.filter(team => team.status === 'UP NEXT');
+    const endedTeams = teams.filter(team => team.status === 'ENDED');
+
     return (
       <div className="h-full overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
-        <p className="text-gray-500 text-sm mb-2 font-medium sticky top-0 bg-white z-10 py-1 shadow-sm">Performing teams</p>
+        {/* Main Heading */}
+        <div className="sticky top-0 bg-white z-10 py-2 border-b border-gray-100 mb-3">
+          <h2 className="text-sm font-semibold text-gray-800 flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1.5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+            PERFORMING TEAMS
+          </h2>
+        </div>
         
-        <div className="space-y-2">
-          {performingTeams.map((team, index) => {
-            // Define status styling
-            let statusClass, statusBg, statusDot, animation;
-            switch(team.status) {
-              case 'LIVE':
-                statusClass = 'text-green-800';
-                statusBg = 'bg-green-100';
-                statusDot = 'bg-green-500';
-                animation = <span className="absolute inset-0 bg-green-500 rounded-full animate-ping opacity-75"></span>;
-                break;
-              case 'ENDED':
-                statusClass = 'text-red-800';
-                statusBg = 'bg-red-100';
-                statusDot = 'bg-red-500';
-                animation = null;
-                break;
-              case 'UP NEXT':
-                statusClass = 'text-amber-800';
-                statusBg = 'bg-amber-100';
-                statusDot = 'bg-amber-500';
-                animation = null;
-                break;
-              default:
-                statusClass = 'text-gray-800';
-                statusBg = 'bg-gray-100';
-                statusDot = 'bg-gray-500';
-                animation = null;
-            }
-            
-            return (
-              <div key={`team-${index}`} className="flex items-center justify-between p-2.5 border-b border-gray-100 hover:bg-gray-50 transition-colors duration-200 rounded-md">
-                <div className="flex items-center gap-3">
-                  <span className="text-gray-500 font-medium w-5">{index + 1}.</span>
-                  <div>
-                    <p className="font-medium text-gray-800">{team.name}</p>
-                    <p className="text-xs text-gray-500">{team.event} • {team.location}</p>
+        {/* Live Teams Section */}
+        {liveTeams.length > 0 && (
+          <div className="mb-4">
+            <h3 className="text-xs uppercase text-green-800 font-medium mb-2 flex items-center">
+              <span className="w-2 h-2 bg-green-500 rounded-full mr-1.5 relative">
+                <span className="absolute inset-0 bg-green-500 rounded-full animate-ping opacity-75"></span>
+              </span>
+              Live Performances
+            </h3>
+            <div className="space-y-2">
+              {liveTeams.map((team, index) => (
+                <div key={`team-live-${index}`} className="flex items-center justify-between p-2.5 border-b border-gray-100 hover:bg-green-50 transition-colors duration-200 rounded-md">
+                  <div className="flex items-center gap-3">
+                    <span className="text-green-500 font-medium w-5">{index + 1}.</span>
+                    <div>
+                      <p className="font-medium text-gray-800">{team.name}</p>
+                      <p className="text-xs text-gray-500">{team.event || team.parentEvent} • {team.location}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-1 bg-green-100 px-2 py-0.5 rounded-full">
+                    <span className="w-2 h-2 bg-green-500 rounded-full relative flex-shrink-0">
+                      <span className="absolute inset-0 bg-green-500 rounded-full animate-ping opacity-75"></span>
+                    </span>
+                    <span className="text-xs font-medium text-green-800">LIVE</span>
                   </div>
                 </div>
-                <div className={`flex items-center gap-1 ${statusBg} px-2 py-0.5 rounded-full`}>
-                  <span className={`w-2 h-2 ${statusDot} rounded-full relative flex-shrink-0`}>
-                    {animation}
-                  </span>
-                  <span className={`text-xs font-medium ${statusClass}`}>{team.status}</span>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Up Next Teams Section */}
+        {upNextTeams.length > 0 && (
+          <div className="mb-4">
+            <h3 className="text-xs uppercase text-amber-800 font-medium mb-2 flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-3.5 h-3.5 mr-1.5 text-amber-700">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+              </svg>
+              Coming Up Next
+            </h3>
+            <div className="space-y-2">
+              {upNextTeams.map((team, index) => (
+                <div key={`team-next-${index}`} className="flex items-center justify-between p-2.5 border-b border-gray-100 hover:bg-amber-50 transition-colors duration-200 rounded-md">
+                  <div className="flex items-center gap-3">
+                    <span className="text-amber-500 font-medium w-5">{index + 1}.</span>
+                    <div>
+                      <p className="font-medium text-gray-800">{team.name}</p>
+                      <p className="text-xs text-gray-500">{team.event || team.parentEvent} • {team.location}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-1 bg-amber-100 px-2 py-0.5 rounded-full">
+                    <span className="w-2 h-2 bg-amber-500 rounded-full flex-shrink-0"></span>
+                    <span className="text-xs font-medium text-amber-800">UP NEXT</span>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
-        </div>
+              ))}
+            </div>
+          </div>
+        )}
+        
+        {/* Ended Teams Section */}
+        {endedTeams.length > 0 && (
+          <div>
+            <h3 className="text-xs uppercase text-gray-700 font-medium mb-2 flex items-center">
+              <span className="w-2 h-2 bg-gray-500 rounded-full mr-1.5"></span>
+              Completed Performances
+            </h3>
+            <div className="space-y-2">
+              {endedTeams.map((team, index) => (
+                <div key={`team-ended-${index}`} className="flex items-center justify-between p-2.5 border-b border-gray-100 hover:bg-gray-50 transition-colors duration-200 rounded-md">
+                  <div className="flex items-center gap-3">
+                    <span className="text-gray-500 font-medium w-5">{index + 1}.</span>
+                    <div>
+                      <p className="font-medium text-gray-800">{team.name}</p>
+                      <p className="text-xs text-gray-500">{team.event || team.parentEvent} • {team.location}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-1 bg-gray-100 px-2 py-0.5 rounded-full">
+                    <span className="w-2 h-2 bg-gray-500 rounded-full flex-shrink-0"></span>
+                    <span className="text-xs font-medium text-gray-700">ENDED</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     );
-  }
+  };
 
   // Function to manually change live events view
   const changeLiveEventsView = (view) => {
