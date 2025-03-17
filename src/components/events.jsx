@@ -49,22 +49,29 @@ export function Events({ setGlobalVideoHovered }) {
       day: 1,
       coordinators: [
         {
-          name: 'Aditya Sharma',
-          phone: '9876543210'
+          name: 'Adithi Rao',
+          phone: '+91 90197 58621'
         },
         {
-          name: 'Riya Patel',
-          phone: '8765432109'
+          name: 'Sahit Raj',
+          phone: '+9184314 89585'
         }
       ],
       rules: [
-        'Each band will have 15 minutes for setup and performance.',
-        'Minimum 3 and maximum 8 members per band.',
-        'Original compositions and covers are both allowed.',
-        'Bands must bring their own instruments.',
-        'Drum kit and amplifiers will be provided.',
-        'Pre-recorded tracks are not allowed.',
-        'Judges\' decision will be final.',
+        'Team Size: 6-10 members, including minimum 3 instrumentalists and 1 vocalist',
+        'Open to students from any college with valid ID card',
+        'Team leaders will receive Google Form to submit team details & performance video',
+        'Previous live performance videos accepted if audio is clear, unaltered & unedited',
+        'Submit 2-5 min video clip by March 10, 2025',
+        'Top 5 teams will be shortlisted based on submitted video',
+        'Each band will have 15 minutes for setup and performance',
+        'Original compositions and covers both allowed',
+        'Bands must bring their own instruments',
+        'Drum kit and amplifiers will be provided',
+        'No backing tracks or synthesized beats allowed',
+        'Vulgarity and obscenity not permitted',
+        'Lyricists not considered part of the band',
+        'Judges\' decision will be final'
       ]
     },
     'fashion-walk': {
@@ -104,8 +111,8 @@ export function Events({ setGlobalVideoHovered }) {
         'Top 6 Teams: Selected based on submission',
 
         // Judgment Criteria
-        'Judged on theme integration, outfits, accessories, props creativity, coordination, music, confidence, gestures, and overall presentation.',
-        'Walking barefoot: Not allowed.'
+        'Judged on theme integration, outfits, accessories, props creativity, coordination, music, confidence, gestures, and overall presentation',
+        'Walking barefoot: Not allowed'
       ]
     },
     'robo-wars': {
@@ -156,23 +163,7 @@ export function Events({ setGlobalVideoHovered }) {
         'The team scoring the most goals advances to the next round'
       ]
     },
-    'coffee-break': {
-      title: 'Coffee Break Guidelines',
-      day: 1,
-      coordinators: [
-        {
-          name: 'Campus Crew',
-          phone: '+91 98765 43210'
-        }
-      ],
-      rules: [
-        'Refreshments available in the designated lounge area only',
-        'Please dispose of cups and napkins in provided bins',
-        'Coffee stations will close 5 minutes before end of break',
-        'Networking encouraged during this time',
-        'Staff will announce when break time is ending'
-      ]
-    },
+    
     'robo-mania': {
       title: 'Robo Mania',
       day: 1,

@@ -60,7 +60,7 @@ const allEvents = [
   {
     id: "quiz-quest",
     title: "Quiz quest",
-    description: "Challenge your mind and conquer every question 🧠❓. The quest for knowledge begins now!",
+    description: "Challenge your mind and conquer every question 🧠❓. The quest for knowledge begins now! 📚 With every round, the questions get tougher, and the stakes get higher 🎯. Test your wit, knowledge, and speed ⏱️—only the sharpest minds will make it to the top! 🏆",
     building: "PG Block",
     roomNumber: "MCA402",
     day: 1,
@@ -69,7 +69,7 @@ const allEvents = [
   {
     id: "master-minds",
     title: "Master minds",
-    description: "Lead, innovate, and rise above the rest 💼🚀. Only the sharpest minds will claim the title of the best manager!",
+    description: "Lead, innovate, and rise above the rest 💼🚀. Only the sharpest minds will claim the title of the best manager! 🏅 Face real-world challenges and strategic decisions that test your leadership and managerial skills 🧑‍💼. Can you outthink, outlast, and outmanage your competition? 💡",
     time: "10:00 - 12:00",
     building: "PG Block",
     roomNumber: "VR Lab 01",
@@ -251,16 +251,14 @@ export function RegisterPage() {
       </div>
 
       <div className="container mx-auto max-w-6xl py-10 px-4">
-      <div className="mb-7 space-y-4">
-          <div className="bg-white p-3 rounded-lg border border-red-500">
-            <p className="text-red-600 font-medium text-sm">Disclaimer: Separate registrations are required for each event. Shortlisted teams will receive an email notification, so ensure you check your inbox regularly. If selected, visit this website for detailed instructions on the next steps.</p>
-          </div>
-          <div className="bg-white p-3 rounded-lg border border-orange-500">
-            <p className="text-orange-600 font-medium text-sm">Refund Policy: All registrations are final, and no refunds will be issued under any circumstances. Please review all event details carefully before completing your registration.</p>
-          </div>
+      <div className="mb-7">
+        <div className="bg-white p-3 rounded-lg border border-red-500">
+          <p className="text-red-600 font-medium text-sm">Disclaimer: Separate registrations are required for each event. Shortlisted teams will receive an email notification, so ensure you check your inbox regularly. If selected, visit this website for detailed instructions on the next steps.</p>
+          <p className="text-orange-600 font-medium text-sm mt-4">Refund Policy: All registrations are final, and no refunds will be issued under any circumstances. Please review all event details carefully before completing your registration.</p>
         </div>
+      </div>
         {/* General Instructions Section */}
-        <div className="mb-8 bg-white p-4 rounded-lg border border-gray-200 shadow-lg max-w-4xl mx-auto">
+        <div className="mb-8 bg-white p-4 rounded-lg border border-gray-200 shadow-lg ">
           <h2 className="text-3xl font-bold text-center text-black mb-6 pb-4 border-b border-gray-200">
             General Instructions
           </h2>

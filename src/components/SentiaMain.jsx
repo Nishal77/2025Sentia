@@ -4,6 +4,8 @@ import { HeroSection } from './HeroSection';
 import Events from './events';
 import { Link } from 'react-router-dom';
 import Footer from './Footer';
+import pusherClient from '../utils/pusherClient';
+import { EVENTS_CHANNEL, ALL_EVENTS_UPDATED, EVENT_ADDED, EVENT_UPDATED, EVENT_DELETED, EVENT_STATUS_CHANGED } from '../utils/pusher';
 
 import Sonisoni from '../assets/Songs/Sonisoni.mp3';
 import WhatJhumka from '../assets/Songs/WhatJhumka320.mp3';
@@ -20,14 +22,16 @@ import drum from '../assets/drum.mp4';
 import fashionwalk from '../assets/fashionwalk.mp4';
 import robowars from '../assets/robowars.mp4';
 import dance from '../assets/dance.mp4';
-// import SentiaDressUpdate from '../assets/SentiaDressUpdate.mp4'; // Removed local import
+import SentiaDressUpdate from '/assets/SentiaDressUpdate.mp4'; 
+
 
 // Cloudinary URL for SentiaDressUpdate
-const SentiaDressUpdate = 'https://res.cloudinary.com/dqmryiyhz/video/upload/v1742054083/sentia/sitpekusuf2gx3gcghse.mp4';
+//const SentiaDressUpdate = 'https://res.cloudinary.com/dqmryiyhz/video/upload/v1742054083/sentia/sitpekusuf2gx3gcghse.mp4';
 
 import jonitha from '/assets/JonithagandhiUpdated.png';
 import jonithaspotify from '/assets/jonithaspotify.jpeg';
-const mitecollege = 'https://res.cloudinary.com/dqmryiyhz/video/upload/v1742093020/sentia/dzgpzavqxje9habco5re.mp4';
+import mitecollege from '/assets/mitecollegeupdated.mp4';
+//const mitecollege = 'https://res.cloudinary.com/dqmryiyhz/video/upload/v1742093020/sentia/dzgpzavqxje9habco5re.mp4';
 
 // Remove local image imports
 // import image1 from '../assets/sentia2024/image1.jpg';
@@ -77,7 +81,7 @@ const defaultPerformingTeams = [
     id: 2,
     name: "Elegance Elite",
     event: "Fashion Walk",
-    location: "Engineering Block - CSE202",
+    location: "Mite Venue",
     status: "ENDED",
     video: "fashionwalk"
   },
@@ -331,231 +335,170 @@ export function SentiaMain() {
   
   // Function to render events view with thumbnails
   const renderEventsView = () => {
+    // Show a message when there are no events
+    if (noEventsData || performingTeams.length === 0) {
+      return (
+        <div className="h-full flex flex-col items-center justify-center text-center p-6">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 text-gray-300 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+          </svg>
+          <h3 className="text-lg text-gray-700 font-medium mb-2">No Live Events Currently</h3>
+          <p className="text-gray-500 max-w-md mx-auto">
+            Our event schedule is being updated. Please check back soon for upcoming performances and activities.
+          </p>
+        </div>
+      );
+    }
+
+    // Get live, ended and upcoming events
+    const liveEvents = performingTeams.filter(event => event.status === 'LIVE');
+    const endedEvents = performingTeams.filter(event => event.status === 'ENDED');
+    const upNextEvents = performingTeams.filter(event => event.status === 'UP NEXT');
+
     return (
       <div className="space-y-2.5 h-full overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
-        {/* Event 1 - Live */}
-        <div 
-          className="flex items-center gap-2 bg-gradient-to-r from-green-50 to-transparent p-2.5 rounded-lg border-l-3 border-green-600 hover:shadow-md transition-all duration-300 group"
-          onMouseEnter={(e) => {
-            // Set global hovering state to pause slider
-            setIsAnyVideoHovered(true);
-            
-            const video = e.currentTarget.querySelector('video');
-            if (video) {
-              video.currentTime = 0;
-              const playPromise = video.play();
-              if (playPromise !== undefined) {
-                playPromise.catch(error => {
-                  console.error("Error playing video:", error);
-                });
+        {/* Live Events */}
+        {liveEvents.map((event) => (
+          <div 
+            key={`live-${event.id}`}
+            className="flex items-center gap-2 bg-gradient-to-r from-green-50 to-transparent p-2.5 rounded-lg border-l-3 border-green-600 hover:shadow-md transition-all duration-300 group"
+            onMouseEnter={(e) => {
+              // Set global hovering state to pause slider
+              setIsAnyVideoHovered(true);
+              
+              const video = e.currentTarget.querySelector('video');
+              if (video) {
+                video.currentTime = 0;
+                const playPromise = video.play();
+                if (playPromise !== undefined) {
+                  playPromise.catch(error => {
+                    console.error("Error playing video:", error);
+                  });
+                }
               }
-            }
-          }}
-          onMouseLeave={(e) => {
-            // Reset global hovering state to resume slider
-            setIsAnyVideoHovered(false);
-            
-            const video = e.currentTarget.querySelector('video');
-            if (video) {
-              video.pause();
-              video.currentTime = 0;
-            }
-          }}
-        >
-          <div className="w-10 h-10 rounded-md flex-shrink-0 overflow-hidden">
-            <video 
-              src={getVideoSource(performingTeams.find(team => team.status === 'LIVE')?.video || 'drum')}
-              className="w-full h-full object-cover"
-              muted
-              loop
-              playsInline
-              preload="auto"
-            ></video>
-          </div>
-          <div className="flex-grow">
-            <div className="flex items-center justify-between">
-              <h3 className="font-semibold text-sm">Battle of Bands</h3>
-              <div className="flex items-center gap-1 bg-green-100 px-1.5 py-0.5 rounded-full">
-                <span className="w-2 h-2 bg-green-500 rounded-full relative flex-shrink-0">
-                  <span className="absolute inset-0 bg-green-500 rounded-full animate-ping opacity-75"></span>
-                </span>
-                <span className="text-xs font-medium text-green-800">LIVE</span>
-              </div>
+            }}
+            onMouseLeave={(e) => {
+              // Reset global hovering state to resume slider
+              setIsAnyVideoHovered(false);
+              
+              const video = e.currentTarget.querySelector('video');
+              if (video) {
+                video.pause();
+                video.currentTime = 0;
+              }
+            }}
+          >
+            <div className="w-10 h-10 rounded-md flex-shrink-0 overflow-hidden">
+              <video 
+                src={getVideoSource(event.video)}
+                className="w-full h-full object-cover"
+                muted
+                loop
+                playsInline
+                preload="auto"
+              ></video>
             </div>
-            <p className="text-gray-500 text-xs">Main Building - MCA101</p>
+            <div className="flex-grow">
+              <div className="flex items-center justify-between">
+                <h3 className="font-semibold text-sm">{event.event}</h3>
+                <div className="flex items-center gap-1 bg-green-100 px-1.5 py-0.5 rounded-full">
+                  <span className="w-2 h-2 bg-green-500 rounded-full relative flex-shrink-0">
+                    <span className="absolute inset-0 bg-green-500 rounded-full animate-ping opacity-75"></span>
+                  </span>
+                  <span className="text-xs font-medium text-green-800">LIVE</span>
+                </div>
+              </div>
+              <p className="text-gray-500 text-xs">{event.location}</p>
+            </div>
           </div>
-        </div>
+        ))}
         
-        {/* Event 2 - Live */}
-        <div 
-          className="flex items-center gap-2 bg-gradient-to-r from-green-50 to-transparent p-2.5 rounded-lg border-l-3 border-green-600 hover:shadow-md transition-all duration-300 group"
-          onMouseEnter={(e) => {
-            // Set global hovering state to pause slider
-            setIsAnyVideoHovered(true);
-            
-            const video = e.currentTarget.querySelector('video');
-            if (video) {
-              video.currentTime = 0;
-              const playPromise = video.play();
-              if (playPromise !== undefined) {
-                playPromise.catch(error => {
-                  console.error("Error playing video:", error);
-                });
+        {/* Ended Events */}
+        {endedEvents.map((event) => (
+          <div 
+            key={`ended-${event.id}`}
+            className="flex items-center gap-2 bg-gradient-to-r from-red-50 to-transparent p-2.5 rounded-lg border-l-3 border-red-600 hover:shadow-md transition-all duration-300 opacity-80 group"
+            onMouseEnter={(e) => {
+              // Set global hovering state to pause slider
+              setIsAnyVideoHovered(true);
+              
+              const video = e.currentTarget.querySelector('video');
+              if (video) {
+                video.currentTime = 0;
+                const playPromise = video.play();
+                if (playPromise !== undefined) {
+                  playPromise.catch(error => {
+                    console.error("Error playing video:", error);
+                  });
+                }
               }
-            }
-          }}
-          onMouseLeave={(e) => {
-            // Reset global hovering state to resume slider
-            setIsAnyVideoHovered(false);
-            
-            const video = e.currentTarget.querySelector('video');
-            if (video) {
-              video.pause();
-              video.currentTime = 0;
-            }
-          }}
-        >
-          <div className="w-10 h-10 rounded-md flex-shrink-0 overflow-hidden">
-            <video 
-              src={getVideoSource(performingTeams.find(team => team.event === 'Fashion Walk')?.video || 'fashionwalk')}
-              className="w-full h-full object-cover"
-              muted
-              loop
-              playsInline
-              preload="auto"
-            ></video>
-          </div>
-          <div className="flex-grow">
-            <div className="flex items-center justify-between">
-              <h3 className="font-semibold text-sm">Fashion Walk</h3>
-              <div className="flex items-center gap-1 bg-green-100 px-1.5 py-0.5 rounded-full">
-                <span className="w-2 h-2 bg-green-500 rounded-full relative flex-shrink-0">
-                  <span className="absolute inset-0 bg-green-500 rounded-full animate-ping opacity-75"></span>
-                </span>
-                <span className="text-xs font-medium text-green-800">LIVE</span>
-              </div>
-            </div>
-            <p className="text-gray-500 text-xs">Engineering Block - CSE202</p>
-          </div>
-        </div>
-        
-        {/* Event 3 - Ended */}
-        <div 
-          className="flex items-center gap-2 bg-gradient-to-r from-red-50 to-transparent p-2.5 rounded-lg border-l-3 border-red-600 hover:shadow-md transition-all duration-300 opacity-80 group"
-          onMouseEnter={(e) => {
-            // Set global hovering state to pause slider
-            setIsAnyVideoHovered(true);
-            
-            const video = e.currentTarget.querySelector('video');
-            if (video) {
-              video.currentTime = 0;
-              const playPromise = video.play();
-              if (playPromise !== undefined) {
-                playPromise.catch(error => {
-                  console.error("Error playing video:", error);
-                });
+            }}
+            onMouseLeave={(e) => {
+              // Reset global hovering state to resume slider
+              setIsAnyVideoHovered(false);
+              
+              const video = e.currentTarget.querySelector('video');
+              if (video) {
+                video.pause();
+                video.currentTime = 0;
               }
-            }
-          }}
-          onMouseLeave={(e) => {
-            // Reset global hovering state to resume slider
-            setIsAnyVideoHovered(false);
-            
-            const video = e.currentTarget.querySelector('video');
-            if (video) {
-              video.pause();
-              video.currentTime = 0;
-            }
-          }}
-        >
-          <div className="w-10 h-10 rounded-md flex-shrink-0 overflow-hidden">
-            <video 
-              src={getVideoSource(performingTeams.find(team => team.status === 'ENDED')?.video || 'robowars')}
-              className="w-full h-full object-cover"
-              muted
-              loop
-              playsInline
-              preload="auto"
-            ></video>
-          </div>
-          <div className="flex-grow">
-            <div className="flex items-center justify-between">
-              <h3 className="font-semibold text-sm">Robo Wars & Robo Soccer</h3>
-              <div className="flex items-center gap-1 bg-red-100 px-1.5 py-0.5 rounded-full">
-                <span className="w-2 h-2 bg-red-500 rounded-full flex-shrink-0"></span>
-                <span className="text-xs font-medium text-red-800">ENDED</span>
-              </div>
+            }}
+          >
+            <div className="w-10 h-10 rounded-md flex-shrink-0 overflow-hidden">
+              <video 
+                src={getVideoSource(event.video)}
+                className="w-full h-full object-cover"
+                muted
+                loop
+                playsInline
+                preload="auto"
+              ></video>
             </div>
-            <p className="text-gray-500 text-xs">Student Center - SC105</p>
-          </div>
-        </div>
-        
-        {/* Event 4 - Ended */}
-        <div 
-          className="flex items-center gap-2 bg-gradient-to-r from-red-50 to-transparent p-2.5 rounded-lg border-l-3 border-red-600 hover:shadow-md transition-all duration-300 opacity-80 group"
-          onMouseEnter={(e) => {
-            // Set global hovering state to pause slider
-            setIsAnyVideoHovered(true);
-            
-            const video = e.currentTarget.querySelector('video');
-            if (video) {
-              video.currentTime = 0;
-              const playPromise = video.play();
-              if (playPromise !== undefined) {
-                playPromise.catch(error => {
-                  console.error("Error playing video:", error);
-                });
-              }
-            }
-          }}
-          onMouseLeave={(e) => {
-            // Reset global hovering state to resume slider
-            setIsAnyVideoHovered(false);
-            
-            const video = e.currentTarget.querySelector('video');
-            if (video) {
-              video.pause();
-              video.currentTime = 0;
-            }
-          }}
-        >
-          <div className="w-10 h-10 rounded-md flex-shrink-0 overflow-hidden">
-            <video 
-              src={getVideoSource(performingTeams.find(team => team.status === 'ENDED')?.video || 'dance')}
-              className="w-full h-full object-cover" 
-              muted 
-              loop 
-              playsInline
-              preload="auto"
-            ></video>
-          </div>
-          <div className="flex-grow">
-            <div className="flex items-center justify-between">
-              <h3 className="font-semibold text-sm">Eastern and Western Dance</h3>
-              <div className="flex items-center gap-1 bg-red-100 px-1.5 py-0.5 rounded-full">
-                <span className="w-2 h-2 bg-red-500 rounded-full flex-shrink-0"></span>
-                <span className="text-xs font-medium text-red-800">ENDED</span>
+            <div className="flex-grow">
+              <div className="flex items-center justify-between">
+                <h3 className="font-semibold text-sm">{event.event}</h3>
+                <div className="flex items-center gap-1 bg-red-100 px-1.5 py-0.5 rounded-full">
+                  <span className="w-2 h-2 bg-red-500 rounded-full flex-shrink-0"></span>
+                  <span className="text-xs font-medium text-red-800">ENDED</span>
+                </div>
               </div>
+              <p className="text-gray-500 text-xs">{event.location}</p>
             </div>
-            <p className="text-gray-500 text-xs">Science Block - PHY303</p>
           </div>
-        </div>
+        ))}
         
         {/* Coming up next banner */}
-        <div className="bg-gradient-to-r from-black/5 to-black/0 p-2 rounded-lg mt-3">
-          <div className="flex items-center text-xs font-medium text-black/70">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-3.5 h-3.5 mr-1.5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-            </svg>
-            Coming up next: Quiz Quest at 13:00 in PG Block - MCA402
+        {upNextEvents.length > 0 && (
+          <div className="bg-gradient-to-r from-black/5 to-black/0 p-2 rounded-lg mt-3">
+            <div className="flex items-center text-xs font-medium text-black/70">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-3.5 h-3.5 mr-1.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+              </svg>
+              Coming up next: {upNextEvents[0].event} at {upNextEvents[0].location}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     );
   }
   
-  // Function to render performing teams view
+  // Function to render teams view with list
   const renderTeamsView = () => {
+    // Show a message when there are no teams
+    if (noEventsData || performingTeams.length === 0) {
+      return (
+        <div className="h-full flex flex-col items-center justify-center text-center p-6">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 text-gray-300 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+          </svg>
+          <h3 className="text-lg text-gray-700 font-medium mb-2">No Performing Teams</h3>
+          <p className="text-gray-500 max-w-md mx-auto">
+            Team information is currently being updated. Check back soon to see which teams will be performing.
+          </p>
+        </div>
+      );
+    }
+
     return (
       <div className="h-full overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
         <p className="text-gray-500 text-sm mb-2 font-medium sticky top-0 bg-white z-10 py-1 shadow-sm">Performing teams</p>
@@ -629,22 +572,91 @@ export function SentiaMain() {
   };
 
   const [performingTeams, setPerformingTeams] = useState(getTeamsFromStorage());
+  const [noEventsData, setNoEventsData] = useState(false);
   
-  // Update performing teams whenever localStorage changes
+  // Update performing teams whenever data changes via Pusher or localStorage
   useEffect(() => {
+    // Initialize with data from localStorage
+    const teamsFromStorage = getTeamsFromStorage();
+    setPerformingTeams(teamsFromStorage);
+    setNoEventsData(teamsFromStorage.length === 0);
+    
+    // Handle localStorage changes (for compatibility with non-Pusher updates)
     const handleStorageChange = () => {
-      setPerformingTeams(getTeamsFromStorage());
+      const updatedTeams = getTeamsFromStorage();
+      setPerformingTeams(updatedTeams);
+      setNoEventsData(updatedTeams.length === 0);
     };
     
-    // Listen for storage events (when changes are made from admin panel)
+    // Subscribe to Pusher events for real-time updates
+    const channel = pusherClient.subscribe(EVENTS_CHANNEL);
+    
+    // Handler for when all events are updated
+    channel.bind(ALL_EVENTS_UPDATED, (data) => {
+      console.log('Real-time update: All events updated', data);
+      setPerformingTeams(data.events);
+      setNoEventsData(data.events.length === 0);
+      // Also update localStorage to keep it in sync
+      localStorage.setItem('sentiaLiveEvents', JSON.stringify(data.events));
+    });
+    
+    // Handler for when a single event is added
+    channel.bind(EVENT_ADDED, (data) => {
+      console.log('Real-time update: Event added', data);
+      setPerformingTeams(prevTeams => {
+        const updatedTeams = [...prevTeams, data.event];
+        // Also update localStorage to keep it in sync
+        localStorage.setItem('sentiaLiveEvents', JSON.stringify(updatedTeams));
+        return updatedTeams;
+      });
+      setNoEventsData(false);
+    });
+    
+    // Handler for when a single event is updated
+    channel.bind(EVENT_UPDATED, (data) => {
+      console.log('Real-time update: Event updated', data);
+      setPerformingTeams(prevTeams => {
+        const updatedTeams = prevTeams.map(team => 
+          team.id === data.event.id ? data.event : team
+        );
+        // Also update localStorage to keep it in sync
+        localStorage.setItem('sentiaLiveEvents', JSON.stringify(updatedTeams));
+        return updatedTeams;
+      });
+    });
+    
+    // Handler for when a single event is deleted
+    channel.bind(EVENT_DELETED, (data) => {
+      console.log('Real-time update: Event deleted', data);
+      setPerformingTeams(prevTeams => {
+        const updatedTeams = prevTeams.filter(team => team.id !== data.eventId);
+        // Also update localStorage to keep it in sync
+        localStorage.setItem('sentiaLiveEvents', JSON.stringify(updatedTeams));
+        setNoEventsData(updatedTeams.length === 0);
+        return updatedTeams;
+      });
+    });
+    
+    // Handler for when an event status is changed
+    channel.bind(EVENT_STATUS_CHANGED, (data) => {
+      console.log('Real-time update: Event status changed', data);
+      setPerformingTeams(prevTeams => {
+        const updatedTeams = prevTeams.map(team => 
+          team.id === data.eventId ? { ...team, status: data.newStatus } : team
+        );
+        // Also update localStorage to keep it in sync
+        localStorage.setItem('sentiaLiveEvents', JSON.stringify(updatedTeams));
+        return updatedTeams;
+      });
+    });
+    
+    // Listen for storage events (for cross-tab compatibility)
     window.addEventListener('storage', handleStorageChange);
     
-    // Check for updates every 10 seconds in case localStorage is updated in another tab
-    const intervalId = setInterval(handleStorageChange, 10000);
-    
+    // Cleanup function
     return () => {
+      pusherClient.unsubscribe(EVENTS_CHANNEL);
       window.removeEventListener('storage', handleStorageChange);
-      clearInterval(intervalId);
     };
   }, []);
 
@@ -1157,7 +1169,7 @@ export function SentiaMain() {
               <div className="bg-yellow-50 border-l-4 border-yellow-400 p-3 rounded">
                 <div className="flex items-center gap-2">
                   <svg className="h-4 w-4 text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 6a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 6zm0 9a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
+                    <path fillRule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 6a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 6zm5-1a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
                   </svg>
                   <p className="text-sm text-yellow-700">
                     <strong>Note:</strong> For assistance, contact the respective event coordinator. Details available in the Events section.

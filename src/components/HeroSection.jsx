@@ -42,6 +42,7 @@ const ClubLogoSizes = {
   lg: 'https://res.cloudinary.com/dqmryiyhz/image/upload/w_280,q_auto,f_auto/v1742053263/sentia/k7hohwsicphkud5msxkz.png'
 };
 
+
 // Cloudinary configuration for video only
 const CLOUDINARY_CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || 'dqmryiyhz'; 
 
@@ -51,6 +52,7 @@ const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 // Direct video URL as requested by user - with transcoding parameters for better compatibility
 const videoUrl = 'https://res.cloudinary.com/dqmryiyhz/video/upload/q_auto:good,vc_auto/v1742035121/sentia/ixpbo4budsp7epswcf3u.mp4';
 const videoUrlMobile = 'https://res.cloudinary.com/dqmryiyhz/video/upload/q_auto:good,vc_auto,w_640/v1742035121/sentia/ixpbo4budsp7epswcf3u.mp4';
+
 
 export function HeroSection() {
   const [videoLoaded, setVideoLoaded] = useState(false);

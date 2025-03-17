@@ -7,6 +7,25 @@ import { Timeline } from "./ui/timeline";
 
 import HeroImage from '/assets/mite123.png';
 
+import Memories20121 from '/assets/Memories/2011/imagenew.png';
+import Memories20122 from '/assets/Memories/2011/imagenew1.png';
+import Memories20131 from '/assets/Memories/2013/image3.jpg';
+import Memories20132 from '/assets/Memories/2013/image7.jpg';
+import Memories20141 from '/assets/Memories/2014/image6.jpg';
+import Memories20151 from '/assets/Memories/2015/image2.jpg';
+import Memories20152 from '/assets/Memories/2015/image1.jpg';
+import Memories20161 from '/assets/Memories/2016/image32.jpg';
+import Memories20162 from '/assets/Memories/2016/image4.jpg';
+import Memories20191 from '/assets/Memories/2019/image1.jpg';
+import Memories20192 from '/assets/Memories/2019/image5.jpg';
+import Memories20193 from '/assets/Memories/2019/image3.jpg';
+import Memories20194 from '/assets/Memories/2019/image2.jpg';
+
+import Memories20241 from '/assets/sentia2024/image7.jpg';
+import Memories20242 from '/assets/sentia2024/image9.jpg';
+import Memories20243 from '/assets/sentia2024/image2.jpg';
+import Memories20244 from '/assets/sentia2024/image13.jpg';
+import Memories20245 from '/assets/sentia2024/image15.png';
 // Create the TimelineDemo component inline
 const TimelineDemo = () => {
   const data = [
@@ -19,7 +38,7 @@ const TimelineDemo = () => {
           </p>
           <div className="grid grid-cols-2 gap-4">
             <motion.img
-              src="/src/assets/Memories/2011/image1.jpg"
+              src={Memories20121}
               alt="Sentia 2012"
               className="rounded-lg object-cover h-20 md:h-44 w-full"
               initial={{ opacity: 0, scale: 0.8 }}
@@ -28,7 +47,7 @@ const TimelineDemo = () => {
               viewport={{ once: true }}
             />
             <motion.img
-              src="/src/assets/Memories/2011/image2.jpg"
+              src={Memories20122}
               alt="Sentia 2012"
               className="rounded-lg object-cover h-20 md:h-44 w-full"
               initial={{ opacity: 0, scale: 0.8 }}
@@ -41,7 +60,7 @@ const TimelineDemo = () => {
       ),
     },
     {
-      title: "2013-2015",
+      title: "2013-2014",
       content: (
         <div>
           <p className="text-neutral-800 dark:text-neutral-200 text-sm font-normal mb-4">
@@ -49,7 +68,7 @@ const TimelineDemo = () => {
           </p>
           <div className="grid grid-cols-2 gap-2 md:gap-4">
             <motion.img
-              src="/src/assets/Memories/2013/image1.jpg"
+              src={Memories20131}
               alt="Sentia 2013"
               className="rounded-lg object-cover h-20 md:h-44 w-full"
               initial={{ opacity: 0, scale: 0.8 }}
@@ -58,7 +77,7 @@ const TimelineDemo = () => {
               viewport={{ once: true }}
             />
             <motion.img
-              src="/src/assets/Memories/2014/image1.jpg"
+              src={Memories20132}
               alt="Sentia 2014"
               className="rounded-lg object-cover h-20 md:h-44 w-full"
               initial={{ opacity: 0, scale: 0.8 }}
@@ -67,7 +86,7 @@ const TimelineDemo = () => {
               viewport={{ once: true }}
             />
             <motion.img
-              src="/src/assets/Memories/2015/image1.jpg"
+              src={Memories20141}
               alt="Sentia 2015"
               className="rounded-lg object-cover h-20 md:h-44 w-full col-span-2"
               initial={{ opacity: 0, scale: 0.8 }}
@@ -80,15 +99,15 @@ const TimelineDemo = () => {
       ),
     },
     {
-      title: "2016-2019",
+      title: "2015-2016",
       content: (
         <div>
           <p className="text-neutral-800 dark:text-neutral-200 text-sm font-normal mb-4">
             The festival gained recognition across the region with over 2000 participants annually. Celebrity performances and sponsored technical events became a highlight.
           </p>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-2">
             <motion.img
-              src="/src/assets/Memories/2016/image1.jpg"
+              src={Memories20151}
               alt="Sentia 2016-2019"
               className="rounded-lg object-cover h-20 md:h-44 w-full"
               initial={{ opacity: 0, scale: 0.8 }}
@@ -97,7 +116,7 @@ const TimelineDemo = () => {
               viewport={{ once: true }}
             />
             <motion.img
-              src="/src/assets/Memories/2019/image1.jpg"
+              src={Memories20152}
               alt="Sentia 2016-2019"
               className="rounded-lg object-cover h-20 md:h-44 w-full"
               initial={{ opacity: 0, scale: 0.8 }}
@@ -105,12 +124,30 @@ const TimelineDemo = () => {
               transition={{ duration: 0.5, delay: 0.2 }}
               viewport={{ once: true }}
             />
+            <motion.img
+              src={Memories20161}
+              alt="Sentia 2016-2019"
+              className="rounded-lg object-cover h-20 md:h-44 w-full"
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              viewport={{ once: true }}
+            />
+            <motion.img
+              src={Memories20162}
+              alt="Sentia 2016-2019"
+              className="rounded-lg object-cover h-20 md:h-44 w-full"
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              viewport={{ once: true }}
+            />
           </div>
         </div>
       ),
     },
     {
-      title: "2020-2022",
+      title: "2017-2020",
       content: (
         <div>
           <p className="text-neutral-800 dark:text-neutral-200 text-sm font-normal mb-4">
@@ -118,7 +155,7 @@ const TimelineDemo = () => {
           </p>
           <div className="grid grid-cols-2 gap-4">
             <motion.img
-              src="/src/assets/sentia2024/image7.jpg"
+              src={Memories20194}
               alt="Sentia 2020-2022"
               className="rounded-lg object-cover h-20 md:h-44 w-full"
               initial={{ opacity: 0, scale: 0.8 }}
@@ -127,7 +164,7 @@ const TimelineDemo = () => {
               viewport={{ once: true }}
             />
             <motion.img
-              src="/src/assets/sentia2024/image9.jpg"
+              src={Memories20193}
               alt="Sentia 2020-2022"
               className="rounded-lg object-cover h-20 md:h-44 w-full"
               initial={{ opacity: 0, scale: 0.8 }}
@@ -135,18 +172,36 @@ const TimelineDemo = () => {
               transition={{ duration: 0.5, delay: 0.2 }}
               viewport={{ once: true }}
             />
+            <motion.img
+              src={Memories20191}
+              alt="Sentia 2020-2022"
+              className="rounded-lg object-cover h-20 md:h-44 w-full"
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              viewport={{ once: true }}
+            />
+            <motion.img
+              src={Memories20192}
+              alt="Sentia 2020-2022"
+              className="rounded-lg object-cover h-20 md:h-44 w-full"
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              viewport={{ once: true }}
+            />
           </div>
         </div>
       ),
     },
     {
-      title: "2023-2024",
+      title: "2021-2023",
       content: (
         <div>
           <p className="text-neutral-800 dark:text-neutral-200 text-sm font-normal mb-4">
             Sentia returned to campus with renewed energy, combining the best of physical and digital formats, attracting over 5000 participants from across the country.
           </p>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-2">
             <motion.img
               src="/src/assets/sentia2024/image1.jpg"
               alt="Sentia 2023-2024"
@@ -165,6 +220,90 @@ const TimelineDemo = () => {
               transition={{ duration: 0.5, delay: 0.2 }}
               viewport={{ once: true }}
             />
+            <motion.img
+              src="/src/assets/sentia2024/image4.jpg"
+              alt="Sentia 2023-2024"
+              className="rounded-lg object-cover h-20 md:h-44 w-full"
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              viewport={{ once: true }}
+            />
+            <motion.img
+              src="/src/assets/sentia2024/image5.jpg"
+              alt="Sentia 2023-2024"
+              className="rounded-lg object-cover h-20 md:h-44 w-full"
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              viewport={{ once: true }}
+            />
+            <motion.img
+              src="/src/assets/sentia2024/image6.jpg"
+              alt="Sentia 2023-2024"
+              className="rounded-lg object-cover h-20 md:h-44 w-full"
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+              viewport={{ once: true }}
+            />
+          </div>
+        </div>
+      ),
+    },
+    {
+      title: "2024",
+      content: (
+        <div>
+          <p className="text-neutral-800 dark:text-neutral-200 text-sm font-normal mb-4">
+            Sentia 2024 was a spectacular event showcasing a plethora of talent. The festival featured an array of performances, competitions, and workshops that captivated the audience. One of the highlights was the DJ night, where everyone enjoyed and danced the night away, creating unforgettable memories.
+          </p>
+          <div className="grid grid-cols-2 gap-2">
+            <motion.img
+              src={Memories20241}
+              alt="Sentia 2023-2024"
+              className="rounded-lg object-cover h-20 md:h-44 w-full"
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
+            />
+            <motion.img
+              src={Memories20242}
+              alt="Sentia 2023-2024"
+              className="rounded-lg object-cover h-20 md:h-44 w-full"
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              viewport={{ once: true }}
+            />
+            <motion.img
+              src={Memories20243}
+              alt="Sentia 2023-2024"
+              className="rounded-lg object-cover h-20 md:h-44 w-full"
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              viewport={{ once: true }}
+            />
+            <motion.img
+              src={Memories20245}
+              alt="Sentia 2023-2024"
+              className="rounded-lg object-cover h-20 md:h-44 w-full"
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              viewport={{ once: true }}
+            />
+            <motion.img
+              src={Memories20244}
+              alt="Sentia 2023-2024"
+              className="rounded-lg object-cover h-20 md:h-44 w-full col-span-2"
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+              viewport={{ once: true }}
+            />
           </div>
         </div>
       ),
@@ -178,87 +317,7 @@ const TimelineDemo = () => {
   );
 };
 
-// Import images for 2012 from the Memories/2011 folder
-import image2012_1 from '../assets/Memories/2011/image1.jpg';
-import image2012_2 from '../assets/Memories/2011/image2.jpg';
-import image2012_3 from '../assets/Memories/2011/image3.jpg';
-import image2012_4 from '../assets/Memories/2011/image4.jpg';
-import image2012_5 from '../assets/Memories/2011/image5.jpg';
-import image2012_6 from '../assets/Memories/2011/image6.jpg';
-import image2012_7 from '../assets/Memories/2011/image7.jpg';
-import image2012_8 from '../assets/Memories/2011/image8.jpg';
-import image2012_9 from '../assets/Memories/2011/image9.jpg';
 
-// Import images for 2013 from the Memories/2013 folder
-import image2013_1 from '../assets/Memories/2013/image1.jpg';
-import image2013_2 from '../assets/Memories/2013/image2.jpg';
-import image2013_3 from '../assets/Memories/2013/image3.jpg';
-import image2013_4 from '../assets/Memories/2013/image4.jpg';
-import image2013_5 from '../assets/Memories/2013/image5.jpg';
-import image2013_6 from '../assets/Memories/2013/image6.jpg';
-import image2013_7 from '../assets/Memories/2013/image7.jpg';
-import image2013_8 from '../assets/Memories/2013/image8.jpg';
-
-// Import images for 2014 from the Memories/2014 folder
-import image2014_1 from '../assets/Memories/2014/image1.jpg';
-import image2014_2 from '../assets/Memories/2014/image2.jpg';
-import image2014_3 from '../assets/Memories/2014/image3.jpg';
-import image2014_4 from '../assets/Memories/2014/image4.jpg';
-import image2014_5 from '../assets/Memories/2014/image5.jpg';
-import image2014_6 from '../assets/Memories/2014/image6.jpg';
-import image2014_7 from '../assets/Memories/2014/image7.jpg';
-import image2014_8 from '../assets/Memories/2014/image8.jpg';
-
-// Import images for 2015 from the Memories/2015 folder
-import image2015_1 from '../assets/Memories/2015/image1.jpg';
-import image2015_2 from '../assets/Memories/2015/image2.jpg';
-import image2015_3 from '../assets/Memories/2015/image3.jpg';
-import image2015_4 from '../assets/Memories/2015/image4.jpg';
-import image2015_5 from '../assets/Memories/2015/image5.jpg';
-
-// Import images for 2016 from the Memories/2016 folder
-import image2016_1 from '../assets/Memories/2016/image1.jpg';
-import image2016_2 from '../assets/Memories/2016/image2.jpg';
-import image2016_3 from '../assets/Memories/2016/image3.jpg';
-import image2016_4 from '../assets/Memories/2016/image4.jpg';
-import image2016_5 from '../assets/Memories/2016/image5.jpg';
-import image2016_6 from '../assets/Memories/2016/image6.jpg';
-import image2016_7 from '../assets/Memories/2016/image7.jpg';
-import image2016_8 from '../assets/Memories/2016/image8.jpg';
-import image2016_9 from '../assets/Memories/2016/image9.jpg';
-import image2016_10 from '../assets/Memories/2016/image10.jpg';
-import image2016_11 from '../assets/Memories/2016/image11.jpg';
-import image2016_12 from '../assets/Memories/2016/image12.jpg';
-import image2016_13 from '../assets/Memories/2016/image13.jpg';
-import image2016_14 from '../assets/Memories/2016/image14.jpg';
-import image2016_15 from '../assets/Memories/2016/image15.jpg';
-import image2016_16 from '../assets/Memories/2016/image16.jpg';
-import image2016_17 from '../assets/Memories/2016/image17.jpg';
-import image2016_18 from '../assets/Memories/2016/image18.jpg';
-import image2016_19 from '../assets/Memories/2016/image19.jpg';
-import image2016_20 from '../assets/Memories/2016/image20.jpg';
-import image2016_21 from '../assets/Memories/2016/image21.jpg';
-import image2016_22 from '../assets/Memories/2016/image22.jpg';
-import image2016_23 from '../assets/Memories/2016/image23.jpg';
-import image2016_24 from '../assets/Memories/2016/image24.jpg';
-import image2016_25 from '../assets/Memories/2016/image25.jpg';
-import image2016_26 from '../assets/Memories/2016/image26.jpg';
-import image2016_27 from '../assets/Memories/2016/image27.jpg';
-import image2016_28 from '../assets/Memories/2016/image28.jpg';
-import image2016_29 from '../assets/Memories/2016/image29.jpg';
-import image2016_30 from '../assets/Memories/2016/image30.jpg';
-import image2016_31 from '../assets/Memories/2016/image31.jpg';
-import image2016_32 from '../assets/Memories/2016/image32.jpg';
-import image2016_33 from '../assets/Memories/2016/image33.jpg';
-
-// Import images for 2019 from the Memories/2019 folder
-import image2019_1 from '../assets/Memories/2019/image1.jpg';
-import image2019_2 from '../assets/Memories/2019/image2.jpg';
-import image2019_3 from '../assets/Memories/2019/image3.jpg';
-import image2019_4 from '../assets/Memories/2019/image4.jpg';
-import image2019_5 from '../assets/Memories/2019/image5.jpg';
-import image2019_6 from '../assets/Memories/2019/image6.jpg';
-import image2019_7 from '../assets/Memories/2019/image7.jpg';
 
 export function OldMemories() {
   // Scroll to top when component mounts
