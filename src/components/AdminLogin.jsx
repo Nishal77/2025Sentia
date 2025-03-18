@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 // Mock admin credentials - in a real app, this would be handled by a secure backend
 const ADMIN_EMAIL = "admin@sentia.com";
-const ADMIN_PASSWORD = "Sentia2025!";
+const ADMIN_PASSWORD = "sentia2025";
 
 export function AdminLogin() {
   const [email, setEmail] = useState('');
@@ -23,7 +23,7 @@ export function AdminLogin() {
         
         // If logged in and session not older than 4 hours
         if (isLoggedIn && Date.now() - timestamp <= fourHoursInMs) {
-          navigate('/admin/dashboard');
+          navigate('/adminpanel/dashboard');
         }
       } catch (error) {
         console.error('Auth data parsing error:', error);
@@ -32,42 +32,26 @@ export function AdminLogin() {
     }
   }, [navigate]);
   
-  const handleLogin = async (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
-    setError('');
     setLoading(true);
     
-    // Basic validation
-    if (!email.trim()) {
-      setError('Email is required');
-      setLoading(false);
-      return;
-    }
-    
-    if (!password) {
-      setError('Password is required');
-      setLoading(false);
-      return;
-    }
-    
-    // Simulate network delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    // Check credentials
+    // Simple authentication check - in a real app, this would be a backend call
     if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
-      // Save auth status to localStorage with timestamp and email
-      localStorage.setItem('sentiaAdminAuth', JSON.stringify({
+      // Store auth info in localStorage with timestamp
+      const authData = {
         isLoggedIn: true,
         timestamp: Date.now(),
         email: email
-      }));
+      };
+      localStorage.setItem('sentiaAdminAuth', JSON.stringify(authData));
       
-      navigate('/admin/dashboard');
+      // Redirect to admin dashboard
+      navigate('/adminpanel/dashboard');
     } else {
       setError('Invalid email or password');
+      setLoading(false);
     }
-    
-    setLoading(false);
   };
   
   return (

@@ -18,9 +18,8 @@ function App() {
         <Route path="/oldmemories" element={<OldMemories />} />
         
         {/* Admin Routes */}
-        <Route path="/adminpanel" element={<Navigate to="/admin/login" replace />} />
-        <Route path="/admin/login" element={<AdminLogin />} />
-        <Route path="/admin/dashboard" element={<AdminHome />} />
+        <Route path="/adminpanel" element={<AdminLogin />} />
+        <Route path="/adminpanel/dashboard" element={<AdminHome />} />
       </Routes>
     </Router>
   )

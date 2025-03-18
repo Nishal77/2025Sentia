@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import apiService from '../utils/apiService';
 
 // Import any required video assets
-import drum from '../assets/drum.mp4';
-import fashionwalk from '../assets/fashionwalk.mp4';
-import robowars from '../assets/robowars.mp4';
-import dance from '../assets/dance.mp4';
+import drum from '/assets/drum.mp4';
+import fashionwalk from '/assets/fashionwalk.mp4';
+import robowars from '/assets/robowars.mp4';
+import dance from '/assets/dance.mp4';
 
 // Helper function to save data to localStorage
 const saveEventsToLocalStorage = (events) => {
@@ -149,7 +149,7 @@ export function AdminHome() {
     const checkAuth = () => {
       const authData = localStorage.getItem('sentiaAdminAuth');
       if (!authData) {
-        navigate('/admin/login');
+        navigate('/adminpanel');
         return;
       }
       
@@ -160,7 +160,7 @@ export function AdminHome() {
         // If not logged in or session older than 4 hours
         if (!isLoggedIn || Date.now() - timestamp > fourHoursInMs) {
           localStorage.removeItem('sentiaAdminAuth');
-          navigate('/admin/login');
+          navigate('/adminpanel');
         } else {
           setIsLoading(false);
           setAdminInfo({
@@ -171,7 +171,7 @@ export function AdminHome() {
       } catch (error) {
         console.error('Auth data parsing error:', error);
         localStorage.removeItem('sentiaAdminAuth');
-        navigate('/admin/login');
+        navigate('/adminpanel');
       }
     };
     
@@ -749,7 +749,7 @@ export function AdminHome() {
   
   const handleLogout = () => {
     localStorage.removeItem('sentiaAdminAuth');
-    navigate('/admin/login');
+    navigate('/adminpanel');
   };
   
   // Add a function to show toast notifications

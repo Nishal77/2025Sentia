@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import Footer from './Footer';
 import pusherClient from '../utils/pusherClient';
 import { EVENTS_CHANNEL, ALL_EVENTS_UPDATED, EVENT_ADDED, EVENT_UPDATED, EVENT_DELETED, EVENT_STATUS_CHANGED } from '../utils/pusher';
+import Countdown, { MiniCountdown } from './Countdown';
 
 import Sonisoni from '../assets/Songs/Sonisoni.mp3';
 import WhatJhumka from '../assets/Songs/WhatJhumka320.mp3';
@@ -16,14 +17,20 @@ import TheBreakupSong from '../assets/Songs/TheBreakupSong.mp3';
 
 // With Cloudinary video URL
 // import Sentia2025 from '../assets/Sentia2025.mp4'; // Removed local import
-const Sentia2025 = 'https://res.cloudinary.com/dqmryiyhz/video/upload/v1742053509/sentia/bybm497cwxns4ebxewm1.mp4';
+const Sentia2025 = 'https://res.cloudinary.com/dqmryiyhz/video/upload/v1742270393/sentia/xlnc53qccudeyxw96g1l.mp4';
 
-import drum from '../assets/drum.mp4';
-import fashionwalk from '../assets/fashionwalk.mp4';
-import robowars from '../assets/robowars.mp4';
-import dance from '../assets/dance.mp4';
+import drum from '/assets/drum.mp4';
+import fashionwalk from '/assets/fashionwalk.mp4';
+import robowars from '/assets/robowars.mp4';
+import dance from '/assets/dance.mp4';
 import SentiaDressUpdate from '/assets/SentiaDressUpdate.mp4'; 
 
+// Random contacts data
+const contacts = [
+  { name: "Prakyath Shetty", phone: "+91 9353528465" },
+  { name: "Sanjana", phone: "+91 9606632307" },
+
+];
 
 // Cloudinary URL for SentiaDressUpdate
 //const SentiaDressUpdate = 'https://res.cloudinary.com/dqmryiyhz/video/upload/v1742054083/sentia/sitpekusuf2gx3gcghse.mp4';
@@ -130,6 +137,64 @@ const getVideoSource = (videoType) => {
 };
 
 export function SentiaMain() {
+  const [activeView, setActiveView] = useState('events');
+  const [events, setEvents] = useState([]);
+  const [isVideoHovered, setIsVideoHovered] = useState(false);
+  const [currentAudio, setCurrentAudio] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [volume, setVolume] = useState(0.5);
+  const [songIndex, setSongIndex] = useState(0);
+  const audioRef = useRef(null);
+  const [videoEnded, setVideoEnded] = useState(false);
+  const songs = [Sonisoni, WhatJhumka, TheBreakupSong];
+  
+  // State for contact popup
+  const [isContactPopupOpen, setIsContactPopupOpen] = useState(false);
+  const [randomContacts, setRandomContacts] = useState([]);
+  
+  // Function to get random contacts
+  const getRandomContacts = () => {
+    const shuffled = [...contacts].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, 2); // Get 2 random contacts
+  };
+  
+  // Function to get current song name
+  const getCurrentSongName = () => {
+    const songNames = ["Soni Soni", "What Jhumka", "The Breakup Song"];
+    return songNames[songIndex];
+  };
+  
+  // Function to go to previous song
+  const prevSong = () => {
+    const newIndex = (songIndex - 1 + songs.length) % songs.length;
+    setSongIndex(newIndex);
+    if (isPlaying) {
+      setTimeout(() => {
+        audioRef.current.play();
+      }, 100);
+    }
+  };
+  
+  // Function to go to next song
+  const nextSong = () => {
+    const newIndex = (songIndex + 1) % songs.length;
+    setSongIndex(newIndex);
+    if (isPlaying) {
+      setTimeout(() => {
+        audioRef.current.play();
+      }, 100);
+    }
+  };
+  
+  // Function to handle volume change
+  const handleVolumeChange = (e) => {
+    const newVolume = parseFloat(e.target.value);
+    setVolume(newVolume);
+    if (audioRef.current) {
+      audioRef.current.volume = newVolume;
+    }
+  };
+
   // Scroll to top when component mounts
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -137,7 +202,6 @@ export function SentiaMain() {
 
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
   const [isAnyVideoHovered, setIsAnyVideoHovered] = useState(false);
   const [currentSong, setCurrentSong] = useState({
     id: 0,
@@ -151,7 +215,6 @@ export function SentiaMain() {
   const [liveEventsView, setLiveEventsView] = useState('events'); // 'events' or 'teams'
   const [liveEventsVisible, setLiveEventsVisible] = useState(true);
   
-  const audioRef = useRef(null);
   const intervalRef = useRef(null);
   const sliderTimeoutRef = useRef(null);
   
@@ -1429,34 +1492,40 @@ export function SentiaMain() {
               </div>
               
               <div className="space-y-3 mt-auto">
-              <div className="bg-yellow-50 border-l-4 border-yellow-400 p-3 rounded">
-                <div className="flex items-center gap-2">
-                  <svg className="h-4 w-4 text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 6a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 6zm5-1a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
+              <button 
+                  disabled
+                  className="w-full px-5 py-4 bg-gray-400 text-white rounded-md flex items-center justify-center cursor-not-allowed opacity-70"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10" />
                   </svg>
-                  <p className="text-sm text-yellow-700">
-                    <strong>Note:</strong> For assistance, contact the respective event coordinator. Details available in the Events section.
-                  </p>
-                </div>
-              </div>
-              <Button className="w-full bg-indigo-600 hover:bg-indigo-700 text-white rounded-full py-5 px-6 flex items-center justify-center gap-2">
-                  <span>Event Proofs (Coming Soon)</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 9.75a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375m-13.5 3.01c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.184-4.183a1.14 1.14 0 0 1 .778-.332 48.294 48.294 0 0 0 5.83-.498c1.585-.233 2.708-1.626 2.708-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
+                  Event Proofs 
+                  <MiniCountdown />
+                </button>
+
+                <button 
+                  onClick={() => {
+                    setRandomContacts(getRandomContacts());
+                    setIsContactPopupOpen(true);
+                  }}
+                  className="w-full px-5 py-4 bg-[rgb(61,6,246)] hover:bg-blue-700 text-white rounded-md transition-colors duration-200 flex items-center justify-center"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                   </svg>
-                </Button>
-
-                
-
+                  Contact Student Coordinators
+                </button>
                 
                 <Link to="/register">
-                  <Button className="w-full bg-indigo-600 hover:bg-indigo-700 text-white rounded-full py-5 px-6 flex items-center justify-center gap-2">
-                    <span>Register now</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM4 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 10.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
+                  <button className="w-full px-5 py-4 bg-[rgb(61,6,246)] hover:bg-blue-700 text-white rounded-md transition-colors duration-200 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
                     </svg>
-                  </Button>
+                    Register Now
+                  </button>
                 </Link>
+                
+                
               </div>
             </div>
           </div>
@@ -1527,6 +1596,131 @@ export function SentiaMain() {
           animation: fadeIn 0.3s ease forwards;
         }
       `}</style>
+      
+      {/* Music player */}
+      <div className={`fixed bottom-0 left-0 right-0 bg-gray-900 text-white p-3 transform transition-transform duration-300 ${isPlaying ? 'translate-y-0' : 'translate-y-full'}`}>
+        <div className="flex items-center justify-between max-w-7xl mx-auto">
+          <div className="flex items-center">
+            <button 
+              onClick={togglePlay}
+              className="rounded-full bg-white/10 p-2 mr-3 hover:bg-white/20 transition-colors"
+            >
+              {isPlaying ? (
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              ) : (
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              )}
+            </button>
+            
+            <div>
+              <p className="text-sm font-medium">Now Playing:</p>
+              <p className="text-xs opacity-70">{getCurrentSongName()}</p>
+            </div>
+          </div>
+          
+          <div className="flex items-center space-x-3">
+            <button 
+              onClick={prevSong}
+              className="rounded-full bg-white/10 p-2 hover:bg-white/20 transition-colors"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            
+            <button 
+              onClick={nextSong}
+              className="rounded-full bg-white/10 p-2 hover:bg-white/20 transition-colors"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+            
+            <div className="flex items-center space-x-1">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15.465a5 5 0 001.06-7.001 5.006 5.006 0 00-7.001 1.06m2.828 9.9a9 9 0 01-2.828-12.728 9.03 9.03 0 013.994-2.93" />
+              </svg>
+              <input 
+                type="range" 
+                min="0" 
+                max="1" 
+                step="0.01" 
+                value={volume}
+                onChange={handleVolumeChange}
+                className="w-20 h-1 bg-white/30 rounded-full appearance-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white"
+              />
+            </div>
+            
+            <button 
+              onClick={() => setIsPlaying(false)}
+              className="rounded-full bg-white/10 p-2 hover:bg-white/20 transition-colors ml-2"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      {/* Contact Popup */}
+      {isContactPopupOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ backgroundColor: 'rgba(61, 6, 246, 0.3)' }}>
+          <div className="bg-white rounded-lg shadow-xl max-w-md w-full overflow-hidden border border-gray-300 animate-in fade-in zoom-in duration-200">
+            <div className="p-5" style={{ backgroundColor: 'rgb(61, 6, 246)', color: 'white' }}>
+              <div className="flex justify-between items-center">
+                <h3 className="text-lg font-semibold">Student Coordinators</h3>
+                <button 
+                  onClick={() => setIsContactPopupOpen(false)}
+                  className="text-white/70 hover:text-white transition-colors"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+            
+            <div className="p-5">
+              <p className="text-gray-700 mb-5">Contact our student coordinators for more information:</p>
+              
+              <div className="space-y-4">
+                {randomContacts.map((contact, index) => (
+                  <div key={index} className="flex items-center p-3 bg-gray-100 rounded-lg border border-gray-300">
+                    <div className="rounded-full p-3 mr-4" style={{ backgroundColor: 'rgb(61, 6, 246)' }}>
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="font-medium" style={{ color: 'rgb(61, 6, 246)' }}>{contact.name}</p>
+                      <p className="text-gray-700">{contact.phone}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              
+              <div className="mt-6 flex justify-end">
+                <button
+                  onClick={() => setIsContactPopupOpen(false)}
+                  className="px-4 py-2 rounded-md text-white transition-colors duration-200"
+                  style={{ backgroundColor: 'rgb(61, 6, 246)', hover: { backgroundColor: 'rgba(61, 6, 246, 0.8)' } }}
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      
+      <audio ref={audioRef} src={songs[songIndex]} />
     </div>
   );
 } 
