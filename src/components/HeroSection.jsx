@@ -8,6 +8,8 @@ import { motion } from 'framer-motion';
 // import MiteLogo from '../assets/MITELogomain.png'; // Removed local import
 // import ClubLogo from '../assets/clubmite.png'; // Removed local import
 
+import HeroBackground from '/assets/herobg123.jpg';
+
 // Cloudinary URLs for assets
 const SentiaLogo = 'https://res.cloudinary.com/dqmryiyhz/image/upload/v1742037206/sentia/ok4az4bo05nmgeiq6bzo.png';
 const SentiaLogoSizes = {
@@ -242,50 +244,13 @@ export function HeroSection() {
 
   return (
     <section className="overflow-hidden">
-      {/* Video background with enhanced sources */}
-      <div ref={containerRef} className="absolute inset-0 z-0 bg-black/60"> 
-        {!videoError && (
-          <>
-            <video
-              ref={videoRef}
-              className={`w-full h-full object-cover transition-opacity duration-500 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
-              autoPlay
-              loop
-              muted
-              playsInline
-              controls={false}
-              disablePictureInPicture
-              disableRemotePlayback
-              preload="auto"
-              fetchPriority="high"
-              onCanPlay={handleCanPlay}
-              onLoadedData={handleLoadedData}
-              onError={handleVideoError}
-              onClick={attemptPlay}
-              onEnded={handleVideoEnded}
-              src={isMobile ? videoUrlMobile : videoUrl}
-              type="video/mp4"
-            />
-            
-            {/* Play button overlay - appears if autoplay fails */}
-            {showPlayButton && (
-              <div 
-                className="absolute inset-0 flex items-center justify-center bg-black/30 z-10 cursor-pointer"
-                onClick={attemptPlay}
-              >
-                <div className="bg-white/20 backdrop-blur-sm p-6 rounded-full">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" className="w-12 h-12">
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
-                </div>
-                <span className="absolute bottom-10 text-white text-lg font-medium">
-                  Tap to play video
-                </span>
-              </div>
-            )}
-          </>
-        )}
-        
+      {/* Background image */}
+      <div ref={containerRef} className="absolute inset-0 z-0 bg-black/60">
+        <img
+          src={HeroBackground}
+          alt="Hero Background"
+          className="w-full h-full object-cover"
+        />
         {/* Black overlay for better content visibility */}
         <div className="absolute inset-0 bg-black/30"></div>
       </div>
