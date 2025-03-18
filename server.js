@@ -11,18 +11,16 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, 'build')));
+
+// Serve static files from the build/dist directory
+app.use(express.static(path.join(__dirname, 'dist')));
 
 // Initialize Ably
 const ably = new Ably.Rest({
   key: "TejSQw.Me5e8A:uP3cFGffiIKloex2SLWZZabVLxxZYJmOEmor8mZB3Fs"
 });
 
-// Route to serve the React app
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
-
+// API Routes
 // Route to handle event updates
 app.post('/api/events/update', (req, res) => {
   try {
@@ -75,6 +73,11 @@ app.post('/api/events/updateAll', (req, res) => {
     console.error('Error updating all events:', error);
     return res.status(500).json({ error: 'Failed to update all events' });
   }
+});
+
+// Serve React app for any other route (SPA routing)
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
 // Listen on port 5000

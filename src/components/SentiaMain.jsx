@@ -1177,7 +1177,7 @@ export function SentiaMain() {
                     </div>
                     <div>
                       <p className="text-gray-700">
-                      Inaugural Ceremony, followed by dance performances, Robowar, Robo Soccer, faculty act, and Battle of Bands.
+                      Inaugural Ceremony followed by dance performances, Robowar, Robo Soccer, faculty act, and Battle of Bands.
                       </p>
                     </div>
                   </div>
