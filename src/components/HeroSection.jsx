@@ -9,6 +9,7 @@ import { motion } from 'framer-motion';
 // import ClubLogo from '../assets/clubmite.png'; // Removed local import
 
 import HeroBackground from '/assets/herobg123.jpg';
+import SentiaLogoUpdated from '/assets/sentialogo.png';
 
 // Cloudinary URLs for assets
 const SentiaLogo = 'https://res.cloudinary.com/dqmryiyhz/image/upload/v1742037206/sentia/ok4az4bo05nmgeiq6bzo.png';
@@ -334,7 +335,7 @@ export function HeroSection() {
       </div>
       {/* Content container */}
       <div className="container mx-auto max-w-7xl relative z-10 py-15 min-h-screen flex flex-col justify-center">
-        <div className="flex flex-col items-center justify-center text-center mt-20">
+      <div className="flex flex-col items-center justify-center text-center mt-20">
           <img 
             src={SentiaLogo}
             srcSet={`

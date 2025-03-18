@@ -189,40 +189,28 @@ const SimpleEventCard = ({ id, title, description, time, building, roomNumber, d
           </p>
         </div>
         
-        {id === 'battle-of-bands' || id === 'fashion-walk' ? (
-          <button 
-            className="w-full mt-4 bg-red-600 text-white py-2 text-sm font-medium rounded-lg cursor-not-allowed"
-            disabled
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 inline-block mr-2">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-            Registration Closed
-          </button>
-        ) : (
-          <button 
-            className="w-full mt-4 bg-black hover:bg-gray-800 text-white py-2 text-sm font-medium transition-colors rounded-lg"
-            onClick={() => {
-              if (id === 'quiz-quest') {
-                window.open('https://docs.google.com/forms/d/e/1FAIpQLSeDnWEjjGqzTYJNqLWi3PpTLEpAFrttBKYeLzVXzUaqRSYdzg/viewform', '_blank');
-              } 
-              else if (id === 'master-minds') {
-                window.open('https://docs.google.com/forms/d/e/1FAIpQLSdeuPzFc9YTha_jDPjiFmo-4mR0e2UwOrcbQVgPNmYiusqHRA/viewform', '_blank');
-              }
-              else if (id === 'robo-wars-soccer') {
-                window.open('https://docs.google.com/forms/d/e/1FAIpQLSfzm5xRpxU4orOsUNbMElK5EAw42AaXIxSLPoamReaQkVkzfQ/viewform', '_blank');
-              }
-              else if (id === 'robo-mania') {
-                window.open('https://docs.google.com/forms/d/e/1FAIpQLScIg1ypq5jYG0SsBsZe5NxoZo67olTIm3WXkLr7cINXis6VdA/viewform', '_blank');
-              }
-              else if (id === 'eastern-western-dance') {
-                window.open('https://docs.google.com/forms/d/e/1FAIpQLSesYPBrk__OSN67xoUTqFhuZ00ULTKnDfD1rP6mroOIYc0nBQ/viewform', '_blank');
-              }
-            }}
-          >
-            Register Now
-          </button>
-        )}
+        <button 
+          className="w-full mt-4 bg-black hover:bg-gray-800 text-white py-2 text-sm font-medium transition-colors rounded-lg"
+          onClick={() => {
+            if (id === 'quiz-quest') {
+              window.open('https://docs.google.com/forms/d/e/1FAIpQLSeDnWEjjGqzTYJNqLWi3PpTLEpAFrttBKYeLzVXzUaqRSYdzg/viewform', '_blank');
+            } 
+            else if (id === 'master-minds') {
+              window.open('https://docs.google.com/forms/d/e/1FAIpQLSdeuPzFc9YTha_jDPjiFmo-4mR0e2UwOrcbQVgPNmYiusqHRA/viewform', '_blank');
+            }
+            else if (id === 'robo-wars-soccer') {
+              window.open('https://docs.google.com/forms/d/e/1FAIpQLSfzm5xRpxU4orOsUNbMElK5EAw42AaXIxSLPoamReaQkVkzfQ/viewform', '_blank');
+            }
+            else if (id === 'robo-mania') {
+              window.open('https://docs.google.com/forms/d/e/1FAIpQLScIg1ypq5jYG0SsBsZe5NxoZo67olTIm3WXkLr7cINXis6VdA/viewform', '_blank');
+            }
+            else if (id === 'eastern-western-dance') {
+              window.open('https://docs.google.com/forms/d/e/1FAIpQLSesYPBrk__OSN67xoUTqFhuZ00ULTKnDfD1rP6mroOIYc0nBQ/viewform', '_blank');
+            }
+          }}
+        >
+          Register Now
+        </button>
       </div>
     </div>
   );

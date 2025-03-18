@@ -193,26 +193,26 @@ export function Events({ setGlobalVideoHovered }) {
       day: 1,
       coordinators: [
         {
-          name: 'Sujal M H',
-          phone: '8867144895'
+          name: 'Arjun Mehta',
+          phone: '9876543210'
         },
         {
-          name: 'Vipul Nayak',
-          phone: '6366245017'
+          name: 'Prisha Patel',
+          phone: '8765432109'
         }
       ],
       rules: [
         '### 20 HOUR HACKATHON',
-        'Team & Registration: 1-4 member teams, register in the dedicated platform. Late entries not accepted.',
-        'Two-Round Format:',
-        '  - First Round: Submit a presentation on given problem statements.',
-        '  - Top 20 advance.',
-        '  - Final Round: 20-hour coding challenge with on-the-spot problem statements.',
-        'Problem Statements: AI-based EdTech, FinTech, Social Welfare, or Cybersecurity. Final round problems revealed on the spot; develop projects within the 20-hour timeframe.',
-        'Final Round Fees: Selected teams pay ₹500 registration fee.',
-        'Code & Submission: All code must be original (libraries/APIs allowed), hosted on GitHub, and submitted with a demo (if needed).',
-        'Judging Criteria: Innovation, functionality, technical complexity, UI/UX, and presentation will be evaluated.',
-        'Mentoring sessions will be available throughout the hackathon.'
+        '• Team & Registration: 1-4 member teams, register in the dedicated platform. Late entries not accepted.',
+        '• Two-Round Format:',
+        '   - First Round: Submit a presentation on given problem statements.',
+        '   - Top 20 advance.',
+        '   - Final Round: 20-hour coding challenge with on-the-spot problem statements.',
+        '• Problem Statements: AI-based EdTech, FinTech, Social Welfare, or Cybersecurity. Final round problems revealed on the spot; develop projects within the 20-hour timeframe.',
+        '• Final Round Fees: Selected teams pay ₹500 registration fee.',
+        '• Code & Submission: All code must be original (libraries/APIs allowed), hosted on GitHub, and submitted with a demo (if needed).',
+        '• Judging Criteria: Innovation, functionality, technical complexity, UI/UX, and presentation will be evaluated.',
+        '• Mentoring sessions will be available throughout the hackathon.'
       ]
     },
     'quantum-computing': {
@@ -326,11 +326,19 @@ export function Events({ setGlobalVideoHovered }) {
         }
       ],
       rules: [
-        'EVENT DETAILS',
+        '### EVENT DETAILS',
         'Category: Eastern',
         'One team per college.',
         'A team must consist of 6-14 members.',
         'Styles allowed: Semi classical, Fusion, Contemporary, Folk.',
+
+        '### RULES & REGULATIONS',
+        'Time limit: 5+2 minutes (performance + setup time).',
+        'Props are allowed but must be set up within the given time limit.',
+        'Costumes should reflect traditional eastern cultural elements.',
+        'Music must be submitted 2 days prior to the event.',
+        'Teams will be judged on choreography, rhythm, coordination, expressions, and authenticity.',
+        'Any form of vulgarity will lead to immediate disqualification.'
       ]
     },
     'western-dance': {
@@ -347,11 +355,19 @@ export function Events({ setGlobalVideoHovered }) {
         }
       ],
       rules: [
-        'EVENT DETAILS',
+        '### EVENT DETAILS',
         'Category: Western',
         'One team per college.',
         'Team must consist of 6-14 members.',
         'Styles allowed: Hip Hop, Jazz and Freestyle.',
+
+        '### RULES & REGULATIONS',
+        'Time limit: 5+2 minutes (performance + setup time).',
+        'Props are allowed but must be set up within the given time limit.',
+        'Appropriate costumes reflecting the dance style should be worn.',
+        'Music must be submitted 2 days prior to the event.',
+        'Teams will be judged on choreography, technique, synchronization, stage presence, and creativity.',
+        'Any form of vulgarity will lead to immediate disqualification.'
       ]
     },
     'quiz-quest': {
@@ -368,14 +384,38 @@ export function Events({ setGlobalVideoHovered }) {
         }
       ],
       rules: [
-        'Each team must consist of 2 members from the same institution.',
-        'Teams must register before the deadline.',
-        'No changes in team composition after registration.',
-        'The quiz is open to current MCA students.',
-        'The quiz consists of multiple rounds, with elimination at different stages.',
-        'Use of mobile phones, smartwatches, or external help is strictly prohibited.',
-        'In case of disputes, the quiz master\'s decision is final.',
-        'In case of a tie, a tie-breaker round will decide the finalist.'
+        '1. Each team must consist of 2 members from the same institution.',
+        '2. Teams must register before the deadline.',
+        '3. No changes in team composition after registration.',
+        '4. The quiz is open to current MCA students.',
+        '5. The quiz consists of multiple rounds, with elimination at different stages.',
+        '6. Use of mobile phones, smartwatches, or external help is strictly prohibited.',
+        '7. In case of disputes, the quiz master\'s decision is final.',
+        '8. In case of a tie, a tie-breaker round will decide the finalist.'
+      ]
+    },
+    'award-nite': {
+      title: 'Award Nite',
+      day: 2,
+      coordinators: [
+        {
+          name: 'Anish Kumar',
+          phone: '9876543210'
+        },
+        {
+          name: 'Neha Sharma',
+          phone: '8765432109'
+        }
+      ],
+      rules: [
+        'All event winners must be present to receive their awards.',
+        'Dress code: Formal or semi-formal attire is recommended.',
+        'Award recipients will be called in a predetermined sequence.',
+        'Each team will have a maximum of 2 minutes on stage.',
+        'Photography will be allowed during the ceremony.',
+        'Please be seated at least 15 minutes before the ceremony begins.',
+        'Special performances have been arranged between award presentations.',
+        'Certificates will be distributed at the end of the ceremony.',
       ]
     },
     'master-minds': {
@@ -388,12 +428,12 @@ export function Events({ setGlobalVideoHovered }) {
         }
       ],
       rules: [
-        'Each college is allowed to send maximum of two teams.',
-        'Each team must consist of 6 participants.',
-        'The event will consist of finance, HR marketing rounds and a multi-tasking round.',
-        'Judges and organizers decision is final and binding.',
-        'Any team found using unfair means shall be immediately disqualified.',
-        'Teams should carry their own laptop, wi-fi connection and pen drives.'
+        '1. Each college is allowed to send maximum of two teams.',
+        '2. Each team must consist of 6 participants.',
+        '3. The event will consist of finance, HR marketing rounds and a multi-tasking round.',
+        '4. Judges and organizers decision is final and binding.',
+        '5. Any team found using unfair means shall be immediately disqualified.',
+        '6. Teams should carry their own laptop, wi-fi connection and pen drives.'
       ]
     },
   };
