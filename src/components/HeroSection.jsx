@@ -250,6 +250,19 @@ export function HeroSection() {
           src={HeroBackground}
           alt="Hero Background"
           className="w-full h-full object-cover"
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            '@media (max-width: 640px)': {
+              width: '100%',
+              height: 'auto'
+            },
+            '@media (min-width: 641px) and (max-width: 1024px)': {
+              width: '100%',
+              height: 'auto'
+            }
+          }}
         />
         {/* Black overlay for better content visibility */}
         <div className="absolute inset-0 bg-black/30"></div>
@@ -320,7 +333,7 @@ export function HeroSection() {
         />
       </div>
       {/* Content container */}
-      <div className="container mx-auto max-w-7xl px-4 relative z-10 py-20 min-h-screen flex flex-col justify-center">
+      <div className="container mx-auto max-w-7xl relative z-10 py-15 min-h-screen flex flex-col justify-center">
         <div className="flex flex-col items-center justify-center text-center mt-20">
           <img 
             src={SentiaLogo}
@@ -343,7 +356,7 @@ export function HeroSection() {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center w-full mb-16 md:mb-20">
             <Button 
-              className="relative overflow-hidden bg-[#1e40af] hover:bg-[#1e4bd8] text-white rounded-md py-4 px-6 flex items-center justify-center gap-2 transition-all duration-300 shadow-[0_4px_15px_rgba(30,64,175,0.5)] border border-[#60a5fa]/30 group w-full sm:w-auto"
+              className="relative overflow-hidden bg-[#1e40af] hover:bg-[#1e4bd8] text-white rounded-md py-5 px-7 flex items-center justify-center gap-2 transition-all duration-300 shadow-[0_4px_15px_rgba(30,64,175,0.5)] border border-[#60a5fa]/30 group w-full sm:w-auto"
               style={{
                 backgroundImage: 'linear-gradient(135deg, #1e40af 0%, #3b82f6 100%)',
               }}
@@ -373,7 +386,7 @@ export function HeroSection() {
             </Button>
             <Link to="/register" className="relative w-full sm:w-auto">
               <Button 
-                className="relative overflow-hidden bg-[#3b82f6] hover:bg-[#60a5fa] text-white rounded-md py-4 px-6 flex items-center justify-center gap-2 transition-all duration-300 shadow-[0_4px_15px_rgba(59,130,246,0.5)] border border-[#93c5fd]/30 group w-full"
+                className="relative overflow-hidden bg-[#3b82f6] hover:bg-[#60a5fa] text-white rounded-md py-5 px-7 flex items-center justify-center gap-2 transition-all duration-300 shadow-[0_4px_15px_rgba(59,130,246,0.5)] border border-[#93c5fd]/30 group w-full"
                 style={{
                   backgroundImage: 'linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%)',
                 }}
@@ -426,20 +439,6 @@ export function HeroSection() {
               >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M19 13l-7 7-7-7m14-8l-7 7-7-7" />
               </svg>
-            </motion.div>
-            <motion.div 
-              className="mt-1 flex space-x-1"
-              initial={{ opacity: 0.5 }}
-              animate={{ opacity: [0.5, 1, 0.5] }}
-              transition={{ 
-                repeat: Infinity, 
-                duration: 2,
-                ease: "easeInOut"
-              }}
-            >
-              <div className="w-1 h-1 bg-white rounded-full"></div>
-              <div className="w-1 h-1 bg-white rounded-full"></div>
-              <div className="w-1 h-1 bg-white rounded-full"></div>
             </motion.div>
           </motion.div>
         </div>
