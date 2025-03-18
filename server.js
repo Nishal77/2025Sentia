@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const Pusher = require('pusher');
+const Ably = require('ably');
 const cors = require('cors');
 const path = require('path');
 
@@ -13,13 +13,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'build')));
 
-// Initialize Pusher
-const pusher = new Pusher({
-  appId: "1958877",
-  key: "ca5fcc8642a102e39359",
-  secret: "79af2db2aef041e82aef",
-  cluster: "ap2",
-  useTLS: true
+// Initialize Ably
+const ably = new Ably.Rest({
+  key: "TejSQw.Me5e8A:uP3cFGffiIKloex2SLWZZabVLxxZYJmOEmor8mZB3Fs"
 });
 
 // Route to serve the React app
@@ -36,16 +32,21 @@ app.post('/api/events/update', (req, res) => {
       return res.status(400).json({ error: 'Missing required fields' });
     }
     
-    // Trigger a Pusher event
-    pusher.trigger(channelName, eventType, {
+    // Publish message via Ably
+    const channel = ably.channels.get(channelName);
+    channel.publish(eventType, {
       ...event,
       timestamp: Date.now()
+    }, (err) => {
+      if (err) {
+        console.error('Error publishing event:', err);
+        return res.status(500).json({ error: 'Failed to publish event' });
+      }
+      return res.json({ success: true, message: 'Event published successfully' });
     });
-    
-    return res.json({ success: true, message: 'Event triggered successfully' });
   } catch (error) {
-    console.error('Error triggering event:', error);
-    return res.status(500).json({ error: 'Failed to trigger event' });
+    console.error('Error handling event update:', error);
+    return res.status(500).json({ error: 'Failed to handle event update' });
   }
 });
 
@@ -58,13 +59,18 @@ app.post('/api/events/updateAll', (req, res) => {
       return res.status(400).json({ error: 'Missing required fields or invalid events format' });
     }
     
-    // Trigger a Pusher event
-    pusher.trigger(channelName, eventType, {
+    // Publish message via Ably
+    const channel = ably.channels.get(channelName);
+    channel.publish(eventType, {
       events,
       timestamp: Date.now()
+    }, (err) => {
+      if (err) {
+        console.error('Error publishing events update:', err);
+        return res.status(500).json({ error: 'Failed to publish events update' });
+      }
+      return res.json({ success: true, message: 'All events updated successfully' });
     });
-    
-    return res.json({ success: true, message: 'All events updated successfully' });
   } catch (error) {
     console.error('Error updating all events:', error);
     return res.status(500).json({ error: 'Failed to update all events' });

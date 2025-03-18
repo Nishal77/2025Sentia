@@ -1,4 +1,4 @@
-import pusherServer from './pusherServer';
+import ablyServer from './ablyServer';
 import { 
   EVENTS_CHANNEL, 
   EVENT_UPDATED, 
@@ -6,13 +6,13 @@ import {
   EVENT_DELETED, 
   EVENT_STATUS_CHANGED,
   ALL_EVENTS_UPDATED
-} from './pusher';
+} from './ably';
 
-// Service to handle event updates through Pusher
+// Service to handle event updates through Ably
 const eventService = {
   // Trigger event when a new event is added
   eventAdded: (event) => {
-    return pusherServer.trigger(EVENTS_CHANNEL, EVENT_ADDED, {
+    return ablyServer.trigger(EVENTS_CHANNEL, EVENT_ADDED, {
       event,
       timestamp: Date.now()
     });
@@ -20,7 +20,7 @@ const eventService = {
 
   // Trigger event when an event is updated
   eventUpdated: (event) => {
-    return pusherServer.trigger(EVENTS_CHANNEL, EVENT_UPDATED, {
+    return ablyServer.trigger(EVENTS_CHANNEL, EVENT_UPDATED, {
       event,
       timestamp: Date.now()
     });
@@ -28,7 +28,7 @@ const eventService = {
 
   // Trigger event when an event is deleted
   eventDeleted: (eventId) => {
-    return pusherServer.trigger(EVENTS_CHANNEL, EVENT_DELETED, {
+    return ablyServer.trigger(EVENTS_CHANNEL, EVENT_DELETED, {
       eventId,
       timestamp: Date.now()
     });
@@ -36,7 +36,7 @@ const eventService = {
 
   // Trigger event when an event's status is changed
   eventStatusChanged: (eventId, newStatus) => {
-    return pusherServer.trigger(EVENTS_CHANNEL, EVENT_STATUS_CHANGED, {
+    return ablyServer.trigger(EVENTS_CHANNEL, EVENT_STATUS_CHANGED, {
       eventId,
       newStatus,
       timestamp: Date.now()
@@ -45,7 +45,7 @@ const eventService = {
 
   // Trigger event when all events are updated
   allEventsUpdated: (events) => {
-    return pusherServer.trigger(EVENTS_CHANNEL, ALL_EVENTS_UPDATED, {
+    return ablyServer.trigger(EVENTS_CHANNEL, ALL_EVENTS_UPDATED, {
       events,
       timestamp: Date.now()
     });

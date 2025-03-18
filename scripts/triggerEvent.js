@@ -1,102 +1,95 @@
-// ES Module to trigger Pusher events manually for testing
-import Pusher from 'pusher';
-import { EVENTS_CHANNEL, EVENT_UPDATED, EVENT_ADDED, EVENT_DELETED, EVENT_STATUS_CHANGED, ALL_EVENTS_UPDATED } from '../src/utils/pusher.js';
-import { getEventsFromLocalStorage } from '../src/utils/eventsUtils.js';
+// ES Module to trigger Ably events manually for testing
+import * as Ably from 'ably';
+import { EVENTS_CHANNEL, EVENT_UPDATED, EVENT_ADDED, EVENT_DELETED, EVENT_STATUS_CHANGED, ALL_EVENTS_UPDATED } from '../src/utils/ably.js';
 
-// Initialize Pusher
-const pusher = new Pusher({
-  appId: "1958877",
-  key: "ca5fcc8642a102e39359",
-  secret: "79af2db2aef041e82aef",
-  cluster: "ap2",
-  useTLS: true
+// Initialize Ably
+const ably = new Ably.Rest({
+  key: "TejSQw.Me5e8A:uP3cFGffiIKloex2SLWZZabVLxxZYJmOEmor8mZB3Fs"
 });
 
-// Test function to trigger an event update
-const triggerEventUpdate = async () => {
-  console.log('Triggering a test event update...');
-  
-  // Sample event data
-  const testEvent = {
-    id: 999,
-    name: "Test Team (Realtime)",
-    event: "Test Event (Realtime)",
-    location: "Test Location (Realtime)",
-    status: "LIVE",
-    video: "drum"
+// Helper function to publish message
+const publishMessage = async (channelName, eventName, data) => {
+  return new Promise((resolve, reject) => {
+    const channel = ably.channels.get(channelName);
+    channel.publish(eventName, data, (err) => {
+      if (err) {
+        console.error('Error publishing message:', err);
+        reject(err);
+      } else {
+        console.log(`Event ${eventName} published successfully`);
+        resolve();
+      }
+    });
+  });
+};
+
+// Example: Add a new event
+const addEvent = async () => {
+  const newEvent = {
+    id: Date.now(),
+    name: 'New Test Event',
+    description: 'This is a test event triggered via Ably',
+    location: 'Test Location',
+    status: 'UP NEXT',
+    type: 'mainEvent',
+    timestamp: Date.now()
   };
   
+  await publishMessage(EVENTS_CHANNEL, EVENT_ADDED, {
+    event: newEvent,
+    timestamp: Date.now()
+  });
+  
+  console.log('Event added successfully');
+};
+
+// Run a test
+const runTest = async () => {
   try {
-    // Trigger the event
-    await pusher.trigger(EVENTS_CHANNEL, EVENT_ADDED, {
-      event: testEvent,
+    await addEvent();
+    
+    // Wait for a moment to allow the event to be received
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    // Update all events with a test set
+    const testEvents = [
+      {
+        id: 1,
+        name: 'Test Main Event 1',
+        description: 'Description for test event 1',
+        location: 'Location 1',
+        status: 'LIVE',
+        type: 'mainEvent',
+        timestamp: Date.now()
+      },
+      {
+        id: 2,
+        name: 'Test Main Event 2',
+        description: 'Description for test event 2',
+        location: 'Location 2',
+        status: 'UP NEXT',
+        type: 'mainEvent',
+        timestamp: Date.now()
+      }
+    ];
+    
+    await publishMessage(EVENTS_CHANNEL, ALL_EVENTS_UPDATED, {
+      events: testEvents,
       timestamp: Date.now()
     });
     
-    console.log('Event triggered successfully!');
-  } catch (error) {
-    console.error('Error triggering event:', error);
-  }
-};
-
-// Test function to trigger all events update
-const triggerAllEventsUpdate = async () => {
-  console.log('Triggering a test for all events update...');
-  
-  // Get current events from localStorage or use sample data
-  const events = [
-    {
-      id: 1001,
-      name: "Updated Team 1 (Realtime)",
-      event: "Updated Event 1 (Realtime)",
-      location: "Updated Location 1 (Realtime)",
-      status: "LIVE",
-      video: "drum"
-    },
-    {
-      id: 1002,
-      name: "Updated Team 2 (Realtime)",
-      event: "Updated Event 2 (Realtime)",
-      location: "Updated Location 2 (Realtime)",
-      status: "ENDED",
-      video: "fashionwalk"
-    },
-    {
-      id: 1003,
-      name: "Updated Team 3 (Realtime)",
-      event: "Updated Event 3 (Realtime)",
-      location: "Updated Location 3 (Realtime)",
-      status: "UP NEXT",
-      video: "robowars"
-    }
-  ];
-  
-  try {
-    // Trigger the event
-    await pusher.trigger(EVENTS_CHANNEL, ALL_EVENTS_UPDATED, {
-      events,
-      timestamp: Date.now()
-    });
+    console.log('All events updated successfully');
     
-    console.log('All events update triggered successfully!');
+    // Wait for the connection to close properly
+    setTimeout(() => {
+      process.exit(0);
+    }, 1000);
+    
   } catch (error) {
-    console.error('Error triggering all events update:', error);
+    console.error('Error running test:', error);
+    process.exit(1);
   }
 };
 
-// Run the tests
-const runTests = async () => {
-  const args = process.argv.slice(2);
-  const testType = args[0] || 'single';
-  
-  if (testType === 'all') {
-    await triggerAllEventsUpdate();
-  } else {
-    await triggerEventUpdate();
-  }
-  
-  // Exit after all tests are done
-  process.exit(0);
-};
-
-runTests(); 
+// Run the test
+runTest(); 

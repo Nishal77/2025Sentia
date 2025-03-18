@@ -1,4 +1,4 @@
-import { EVENTS_CHANNEL, EVENT_UPDATED, EVENT_ADDED, EVENT_DELETED, EVENT_STATUS_CHANGED, ALL_EVENTS_UPDATED } from './pusher';
+import { EVENTS_CHANNEL, EVENT_UPDATED, EVENT_ADDED, EVENT_DELETED, EVENT_STATUS_CHANGED, ALL_EVENTS_UPDATED } from './ably';
 
 // Base URL for API calls - in production this would be different
 const API_BASE_URL = 'http://localhost:5000/api';

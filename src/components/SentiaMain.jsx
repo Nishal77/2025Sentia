@@ -4,8 +4,8 @@ import { HeroSection } from './HeroSection';
 import Events from './events';
 import { Link } from 'react-router-dom';
 import Footer from './Footer';
-import pusherClient from '../utils/pusherClient';
-import { EVENTS_CHANNEL, ALL_EVENTS_UPDATED, EVENT_ADDED, EVENT_UPDATED, EVENT_DELETED, EVENT_STATUS_CHANGED } from '../utils/pusher';
+import ablyClient from '../utils/ablyClient';
+import { EVENTS_CHANNEL, ALL_EVENTS_UPDATED, EVENT_ADDED, EVENT_UPDATED, EVENT_DELETED, EVENT_STATUS_CHANGED } from '../utils/ably';
 import Countdown, { MiniCountdown } from './Countdown';
 
 import Sonisoni from '../assets/Songs/Sonisoni.mp3';
@@ -421,6 +421,7 @@ export function SentiaMain() {
       const liveEvents = performingTeams.filter(event => event.status === 'LIVE');
       const endedEvents = performingTeams.filter(event => event.status === 'ENDED');
       const upNextEvents = performingTeams.filter(event => event.status === 'UP NEXT');
+      const beReadyEvents = performingTeams.filter(event => event.status === 'BE READY');
 
       return (
         <div className="space-y-3 h-full overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
@@ -582,6 +583,23 @@ export function SentiaMain() {
               </div>
             </div>
           )}
+
+          {/* Be Ready banner */}
+          {beReadyEvents.length > 0 && (
+            <div>
+              <h3 className="text-xs uppercase text-blue-800 font-medium mb-2 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-3.5 h-3.5 mr-1.5 text-blue-700">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+                Be Ready
+              </h3>
+              <div className="bg-gradient-to-r from-blue-50 to-transparent p-2.5 rounded-lg border-l-3 border-blue-500">
+                <div className="flex items-center text-xs font-medium text-blue-900">
+                  {beReadyEvents[0].event || beReadyEvents[0].name} at {beReadyEvents[0].location}
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       );
     }
@@ -590,6 +608,7 @@ export function SentiaMain() {
     const liveEvents = mainEvents.filter(event => event.status === 'LIVE');
     const endedEvents = mainEvents.filter(event => event.status === 'ENDED');
     const upNextEvents = mainEvents.filter(event => event.status === 'UP NEXT');
+    const beReadyEvents = mainEvents.filter(event => event.status === 'BE READY');
 
     return (
       <div className="space-y-3 h-full overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
@@ -751,6 +770,23 @@ export function SentiaMain() {
             </div>
           </div>
         )}
+
+        {/* Be Ready Section */}
+        {beReadyEvents.length > 0 && (
+          <div>
+            <h3 className="text-xs uppercase text-blue-800 font-medium mb-2 flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-3.5 h-3.5 mr-1.5 text-blue-700">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+              </svg>
+              Be Ready
+            </h3>
+            <div className="bg-gradient-to-r from-blue-50 to-transparent p-2.5 rounded-lg border-l-3 border-blue-500">
+              <div className="flex items-center text-xs font-medium text-blue-900">
+                {beReadyEvents[0].name} at {beReadyEvents[0].location}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     );
   }
@@ -779,6 +815,7 @@ export function SentiaMain() {
     const liveTeams = teams.filter(team => team.status === 'LIVE');
     const upNextTeams = teams.filter(team => team.status === 'UP NEXT');
     const endedTeams = teams.filter(team => team.status === 'ENDED');
+    const beReadyTeams = teams.filter(team => team.status === 'BE READY');
 
     return (
       <div className="h-full overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
@@ -852,6 +889,35 @@ export function SentiaMain() {
           </div>
         )}
         
+        {/* Be Ready Teams Section */}
+        {beReadyTeams.length > 0 && (
+          <div className="mb-4">
+            <h3 className="text-xs uppercase text-blue-800 font-medium mb-2 flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-3.5 h-3.5 mr-1.5 text-blue-700">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+              </svg>
+              Be Ready
+            </h3>
+            <div className="space-y-2">
+              {beReadyTeams.map((team, index) => (
+                <div key={`team-ready-${index}`} className="flex items-center justify-between p-2.5 border-b border-gray-100 hover:bg-blue-50 transition-colors duration-200 rounded-md">
+                  <div className="flex items-center gap-3">
+                    <span className="text-blue-500 font-medium w-5">{index + 1}.</span>
+                    <div>
+                      <p className="font-medium text-gray-800">{team.name}</p>
+                      <p className="text-xs text-gray-500">{team.event || team.parentEvent} • {team.location}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-1 bg-blue-100 px-2 py-0.5 rounded-full">
+                    <span className="w-2 h-2 bg-blue-500 rounded-full flex-shrink-0"></span>
+                    <span className="text-xs font-medium text-blue-800">BE READY</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+        
         {/* Ended Teams Section */}
         {endedTeams.length > 0 && (
           <div>
@@ -900,25 +966,26 @@ export function SentiaMain() {
   const [performingTeams, setPerformingTeams] = useState(getTeamsFromStorage());
   const [noEventsData, setNoEventsData] = useState(false);
   
-  // Update performing teams whenever data changes via Pusher or localStorage
+  // Update performing teams whenever data changes via Ably or localStorage
   useEffect(() => {
     // Initialize with data from localStorage
     const teamsFromStorage = getTeamsFromStorage();
     setPerformingTeams(teamsFromStorage);
     setNoEventsData(teamsFromStorage.length === 0);
     
-    // Handle localStorage changes (for compatibility with non-Pusher updates)
+    // Handle localStorage changes (for compatibility with non-Ably updates)
     const handleStorageChange = () => {
       const updatedTeams = getTeamsFromStorage();
       setPerformingTeams(updatedTeams);
       setNoEventsData(updatedTeams.length === 0);
     };
     
-    // Subscribe to Pusher events for real-time updates
-    const channel = pusherClient.subscribe(EVENTS_CHANNEL);
+    // Subscribe to Ably events for real-time updates
+    const channel = ablyClient.channels.get(EVENTS_CHANNEL);
     
     // Handler for when all events are updated
-    channel.bind(ALL_EVENTS_UPDATED, (data) => {
+    channel.subscribe(ALL_EVENTS_UPDATED, (message) => {
+      const data = message.data;
       console.log('Real-time update: All events updated', data);
       setPerformingTeams(data.events);
       setNoEventsData(data.events.length === 0);
@@ -927,7 +994,8 @@ export function SentiaMain() {
     });
     
     // Handler for when a single event is added
-    channel.bind(EVENT_ADDED, (data) => {
+    channel.subscribe(EVENT_ADDED, (message) => {
+      const data = message.data;
       console.log('Real-time update: Event added', data);
       setPerformingTeams(prevTeams => {
         const updatedTeams = [...prevTeams, data.event];
@@ -939,7 +1007,8 @@ export function SentiaMain() {
     });
     
     // Handler for when a single event is updated
-    channel.bind(EVENT_UPDATED, (data) => {
+    channel.subscribe(EVENT_UPDATED, (message) => {
+      const data = message.data;
       console.log('Real-time update: Event updated', data);
       setPerformingTeams(prevTeams => {
         const updatedTeams = prevTeams.map(team => 
@@ -952,7 +1021,8 @@ export function SentiaMain() {
     });
     
     // Handler for when a single event is deleted
-    channel.bind(EVENT_DELETED, (data) => {
+    channel.subscribe(EVENT_DELETED, (message) => {
+      const data = message.data;
       console.log('Real-time update: Event deleted', data);
       setPerformingTeams(prevTeams => {
         const updatedTeams = prevTeams.filter(team => team.id !== data.eventId);
@@ -964,7 +1034,8 @@ export function SentiaMain() {
     });
     
     // Handler for when an event status is changed
-    channel.bind(EVENT_STATUS_CHANGED, (data) => {
+    channel.subscribe(EVENT_STATUS_CHANGED, (message) => {
+      const data = message.data;
       console.log('Real-time update: Event status changed', data);
       setPerformingTeams(prevTeams => {
         const updatedTeams = prevTeams.map(team => 
@@ -981,7 +1052,7 @@ export function SentiaMain() {
     
     // Cleanup function
     return () => {
-      pusherClient.unsubscribe(EVENTS_CHANNEL);
+      channel.unsubscribe();
       window.removeEventListener('storage', handleStorageChange);
     };
   }, []);
@@ -1032,7 +1103,7 @@ export function SentiaMain() {
             
             {/* Right Card - Description */}
             <div className="bg-white p-6 rounded-lg shadow-sm">
-              <h3 className="text-xl font-bold text-black/80 mb-4">SENTIA—The institute's premier inter-collegiate festival—brings together thousands of students for a thrilling three-day celebration of literature, culture, art, and innovation, delivering an electrifying and unforgettable experience.</h3>
+              <h3 className="text-xl font-bold text-black/80 mb-4">Thousands of students gather for the institute's flagship intercollegiate festival, SENTIA, for an exciting three-day celebration of literature, culture, art, and innovation that promises to be an unforgettable and thrilling event, fostering creativity, collaboration, and lifelong memories.</h3>
               <p className="text-gray-500">Join us at SENTIA to celebrate creativity, talent, and vibrant expressions of art and culture.</p>
             </div>
           </div>
