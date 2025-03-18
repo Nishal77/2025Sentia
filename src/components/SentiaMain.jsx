@@ -1688,10 +1688,7 @@ export function SentiaMain() {
               )}
             </button>
             
-            <div>
-              <p className="text-sm font-medium">Now Playing:</p>
-              <p className="text-xs opacity-70">{getCurrentSongName()}</p>
-            </div>
+            
           </div>
           
           <div className="flex items-center space-x-3">
