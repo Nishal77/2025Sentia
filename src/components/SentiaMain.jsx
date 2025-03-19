@@ -58,19 +58,11 @@ const mitecollege = 'https://res.cloudinary.com/dqmryiyhz/video/upload/v17420930
 // Cloudinary image URLs for event gallery
 const eventImageUrls = [
   'https://res.cloudinary.com/dqmryiyhz/image/upload/v1742054299/sentia/dthrxfpl9giyiavfdvhv.jpg',
-  'https://res.cloudinary.com/dqmryiyhz/image/upload/v1742054298/sentia/vnlotdxrkpxdvzrgqkqe.jpg',
   'https://res.cloudinary.com/dqmryiyhz/image/upload/v1742054298/sentia/ai9ds3vlcb2mhyexwcci.jpg',
-  'https://res.cloudinary.com/dqmryiyhz/image/upload/v1742054298/sentia/kwqu2czfo2l7tbh83u6c.jpg',
-  'https://res.cloudinary.com/dqmryiyhz/image/upload/v1742054298/sentia/gwytzgm2dksxe6lmiisu.jpg',
   'https://res.cloudinary.com/dqmryiyhz/image/upload/v1742054297/sentia/bmqfjgpimh6ueqvwtblf.jpg',
   'https://res.cloudinary.com/dqmryiyhz/image/upload/v1742054297/sentia/kxtpcfe7qro7ngmteueh.jpg',
-  'https://res.cloudinary.com/dqmryiyhz/image/upload/v1742054296/sentia/vwssyspanrnbomcs0wf5.jpg',
-  'https://res.cloudinary.com/dqmryiyhz/image/upload/v1742054296/sentia/piuhlqugrhnell8xmuls.jpg',
-  'https://res.cloudinary.com/dqmryiyhz/image/upload/v1742054296/sentia/bqm31eifyw9joqr7a85j.jpg',
-  'https://res.cloudinary.com/dqmryiyhz/image/upload/v1742054296/sentia/bc4gh9az5rolbh7vgvt6.jpg',
-  'https://res.cloudinary.com/dqmryiyhz/image/upload/v1742054296/sentia/ts0kbzxtgq9cw8wlvwpz.jpg',
-  'https://res.cloudinary.com/dqmryiyhz/image/upload/v1742054295/sentia/wg1fqejlgczxnkhogd2u.jpg',
-  'https://res.cloudinary.com/dqmryiyhz/image/upload/v1742054294/sentia/wfcmd8wftw5nuk2adsq2.jpg'
+  'https://res.cloudinary.com/dqmryiyhz/image/upload/v1742399527/sentia/mriypx6mqbqzeavuwk4u.png',
+
 ];
 
 const oldmitefestivals = [
@@ -1509,9 +1501,14 @@ export function SentiaMain() {
             <div className="bg-white p-4 rounded-lg shadow-sm">
               <h2 className="text-3xl font-bold text-black/80 mb-2">Sentia 2024: The DJ Experience You Can't Miss!</h2>
               <p className="text-gray-600">Experience the Rhythm of Sentia 2024! An electrifying night of music, energy, and unforgettable moments.</p>
-             
               
-             
+              <div className="relative w-full h-52 rounded-lg overflow-hidden mt-4">
+                <img 
+                  src="https://res.cloudinary.com/dqmryiyhz/image/upload/v1742399128/sentia/kh6o1rywyhifbekfscih.jpg"
+                  alt="DJ Night at Sentia 2024"
+                  className="w-full h-full object-cover"
+                />
+              </div>
             </div>
             
            
