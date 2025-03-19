@@ -245,28 +245,25 @@ export function HeroSection() {
 
   return (
     <section className="overflow-hidden">
-      {/* Background image */}
-      <div ref={containerRef} className="absolute inset-0 z-0 bg-black/60">
+      {/* Background image with fantasy-themed base */}
+      <div ref={containerRef} className="absolute inset-0 z-0 bg-gradient-to-br from-[#1a2151] via-[#1e2b4d] to-[#252e4a] min-h-screen">
         <img
           src={HeroBackground}
           alt="Hero Background"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover object-[center_40%] sm:object-center md:object-center"
           style={{
+            position: 'absolute',
             width: '100%',
             height: '100%',
-            objectFit: 'cover',
-            '@media (max-width: 640px)': {
-              width: '100%',
-              height: 'auto'
-            },
-            '@media (min-width: 641px) and (max-width: 1024px)': {
-              width: '100%',
-              height: 'auto'
-            }
+            inset: 0,
           }}
         />
-        {/* Black overlay for better content visibility */}
-        <div className="absolute inset-0 bg-black/30"></div>
+        {/* Custom gradient overlay to match the fantasy background */}
+        <div className="absolute inset-0 bg-gradient-to-b from-indigo-900/40 via-purple-900/30 to-blue-900/50 mix-blend-multiply animate-gradient-slow"></div>
+        {/* Magical light effect */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(93,63,211,0.15),transparent_70%)] mix-blend-screen"></div>
+        {/* Additional texture layer */}
+        <div className="absolute inset-0 bg-[url('/assets/noise-pattern.png')] opacity-5 mix-blend-overlay pointer-events-none"></div>
       </div>
       
       {/* Screen size disclaimer for small/medium screens */}
@@ -292,7 +289,7 @@ export function HeroSection() {
       )}
       
       {/* College Logo and MITE Description - Top Left */}
-      <div className="absolute top-4 md:top-6 z-20 w-full flex justify-between items-center px-2 md:px-6">
+      <div className="absolute top-4 md:top-6 z-20 w-full flex justify-between items-center px-4 md:px-6">
         <div className="flex items-center">
           <img 
             src={CollegeLogo}
@@ -335,7 +332,7 @@ export function HeroSection() {
       </div>
       {/* Content container */}
       <div className="container mx-auto max-w-7xl relative z-10 py-15 min-h-screen flex flex-col justify-center">
-      <div className="flex flex-col items-center justify-center text-center mt-20">
+      <div className="flex flex-col items-center justify-center text-center mt-16 sm:mt-20">
           <img 
             src={SentiaLogo}
             srcSet={`
@@ -345,9 +342,9 @@ export function HeroSection() {
               ${SentiaLogoSizes.xl} 750w,
               ${SentiaLogoSizes.xxl} 900w
             `}
-            sizes="(max-width: 640px) 320px, (max-width: 768px) 450px, (max-width: 1024px) 600px, (max-width: 1280px) 750px, 900px"
+            sizes="(max-width: 640px) 280px, (max-width: 768px) 450px, (max-width: 1024px) 600px, (max-width: 1280px) 750px, 900px"
             alt="Sentia 2025 Logo"
-            className="w-[320px] sm:w-[450px] md:w-[600px] lg:w-[750px] xl:w-[900px] h-auto mb-8 mx-auto"
+            className="w-[280px] sm:w-[450px] md:w-[600px] lg:w-[750px] xl:w-[900px] h-auto mb-8 mx-auto drop-shadow-lg animate-subtle-zoom"
             loading="eager"
             fetchPriority="high"
           />
@@ -355,11 +352,11 @@ export function HeroSection() {
 
          
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center w-full mb-16 md:mb-20">
+          <div className="flex flex-col sm:flex-row gap-5 justify-center w-full px-5 sm:px-0 mb-12 sm:mb-16 md:mb-20">
             <Button 
-              className="relative overflow-hidden bg-[#1e40af] hover:bg-[#1e4bd8] text-white rounded-md py-5 px-7 flex items-center justify-center gap-2 transition-all duration-300 shadow-[0_4px_15px_rgba(30,64,175,0.5)] border border-[#60a5fa]/30 group w-full sm:w-auto"
+              className="relative overflow-hidden bg-[#322e81] hover:bg-[#473e95] text-white rounded-full sm:rounded-md md:rounded-md py-4 sm:py-5 px-6 sm:px-7 flex items-center justify-center gap-2 transition-all duration-300 shadow-[0_4px_15px_rgba(80,70,170,0.6)] border border-[#8f82ff]/40 group w-full sm:w-auto"
               style={{
-                backgroundImage: 'linear-gradient(135deg, #1e40af 0%, #3b82f6 100%)',
+                backgroundImage: 'linear-gradient(135deg, #322e81 0%, #5a4aad 100%)',
               }}
               onClick={() => {
                 const startDate = '20250404';
@@ -387,9 +384,9 @@ export function HeroSection() {
             </Button>
             <Link to="/register" className="relative w-full sm:w-auto">
               <Button 
-                className="relative overflow-hidden bg-[#3b82f6] hover:bg-[#60a5fa] text-white rounded-md py-5 px-7 flex items-center justify-center gap-2 transition-all duration-300 shadow-[0_4px_15px_rgba(59,130,246,0.5)] border border-[#93c5fd]/30 group w-full"
+                className="relative overflow-hidden bg-[#4a3db2] hover:bg-[#634fd6] text-white rounded-full sm:rounded-md md:rounded-md py-4 sm:py-5 px-6 sm:px-7 flex items-center justify-center gap-2 transition-all duration-300 shadow-[0_4px_15px_rgba(105,90,227,0.5)] border border-[#a293ff]/40 group w-full"
                 style={{
-                  backgroundImage: 'linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%)',
+                  backgroundImage: 'linear-gradient(135deg, #4a3db2 0%, #6651d4 100%)',
                 }}
               >
                 <span className="relative z-10 font-medium">Register Now</span>
@@ -413,7 +410,7 @@ export function HeroSection() {
         </div>
         
         {/* Scroll indicator at the bottom of the screen */}
-        <div className="absolute bottom-6 left-0 right-0 flex flex-col items-center justify-center z-20">
+        <div className="absolute bottom-10 sm:bottom-6 left-0 right-0 flex flex-col items-center justify-center z-20">
           
           <motion.div 
             className="flex flex-col items-center cursor-pointer"
@@ -444,6 +441,52 @@ export function HeroSection() {
           </motion.div>
         </div>
       
+      {/* CSS for animated gradient */}
+      <style jsx="true">{`
+        @keyframes gradientAnimation {
+          0% { background-position: 0% 50% }
+          50% { background-position: 100% 50% }
+          100% { background-position: 0% 50% }
+        }
+        
+        .animate-gradient-slow {
+          background-size: 200% 200%;
+          animation: gradientAnimation 15s ease infinite;
+        }
+
+        /* Fix for small screens to ensure the background covers properly */
+        @media (max-width: 640px) {
+          section {
+            min-height: 100vh;
+            height: -webkit-fill-available;
+          }
+          
+          .bg-gradient-to-b {
+            background-image: linear-gradient(to bottom, 
+              rgba(79, 70, 229, 0.4) 0%, 
+              rgba(124, 58, 237, 0.35) 35%,
+              rgba(56, 63, 166, 0.5) 100%
+            ) !important;
+          }
+        }
+        
+        /* Improve logo display on mobile */
+        @media (max-width: 768px) {
+          img[alt="Sentia 2025 Logo"] {
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.2));
+          }
+        }
+        
+        @keyframes subtleZoom {
+          0% { transform: scale(0.98); }
+          50% { transform: scale(1.02); }
+          100% { transform: scale(0.98); }
+        }
+        
+        .animate-subtle-zoom {
+          animation: subtleZoom 8s ease-in-out infinite;
+        }
+      `}</style>
     </section>
   );
 } 

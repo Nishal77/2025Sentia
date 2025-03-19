@@ -1024,27 +1024,6 @@ export function Events({ setGlobalVideoHovered }) {
                         <p className="text-white/70 text-sm">Sentia 2025 • Event Guidelines</p>
                       </div>
                     </div>
-                    <AlertDialogFooter className="flex justify-end items-center gap-2 p-4 bg-gray-50 border-t border-gray-200 rounded-xl">
-                      
-                      <AlertDialogCancel 
-                        className="rounded-lg px-3 py-2 text-sm bg-white border border-gray-300 text-gray-700 hover:bg-gray-100 transition-colors"
-                        onClick={() => setIsDialogOpen(false)}
-                      >
-                        Close
-                      </AlertDialogCancel>
-                      
-                      {/* For events that support registration, include Register button */}
-                      {(id === 'battle-of-bands' || id === 'fashion-walk' || id === 'senhacks') && (
-                        <Link to="/register">
-                          <AlertDialogAction 
-                            className="rounded-lg px-4 py-2 text-sm bg-indigo-600 text-white hover:bg-indigo-700 transition-colors"
-                            onClick={() => setIsDialogOpen(false)}
-                          >
-                            Register Now
-                          </AlertDialogAction>
-                        </Link>
-                      )}
-                    </AlertDialogFooter>
                   </div>
                   
                   {/* Add the AlertDialogDescription component for accessibility */}
@@ -1141,6 +1120,28 @@ export function Events({ setGlobalVideoHovered }) {
                       </div>
                     </div>
                   </div>
+                  
+                  {/* Footer moved to bottom */}
+                  <AlertDialogFooter className="flex justify-end items-center gap-2 p-4 bg-gray-50 border-t border-gray-200">
+                    <AlertDialogCancel 
+                      className="rounded-lg px-3 py-2 text-sm bg-white border border-gray-300 text-gray-700 hover:bg-gray-100 transition-colors"
+                      onClick={() => setIsDialogOpen(false)}
+                    >
+                      Close
+                    </AlertDialogCancel>
+                    
+                    {/* For events that support registration, include Register button */}
+                    {(id === 'battle-of-bands' || id === 'fashion-walk' || id === 'senhacks') && (
+                      <Link to="/register">
+                        <AlertDialogAction 
+                          className="rounded-lg px-4 py-2 text-sm bg-indigo-600 text-white hover:bg-indigo-700 transition-colors"
+                          onClick={() => setIsDialogOpen(false)}
+                        >
+                          Register Now
+                        </AlertDialogAction>
+                      </Link>
+                    )}
+                  </AlertDialogFooter>
                 </AlertDialogContent>
               </AlertDialog>
             )}
