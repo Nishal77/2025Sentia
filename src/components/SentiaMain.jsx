@@ -35,9 +35,7 @@ const contacts = [
 // Cloudinary URL for SentiaDressUpdate
 //const SentiaDressUpdate = 'https://res.cloudinary.com/dqmryiyhz/video/upload/v1742054083/sentia/sitpekusuf2gx3gcghse.mp4';
 
-import jonitha from '/assets/JonithagandhiUpdated.png';
 import jonithaspotify from '/assets/jonithaspotify.jpeg';
-const mitecollege = 'https://res.cloudinary.com/dqmryiyhz/video/upload/v1742093020/sentia/dzgpzavqxje9habco5re.mp4';
 
 // Remove local image imports
 // import image1 from '../assets/sentia2024/image1.jpg';
@@ -421,7 +419,7 @@ export function SentiaMain() {
           </svg>
           <h3 className="text-lg text-gray-700 font-medium mb-2">No Events Available</h3>
           <p className="text-gray-500 max-w-md mx-auto">
-            Events need to be added via the admin panel. Please log in to the admin panel to add events and they will appear here.
+            Events need to be updated soon. Stay tuned for the latest updates and check back regularly!
           </p>
         </div>
       );
@@ -817,7 +815,7 @@ export function SentiaMain() {
           </svg>
           <h3 className="text-lg text-gray-700 font-medium mb-2">No Performing Teams</h3>
           <p className="text-gray-500 max-w-md mx-auto">
-            Teams need to be added via the admin panel. Please log in to the admin panel to add performing teams and they will appear here.
+            Performing teams are yet to be updated. Please stay tuned for the latest updates.
           </p>
         </div>
       );
@@ -1278,9 +1276,10 @@ export function SentiaMain() {
               </div>
               <div className="relative w-full h-52 rounded-lg overflow-hidden">
                 <img 
-                  src={jonitha}
+                  src="https://res.cloudinary.com/dqmryiyhz/image/upload/f_auto,q_auto/v1/sentia/uukovgmeloxgdljwrtnm.png"
                   alt="Jonita Gandhi"
                   className="w-full h-full object-cover"
+                  loading="auto"
                 />
               </div>
             </div>
@@ -1562,11 +1561,14 @@ export function SentiaMain() {
               <div className="flex-grow relative mt-1 rounded-lg overflow-hidden min-h-[200px]">
                 <iframe 
                   className="w-full h-full object-cover rounded-lg cursor-pointer"
-                  src="https://www.youtube.com/embed/tx61kRUNfCE?si=h3jh7SZSXVOE-UAS"
+                  src="https://www.youtube.com/embed/tx61kRUNfCE?autoplay=1&mute=1&si=h3jh7SZSXVOE-UAS"
                   title="YouTube video player"
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
+                  onClick={(e) => {
+                    e.target.src = "https://www.youtube.com/embed/tx61kRUNfCE?autoplay=1&mute=0&si=h3jh7SZSXVOE-UAS";
+                  }}
                 ></iframe>
               </div>
             </div>
@@ -1615,7 +1617,7 @@ export function SentiaMain() {
               <div className="space-y-3 mt-auto">
               <button 
                   disabled
-                  className="w-full px-5 py-4 bg-gray-400 text-white rounded-md flex items-center justify-center cursor-not-allowed opacity-70"
+                  className="w-full px-5 py-3 bg-gray-400 text-white rounded-md flex items-center justify-center cursor-not-allowed opacity-70"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10" />
@@ -1629,7 +1631,7 @@ export function SentiaMain() {
                     setRandomContacts(getRandomContacts());
                     setIsContactPopupOpen(true);
                   }}
-                  className="w-full px-5 py-4 bg-[rgb(61,6,246)] hover:bg-blue-700 text-white rounded-md transition-colors duration-200 flex items-center justify-center"
+                  className="w-full px-5 py-3 bg-[rgb(61,6,246)] hover:bg-blue-700 text-white rounded-md transition-colors duration-200 flex items-center justify-center"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
@@ -1638,7 +1640,7 @@ export function SentiaMain() {
                 </button>
                 
                 <Link to="/register">
-                  <button className="w-full px-5 py-4 bg-[rgb(61,6,246)] hover:bg-blue-700 text-white rounded-md transition-colors duration-200 flex items-center justify-center">
+                  <button className="w-full px-5 py-3 bg-[rgb(61,6,246)] hover:bg-blue-700 text-white rounded-md transition-colors duration-200 flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
                     </svg>
@@ -1673,14 +1675,14 @@ export function SentiaMain() {
               </svg>
             </button>
             
-            {/* Full-size video with controls */}
-            <video 
-              src={Sentia2025}
+            {/* Embedded YouTube video */}
+            <iframe 
+              src="https://www.youtube.com/embed/tx61kRUNfCE?si=h3jh7SZSXVOE-UAS&autoplay=1"
               className="w-full rounded-lg shadow-2xl"
-              autoPlay
-              controls
-              playsInline
-            />
+              allow="autoplay; encrypted-media"
+              allowFullScreen
+              title="Sentia 2025 - Official Trailer"
+            ></iframe>
             
             {/* Caption/Title */}
             <p className="text-white text-center mt-4 text-lg font-medium">Sentia 2025 - Official Trailer</p>

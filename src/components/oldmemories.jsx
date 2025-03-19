@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { Timeline } from "./ui/timeline";
 
 import HeroImage from '/assets/mite123.png';
-import HeroImageSmall from '/assets/imagesmallscreen.png';
+
 
 import Memories20121 from '/assets/Memories/2011/imagenew.png';
 import Memories20122 from '/assets/Memories/2011/imagenew1.png';
@@ -373,10 +373,10 @@ export function OldMemories() {
       {/* Hero Section with Image */}
       <div className="relative h-[60vh] w-full overflow-hidden mt-2">
         <picture>
-          <source media="(min-width: 1024px)" srcSet={HeroImage} />
-          <source media="(max-width: 1023px)" srcSet={HeroImageSmall} />
+          <source media="(min-width: 1024px)" srcSet="https://res.cloudinary.com/dqmryiyhz/image/upload/f_auto,q_auto/v1/sentia/i2yo8vewmmhk1mdacvtw.png" />
+          <source media="(max-width: 1023px)" srcSet="https://res.cloudinary.com/dqmryiyhz/image/upload/f_auto,q_auto/v1/sentia/rrrajvmc4rrejlvm0nxo.png" />
           <img
-            src={HeroImage}
+            src="https://res.cloudinary.com/dqmryiyhz/image/upload/f_auto,q_auto/v1/sentia/i2yo8vewmmhk1mdacvtw.png"
             alt="Sentia Memories"
             className="absolute inset-0 w-full h-full "
           />
