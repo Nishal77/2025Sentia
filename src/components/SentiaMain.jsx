@@ -73,6 +73,28 @@ const eventImageUrls = [
   'https://res.cloudinary.com/dqmryiyhz/image/upload/v1742054294/sentia/wfcmd8wftw5nuk2adsq2.jpg'
 ];
 
+const oldmitefestivals = [
+  {
+    name: "MITE Festivals",
+    image: "/assets/OldMite/image1.jpg",
+  },
+  {
+    name: "MITE Festivals",
+    image: "/assets/OldMite/image2.jpg",
+  },
+  {
+    name: "MITE Festivals",
+    image: "/assets/OldMite/image3.jpg",
+  },
+  {
+    name: "MITE Festivals",
+    image: "/assets/OldMite/image4.jpg",
+  },
+  {
+    name: "MITE Festivals",
+    image: "/assets/OldMite/image5.jpg",
+  }
+]
 // Get teams from localStorage only - NEVER use default data
 const getTeamsFromStorage = () => {
   try {
@@ -1235,8 +1257,24 @@ export function SentiaMain() {
           {/* Bottom Row - Global Gathering, Venue, and CTA */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Left Card - Previous Year Highlights */}
-            <div className="bg-white p-6 rounded-lg shadow-sm overflow-hidden flex flex-col h-full">
-             
+            <div className="bg-white p-4 rounded-lg shadow-sm">
+              <h1 className="text-3xl font-bold text-black/80 mb-2">Jonita Gandhi is coming to MITE – Get ready for an unforgettable night!</h1>
+              <p className="text-gray-600">An electrifying night of music and memories awaits at MITE!</p>
+              <div className="relative w-full h-52 rounded-lg overflow-hidden">
+                <iframe 
+                  className="w-full h-full object-cover rounded-lg"
+                  src="https://www.youtube.com/embed/Gr82rgJKkPU?si=oxZhiNa0h-GI-mBn&autoplay=1&mute=1"
+                  title="YouTube video player"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  onClick={(e) => {
+                    const iframe = e.target;
+                    const src = iframe.src;
+                    iframe.src = src.includes('mute=1') ? src.replace('mute=1', 'mute=0') : src;
+                  }}
+                ></iframe>
+              </div>
             </div>
             
             {/* Middle Card - Venue */}
@@ -1480,6 +1518,38 @@ export function SentiaMain() {
             <div className="bg-white p-4 rounded-lg shadow-sm">
               <h1 className="text-3xl font-bold text-black/80 mb-2">More Than Just Sentia: Experience the Vibrance of MITE’s Festivals!</h1>
               <p className="text-gray-600">Celebrating culture and traditions all year round at MITE!</p>
+              
+              {/* Image Slider */}
+              <div className="flex-grow relative mt-2 rounded-lg overflow-hidden min-h-[200px]">
+                {oldmitefestivals.map((festival, index) => (
+                  <div 
+                    key={index}
+                    className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+                      index === currentImageIndex % oldmitefestivals.length ? 'opacity-100' : 'opacity-0'
+                    }`}
+                  >
+                    <img 
+                      src={festival.image} 
+                      alt={`MITE Festival ${index + 1}`} 
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                  </div>
+                ))}
+                
+                {/* Image Slider Indicators - 5 dots for 5 images */}
+                <div className="absolute bottom-2 right-2 z-10 flex flex-wrap gap-1 max-w-[180px] justify-end">
+                  {oldmitefestivals.map((_, index) => (
+                    <button 
+                      key={index}
+                      onClick={() => setCurrentImageIndex(index)}
+                      className={`w-1.5 h-1.5 rounded-full transition-all ${
+                        currentImageIndex % oldmitefestivals.length === index ? 'bg-white scale-125' : 'bg-white/50 hover:bg-white/75'
+                      }`}
+                      aria-label={`Go to slide ${index + 1}`}
+                    />
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
           
