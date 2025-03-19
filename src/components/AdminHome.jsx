@@ -37,14 +37,39 @@ const saveEventsToLocalStorage = (events) => {
 
 // Helper function to get data from localStorage
 const getEventsFromLocalStorage = () => {
-  const storedEvents = localStorage.getItem('sentiaLiveEvents');
-  
-  if (!storedEvents) {
-    return [];
-  }
-  
   try {
+    const storedEvents = localStorage.getItem('sentiaLiveEvents');
+    
+    if (!storedEvents) {
+      return [];
+    }
+    
     const parsedEvents = JSON.parse(storedEvents);
+    
+    // Extra safety check - ensure we're not loading default team names
+    const defaultTeamNames = ["Tech Titans", "Elegance Elite", "Bhangra Beats", "Fusion Flames"];
+    const hasDefaultTeams = parsedEvents.some(event => 
+      defaultTeamNames.includes(event.name) || defaultTeamNames.includes(event.event)
+    );
+    
+    if (hasDefaultTeams) {
+      console.log('Default teams detected in admin panel, removing them');
+      // Remove default teams
+      const filteredEvents = parsedEvents.filter(event => 
+        !defaultTeamNames.includes(event.name) && !defaultTeamNames.includes(event.event)
+      );
+      
+      if (filteredEvents.length === 0) {
+        // If all events were defaults, clear the localStorage
+        localStorage.removeItem('sentiaLiveEvents');
+        localStorage.removeItem('sentiaEvents');
+        return [];
+      }
+      
+      // Save the filtered events back to localStorage
+      saveEventsToLocalStorage(filteredEvents);
+      return filteredEvents;
+    }
     
     // Ensure all events have a type property
     return parsedEvents.map(event => {

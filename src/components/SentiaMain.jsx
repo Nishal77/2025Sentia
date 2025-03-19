@@ -73,13 +73,38 @@ const eventImageUrls = [
   'https://res.cloudinary.com/dqmryiyhz/image/upload/v1742054294/sentia/wfcmd8wftw5nuk2adsq2.jpg'
 ];
 
-// Get teams from localStorage only - no default data
+// Get teams from localStorage only - NEVER use default data
 const getTeamsFromStorage = () => {
   try {
     const storedEvents = localStorage.getItem('sentiaLiveEvents');
-    return storedEvents ? JSON.parse(storedEvents) : [];
+    if (!storedEvents) {
+      return [];
+    }
+    
+    // Parse the events
+    const parsedEvents = JSON.parse(storedEvents);
+    
+    // Extra safety check - if the parsed events contain our known default team names,
+    // we'll return an empty array to force admin panel data entry
+    const defaultTeamNames = ["Tech Titans", "Elegance Elite", "Bhangra Beats", "Fusion Flames"];
+    const hasDefaultTeams = parsedEvents.some(event => 
+      defaultTeamNames.includes(event.name) || defaultTeamNames.includes(event.event)
+    );
+    
+    if (hasDefaultTeams) {
+      // Clear localStorage if default teams are found
+      localStorage.removeItem('sentiaLiveEvents');
+      localStorage.removeItem('sentiaEvents');
+      console.log('Default teams detected and removed from storage');
+      return [];
+    }
+    
+    return parsedEvents;
   } catch (error) {
     console.error('Error loading events from storage:', error);
+    // Clear localStorage on error to be safe
+    localStorage.removeItem('sentiaLiveEvents');
+    localStorage.removeItem('sentiaEvents');
     return [];
   }
 };
@@ -118,13 +143,14 @@ export function SentiaMain() {
   
   // One-time initialization to clear any stale data
   useEffect(() => {
-    // Only run this on first load to ensure we start with a clean slate if needed
-    const appInitialized = localStorage.getItem('sentiaAppInitialized');
-    if (!appInitialized) {
-      // Clear localStorage on first app load to ensure we don't have dummy data
-      localStorage.removeItem('sentiaLiveEvents');
-      localStorage.setItem('sentiaAppInitialized', 'true');
-    }
+    // Force clean localStorage on every page load for deployed environment
+    localStorage.removeItem('sentiaLiveEvents');
+    localStorage.removeItem('sentiaEvents');
+    
+    // Set a flag for future reference
+    localStorage.setItem('sentiaAppInitialized', 'true');
+    
+    console.log('Initialized app with clean storage');
   }, []);
   
   // Function to get random contacts
@@ -943,8 +969,9 @@ export function SentiaMain() {
   
   // Update performing teams whenever data changes via Ably or localStorage
   useEffect(() => {
-    // Initialize with data from localStorage
+    // Initialize with data from localStorage - forcing an empty array if not available
     const teamsFromStorage = getTeamsFromStorage();
+    console.log('Initial teams from storage:', teamsFromStorage.length);
     setPerformingTeams(teamsFromStorage);
     setNoEventsData(teamsFromStorage.length === 0);
     
