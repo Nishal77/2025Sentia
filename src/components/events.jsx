@@ -873,7 +873,7 @@ export function Events({ setGlobalVideoHovered }) {
           </div>
         )}
         
-        <div className="p-5 flex flex-col flex-grow relative z-10" style={{ minHeight: '230px' }}>
+        <div className="p-5 flex flex-col flex-grow relative z-10" style={{ minHeight: '230px', height: '100%', display: 'flex', flexDirection: 'column' }}>
           {/* Revert to horizontal layout but with better alignment */}
           <div className="flex items-start mb-3">
             {/* Icon with margin-top and size adjustments - removed padding for icons */}
@@ -908,7 +908,7 @@ export function Events({ setGlobalVideoHovered }) {
             </div>
           </div>
           
-          <p className="text-gray-600 flex-grow relative z-10 text-sm">
+          <p className="text-gray-600 flex-grow relative z-10 text-sm line-clamp-3">
             {description}
           </p>
           
@@ -1122,7 +1122,7 @@ export function Events({ setGlobalVideoHovered }) {
                   </div>
                   
                   {/* Footer moved to bottom */}
-                  <AlertDialogFooter className="flex justify-end items-center gap-2 p-3 sm:p-4 bg-gray-50 border-t border-gray-200 sticky bottom-0">
+                  <AlertDialogFooter className="flex justify-between items-center sm:justify-end sm:gap-2 p-3 sm:p-4 bg-gray-50 border-t border-gray-200 sticky bottom-0">
                     <AlertDialogCancel 
                       className="rounded-lg px-3 py-2 text-sm bg-white border border-gray-300 text-gray-700 hover:bg-gray-100 transition-colors"
                       onClick={() => setIsDialogOpen(false)}
@@ -1331,6 +1331,28 @@ export function Events({ setGlobalVideoHovered }) {
           a[href^="tel:"] {
             font-size: 13px !important;
             font-weight: 500 !important;
+          }
+          
+          /* Fixed card heights */
+          .grid[style*="grid-auto-rows"] > div {
+            height: 100% !important;
+          }
+          
+          /* Ensure dialog buttons display properly on same line */
+          [class*="AlertDialogFooter"] {
+            display: flex;
+            justify-content: space-between !important;
+            flex-direction: row !important;
+            width: 100%;
+          }
+          
+          /* Ensure description in cards uses limited lines */
+          p.text-gray-600 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            max-height: 4.5em;
           }
         }
       `}</style>

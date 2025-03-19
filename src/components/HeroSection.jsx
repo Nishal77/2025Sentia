@@ -247,10 +247,23 @@ export function HeroSection() {
     <section className="overflow-hidden">
       {/* Background image with fantasy-themed base */}
       <div ref={containerRef} className="absolute inset-0 z-0 bg-gradient-to-br from-[#1a2151] via-[#1e2b4d] to-[#252e4a] min-h-screen">
+        {/* Desktop image - only visible on large screens */}
         <img
           src={HeroBackground}
           alt="Hero Background"
-          className="w-full h-full object-cover object-[center_40%] sm:object-center md:object-center"
+          className="hidden lg:block w-full h-full object-cover object-center"
+          style={{
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+            inset: 0,
+          }}
+        />
+        {/* Mobile/tablet image - only visible on small and medium screens */}
+        <img
+          src="/assets/mobil.jpeg"
+          alt="Hero Background Mobile"
+          className="block lg:hidden w-full h-full object-cover object-[center_40%] sm:object-center md:object-center"
           style={{
             position: 'absolute',
             width: '100%',
