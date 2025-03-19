@@ -1470,54 +1470,14 @@ export function SentiaMain() {
               Mangalore Institute of Technology & Engineering (MITE), established in 2007 under Rajalaxmi Education Trust, is a premier engineering college in Moodabidri, known for its excellence in technical education and state-of-the-art facilities. <a href="https://mite.ac.in/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">Know more</a>
               </p>
               <div className="flex-grow relative mt-1 rounded-lg overflow-hidden min-h-[200px]">
-                <video 
+                <iframe 
                   className="w-full h-full object-cover rounded-lg cursor-pointer"
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  src={mitecollege}
-                  onClick={() => {
-                    // Create fullscreen modal when video is clicked
-                    const modal = document.createElement('div');
-                    modal.className = 'fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50';
-                    
-                    const modalContent = document.createElement('div');
-                    modalContent.className = 'relative max-w-[90vw] max-h-[90vh]';
-                    
-                    const closeButton = document.createElement('button');
-                    closeButton.className = 'absolute -top-10 right-0 text-white hover:text-gray-300 p-2';
-                    closeButton.innerHTML = `
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                      </svg>
-                    `;
-                    closeButton.onclick = (e) => {
-                      e.stopPropagation();
-                      document.body.removeChild(modal);
-                    };
-                    
-                    const videoElement = document.createElement('video');
-                    videoElement.src = mitecollege;
-                    videoElement.className = 'w-full h-full rounded-lg';
-                    videoElement.controls = true;
-                    videoElement.autoplay = true;
-                    
-                    modalContent.appendChild(closeButton);
-                    modalContent.appendChild(videoElement);
-                    modal.appendChild(modalContent);
-                    
-                    modal.onclick = (e) => {
-                      if (e.target === modal) {
-                        document.body.removeChild(modal);
-                      }
-                    };
-                    
-                    document.body.appendChild(modal);
-                  }}
-                >
-                  Your browser does not support the video tag.
-                </video>
+                  src="https://www.youtube.com/embed/tx61kRUNfCE?si=h3jh7SZSXVOE-UAS"
+                  title="YouTube video player"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
               </div>
             </div>
             
