@@ -1108,7 +1108,7 @@ export function SentiaMain() {
                   </div>
                 </div>
                 
-                <div className="h-full w-full">
+                <div className="h-full w-full sm:h-[250px] md:h-[200px] lg:h-full">
                   <iframe 
                     src="https://www.instagram.com/reel/DESJgwduXSY/embed?autoplay=1&mute=0"
                     className="w-full h-full object-cover rounded-lg"
@@ -1117,13 +1117,14 @@ export function SentiaMain() {
                     title="Sentia 2025 Instagram Reel"
                     frameBorder="0"
                     scrolling="no"
+                    style={{ minHeight: '250px' }}
                   ></iframe>
                 </div>
               </div>
             </div>
             {/* Right Card - Description */}
             <div className="bg-white p-6 rounded-lg shadow-sm">
-              <h3 className="text-xl font-bold text-black/80 mb-4">Thousands of students gather for the institute's flagship intercollegiate festival, SENTIA, for an exciting three-day celebration of literature, culture, art, and innovation that promises to be an unforgettable and thrilling event, fostering creativity, collaboration, and lifelong memories.</h3>
+              <h3 className="text-xl font-bold text-black/80 mb-4">Thousands of students gather for the institute's flagship intercollegiate festival, Sentia, a thrilling three-day celebration of literature, culture, art, and innovation. This unforgettable event fosters creativity, collaboration, and lasting memories.</h3>
               <p className="text-gray-500">Join us at SENTIA to celebrate creativity, talent, and vibrant expressions of art and culture.</p>
             </div>
           </div>
@@ -1506,7 +1507,7 @@ export function SentiaMain() {
             {/* Additional Card 2 - Similar to Venue card but smaller and more refined */}
             {/* Middle Card - Venue */}
             <div className="bg-white p-4 rounded-lg shadow-sm">
-              <h2 className="text-3xl font-bold text-black/80 mb-2">Sentia 2024: The DJ Experience You Can’t Miss!</h2>
+              <h2 className="text-3xl font-bold text-black/80 mb-2">Sentia 2024: The DJ Experience You Can't Miss!</h2>
               <p className="text-gray-600">Experience the Rhythm of Sentia 2024! An electrifying night of music, energy, and unforgettable moments.</p>
              
               
@@ -1516,7 +1517,7 @@ export function SentiaMain() {
            
             {/* Event Coordinators Contact Section */}
             <div className="bg-white p-4 rounded-lg shadow-sm">
-              <h1 className="text-3xl font-bold text-black/80 mb-2">More Than Just Sentia: Experience the Vibrance of MITE’s Festivals!</h1>
+              <h1 className="text-3xl font-bold text-black/80 mb-2">More Than Just Sentia: Experience the Vibrance of MITE's Festivals!</h1>
               <p className="text-gray-600">Celebrating culture and traditions all year round at MITE!</p>
               
               {/* Image Slider */}
