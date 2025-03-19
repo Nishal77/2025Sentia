@@ -73,50 +73,14 @@ const eventImageUrls = [
   'https://res.cloudinary.com/dqmryiyhz/image/upload/v1742054294/sentia/wfcmd8wftw5nuk2adsq2.jpg'
 ];
 
-// Define performing teams data
-const defaultPerformingTeams = [
-  {
-    id: 1,
-    name: "Tech Titans",
-    event: "Robo Wars",
-    location: "Student Center - SC105",
-    status: "LIVE",
-    video: "robowars"
-  },
-  {
-    id: 2,
-    name: "Elegance Elite",
-    event: "Fashion Walk",
-    location: "Mite Venue",
-    status: "ENDED",
-    video: "fashionwalk"
-  },
-  {
-    id: 3,
-    name: "Bhangra Beats",
-    event: "Eastern Dance",
-    location: "Science Block - PHY303",
-    status: "UP NEXT",
-    video: "dance"
-  },
-  {
-    id: 4,
-    name: "Fusion Flames",
-    event: "Western Dance",
-    location: "Science Block - PHY303",
-    status: "UP NEXT",
-    video: "dance"
-  }
-];
-
-// Get teams from localStorage if available, otherwise use default data
+// Get teams from localStorage only - no default data
 const getTeamsFromStorage = () => {
   try {
     const storedEvents = localStorage.getItem('sentiaLiveEvents');
-    return storedEvents ? JSON.parse(storedEvents) : defaultPerformingTeams;
+    return storedEvents ? JSON.parse(storedEvents) : [];
   } catch (error) {
     console.error('Error loading events from storage:', error);
-    return defaultPerformingTeams;
+    return [];
   }
 };
 
@@ -151,6 +115,17 @@ export function SentiaMain() {
   // State for contact popup
   const [isContactPopupOpen, setIsContactPopupOpen] = useState(false);
   const [randomContacts, setRandomContacts] = useState([]);
+  
+  // One-time initialization to clear any stale data
+  useEffect(() => {
+    // Only run this on first load to ensure we start with a clean slate if needed
+    const appInitialized = localStorage.getItem('sentiaAppInitialized');
+    if (!appInitialized) {
+      // Clear localStorage on first app load to ensure we don't have dummy data
+      localStorage.removeItem('sentiaLiveEvents');
+      localStorage.setItem('sentiaAppInitialized', 'true');
+    }
+  }, []);
   
   // Function to get random contacts
   const getRandomContacts = () => {
@@ -404,9 +379,9 @@ export function SentiaMain() {
           <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 text-gray-300 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
           </svg>
-          <h3 className="text-lg text-gray-700 font-medium mb-2">No Live Events Currently</h3>
+          <h3 className="text-lg text-gray-700 font-medium mb-2">No Events Available</h3>
           <p className="text-gray-500 max-w-md mx-auto">
-            Our event schedule is being updated. Please check back soon for upcoming performances and activities.
+            Events need to be added via the admin panel. Please log in to the admin panel to add events and they will appear here.
           </p>
         </div>
       );
@@ -802,7 +777,7 @@ export function SentiaMain() {
           </svg>
           <h3 className="text-lg text-gray-700 font-medium mb-2">No Performing Teams</h3>
           <p className="text-gray-500 max-w-md mx-auto">
-            Team information is currently being updated. Check back soon to see which teams will be performing.
+            Teams need to be added via the admin panel. Please log in to the admin panel to add performing teams and they will appear here.
           </p>
         </div>
       );
