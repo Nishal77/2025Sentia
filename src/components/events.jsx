@@ -976,7 +976,7 @@ export function Events({ setGlobalVideoHovered }) {
                   </button>
                 </AlertDialogTrigger>
                 
-                <AlertDialogContent className="max-w-[95vw] md:max-w-[85vw] lg:max-w-[1400px] w-auto rounded-xl overflow-hidden p-0 border border-gray-200 shadow-2xl bg-white fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                <AlertDialogContent className="max-w-[98vw] w-[98vw] sm:max-w-[95vw] md:max-w-[90vw] lg:max-w-[1400px] lg:w-auto rounded-xl overflow-hidden p-0 border border-gray-200 shadow-2xl bg-white fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                   {/* Header - Fixed at top with gradient background */}
                   <div className="p-4 md:p-6 bg-gradient-to-r from-gray-900 to-gray-800 text-white sticky top-0 z-10 flex items-center justify-between">
                     <div className="flex items-center">
@@ -1032,14 +1032,14 @@ export function Events({ setGlobalVideoHovered }) {
                   </AlertDialogDescription>
 
                   {/* Scrollable content area with improved styling */}
-                  <div className="max-h-[65vh] overflow-y-auto relative">
+                  <div className="max-h-[60vh] sm:max-h-[65vh] md:max-h-[70vh] overflow-y-auto relative">
                     {/* Subtle background pattern */}
                     <div className="absolute inset-0 bg-grid-pattern opacity-5 pointer-events-none z-0"></div>
                     
-                    <div className="relative z-10 p-4 md:p-8 space-y-4 md:space-y-6">
+                    <div className="relative z-10 p-3 sm:p-4 md:p-8 space-y-3 sm:space-y-4 md:space-y-6">
                       {/* Coordinators Section with enhanced styling */}
                       {eventRules[id]?.coordinators && (
-                        <div className="bg-gradient-to-br from-gray-50 to-gray-100 p-3 md:p-4 rounded-xl border border-gray-200 shadow-sm">
+                        <div className="bg-gradient-to-br from-gray-50 to-gray-100 p-2.5 md:p-4 rounded-xl border border-gray-200 shadow-sm">
                           <h3 className="font-semibold text-gray-800 text-xs md:text-sm uppercase tracking-wide mb-2 md:mb-3 flex items-center">
                             <div className="bg-indigo-100 p-1 md:p-1.5 rounded-lg mr-2">
                               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-3 h-3 md:w-4 md:h-4 text-indigo-600">
@@ -1070,7 +1070,7 @@ export function Events({ setGlobalVideoHovered }) {
                       )}
                       
                       {/* Rules Section with enhanced card styling */}
-                      <div className="bg-white p-3 md:p-5 rounded-xl border border-gray-200 shadow-sm">
+                      <div className="bg-white p-2.5 sm:p-3 md:p-5 rounded-xl border border-gray-200 shadow-sm">
                         <h3 className="font-semibold text-gray-800 text-xs md:text-sm uppercase tracking-wide mb-3 flex items-center">
                           <div className="bg-indigo-100 p-1 md:p-1.5 rounded-lg mr-2">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-3 h-3 md:w-4 md:h-4 text-indigo-600">
@@ -1080,7 +1080,7 @@ export function Events({ setGlobalVideoHovered }) {
                           RULES & GUIDELINES
                         </h3>
                         
-                        <div className="space-y-1 md:space-y-2">
+                        <div className="space-y-0.5 sm:space-y-1 md:space-y-2">
                           {eventRules[id]?.rules.map((rule, index) => {
                             // Special handling for headers (lines starting with ###)
                             if (rule.startsWith('###')) {
@@ -1092,7 +1092,7 @@ export function Events({ setGlobalVideoHovered }) {
                             // Regular rule
                             return (
                               <div key={index} className="flex items-start bg-white rounded-lg p-1 md:p-2 hover:bg-gray-50 transition-colors">
-                                <div className="w-5 h-5 md:w-6 md:h-6 bg-indigo-100 rounded-full flex items-center justify-center flex-shrink-0 mr-3 mt-0.5">
+                                <div className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 bg-indigo-100 rounded-full flex items-center justify-center flex-shrink-0 mr-2 sm:mr-3 mt-0.5">
                                   <span className="text-indigo-700 text-xs md:text-sm font-semibold">{rule.startsWith('•') ? '•' : index + 1}</span>
                                 </div>
                                 <p className="text-gray-700 text-xs md:text-sm flex-1">
@@ -1105,7 +1105,7 @@ export function Events({ setGlobalVideoHovered }) {
                       </div>
                       
                       {/* Additional notes or information section */}
-                      <div className="bg-amber-50 p-5 rounded-xl border border-amber-200">
+                      <div className="bg-amber-50 p-3 sm:p-4 md:p-5 rounded-xl border border-amber-200">
                         <div className="flex items-start">
                           <div className="flex-shrink-0 text-amber-500 mr-3">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -1122,7 +1122,7 @@ export function Events({ setGlobalVideoHovered }) {
                   </div>
                   
                   {/* Footer moved to bottom */}
-                  <AlertDialogFooter className="flex justify-end items-center gap-2 p-4 bg-gray-50 border-t border-gray-200">
+                  <AlertDialogFooter className="flex justify-end items-center gap-2 p-3 sm:p-4 bg-gray-50 border-t border-gray-200 sticky bottom-0">
                     <AlertDialogCancel 
                       className="rounded-lg px-3 py-2 text-sm bg-white border border-gray-300 text-gray-700 hover:bg-gray-100 transition-colors"
                       onClick={() => setIsDialogOpen(false)}
@@ -1134,7 +1134,7 @@ export function Events({ setGlobalVideoHovered }) {
                     {(id === 'battle-of-bands' || id === 'fashion-walk' || id === 'senhacks') && (
                       <Link to="/register">
                         <AlertDialogAction 
-                          className="rounded-lg px-4 py-2 text-sm bg-indigo-600 text-white hover:bg-indigo-700 transition-colors"
+                          className="rounded-lg px-4 py-2.5 text-sm font-medium bg-indigo-600 text-white hover:bg-indigo-700 transition-colors shadow-md"
                           onClick={() => setIsDialogOpen(false)}
                         >
                           Register Now
@@ -1301,6 +1301,37 @@ export function Events({ setGlobalVideoHovered }) {
             linear-gradient(to right, rgba(0,0,0,0.05) 1px, transparent 1px),
             linear-gradient(to bottom, rgba(0,0,0,0.05) 1px, transparent 1px);
           background-size: 24px 24px;
+        }
+
+        /* Mobile styling improvements */
+        @media (max-width: 640px) {
+          /* Make coordinator items display better on mobile */
+          [class*="flex flex-col space-y-2 md:space-y-3"] > div {
+            padding: 8px !important;
+          }
+          
+          /* Improve rule items spacing */
+          [class*="space-y-0.5 sm:space-y-1"] > div {
+            padding: 5px !important;
+            margin-bottom: 2px;
+          }
+          
+          /* Fix title size on mobile */
+          [class*="text-2xl font-bold mb-1"] {
+            font-size: 1.25rem !important;
+          }
+          
+          /* Improve alert dialog on mobile */
+          [class*="AlertDialogContent"] {
+            height: auto !important;
+            max-height: 85vh !important;
+          }
+          
+          /* Make phone numbers more visible */
+          a[href^="tel:"] {
+            font-size: 13px !important;
+            font-weight: 500 !important;
+          }
         }
       `}</style>
     </div>
