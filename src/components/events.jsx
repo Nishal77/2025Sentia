@@ -388,6 +388,31 @@ export function Events({ setGlobalVideoHovered }) {
       time: "Begins at 8 PM",
       building: "Venue Mite Greens",
       day: 2
+    },
+    // Adding three additional event cards with the same content
+    {
+      id: "extra-event-1",
+      title: "DJ Night",
+      description: "Join our exciting new event featuring competitions, performances, and interactive activities. A perfect opportunity to showcase your talents and enjoy a day of fun and engagement!",
+      time: "Begins at 11 AM",
+      building: "Venue Mite Greens",
+      day: 1
+    },
+    {
+      id: "extra-event-2",
+      title: "Faculty Performance",
+      description: "Join our exciting new event featuring competitions, performances, and interactive activities. A perfect opportunity to showcase your talents and enjoy a day of fun and engagement!",
+      time: "Begins at 1 PM",
+      building: "Venue Mite Greens",
+      day: 2
+    },
+    {
+      id: "extra-event-3",
+      title: "Varity",
+      description: "Join our exciting new event featuring competitions, performances, and interactive activities. A perfect opportunity to showcase your talents and enjoy a day of fun and engagement!",
+      time: "Begins at 3 PM",
+      building: "Innovation Center (Main Building 2nd floor)",
+      day: 1
     }
   ];
 
@@ -833,6 +858,13 @@ export function Events({ setGlobalVideoHovered }) {
                   <> • Room no: {roomNumber}</>
                 )}
               </p>
+              
+              {/* Add disclaimer for extra-event-1 */}
+              {id === 'extra-event-1' && (
+                <div className="mt-1.5 inline-block bg-red-100 text-red-700 px-2.5 py-1 rounded-lg text-xs font-medium">
+                  Exclusive for MITE Students
+                </div>
+              )}
               
               {/* Coordinator badge - hide for award-nite */}
               {eventRules[id]?.coordinators && id !== 'award-nite' && (

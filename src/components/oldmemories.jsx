@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { Timeline } from "./ui/timeline";
 
 import HeroImage from '/assets/mite123.png';
+import HeroImageSmall from '/assets/imagesmallscreen.png';
 
 import Memories20121 from '/assets/Memories/2011/imagenew.png';
 import Memories20122 from '/assets/Memories/2011/imagenew1.png';
@@ -390,11 +391,15 @@ export function OldMemories() {
           </Link>
         </div>
 
-        <img
-          src={HeroImage}
-          alt="Sentia Memories"
-          className="absolute inset-0 w-full h-full mt-20"
-        />
+        <picture>
+          <source media="(min-width: 1024px)" srcSet={HeroImage} />
+          <source media="(max-width: 1023px)" srcSet={HeroImageSmall} />
+          <img
+            src={HeroImage}
+            alt="Sentia Memories"
+            className="absolute inset-0 w-full h-full mt-20 object-cover"
+          />
+        </picture>
         
         {/* Scroll indicator at the bottom of the hero section */}
         <div className="absolute bottom-4 left-0 right-0 flex justify-center items-center z-30">
