@@ -1308,7 +1308,7 @@ export function SentiaMain() {
                   />
                   
                   {/* Header with Album Art */}
-                  <div className="flex items-center gap-4 p-4 pb-3 bg-gradient-to-b from-[#303030] to-black">
+                  <div className="flex items-center gap-4 p-4 pb-3">
                     <div className="w-24 h-24 rounded-md overflow-hidden flex-shrink-0 shadow-[0_8px_24px_rgba(0,0,0,0.5)] hover:shadow-[0_8px_28px_rgba(0,0,0,0.8)] ">
                       <img 
                         src={jonithaspotify}
@@ -1394,7 +1394,7 @@ export function SentiaMain() {
                   </div>
                   
                   {/* Preview Tracks - Scrollable List */}
-                  <div className="flex-grow overflow-y-auto scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent bg-gradient-to-b from-[#121212] to-black">
+                  <div className="flex-grow overflow-y-auto scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent">
                     <div className="px-2 py-2">
                       <div className="text-xs uppercase tracking-wider text-white/50 px-2 mb-1 font-medium">Popular</div>
                       
@@ -1721,74 +1721,6 @@ export function SentiaMain() {
         }
       `}</style>
       
-      {/* Music player */}
-      <div className={`fixed bottom-0 left-0 right-0 bg-gray-900 text-white p-3 transform transition-transform duration-300 ${isPlaying ? 'translate-y-0' : 'translate-y-full'}`}>
-        <div className="flex items-center justify-between max-w-7xl mx-auto">
-          <div className="flex items-center">
-            <button 
-              onClick={togglePlay}
-              className="rounded-full bg-white/10 p-2 mr-3 hover:bg-white/20 transition-colors"
-            >
-              {isPlaying ? (
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              ) : (
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              )}
-            </button>
-            
-            
-          </div>
-          
-          <div className="flex items-center space-x-3">
-            <button 
-              onClick={prevSong}
-              className="rounded-full bg-white/10 p-2 hover:bg-white/20 transition-colors"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-            
-            <button 
-              onClick={nextSong}
-              className="rounded-full bg-white/10 p-2 hover:bg-white/20 transition-colors"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-            
-            <div className="flex items-center space-x-1">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15.465a5 5 0 001.06-7.001 5.006 5.006 0 00-7.001 1.06m2.828 9.9a9 9 0 01-2.828-12.728 9.03 9.03 0 013.994-2.93" />
-              </svg>
-              <input 
-                type="range" 
-                min="0" 
-                max="1" 
-                step="0.01" 
-                value={volume}
-                onChange={handleVolumeChange}
-                className="w-20 h-1 bg-white/30 rounded-full appearance-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white"
-              />
-            </div>
-            
-            <button 
-              onClick={() => setIsPlaying(false)}
-              className="rounded-full bg-white/10 p-2 hover:bg-white/20 transition-colors ml-2"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </div>
-        </div>
-      </div>
       
       {/* Contact Popup */}
       {isContactPopupOpen && (
