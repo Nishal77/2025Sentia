@@ -1087,22 +1087,18 @@ export function SentiaMain() {
                 </div>
                 
                 <div className="h-full w-full">
-                  <video 
-                    src={Sentia2025} 
-                    alt="Sentia 2025" 
-                    className="w-full h-full object-cover rounded-lg cursor-pointer"
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    preload="auto"
-                    onClick={() => setIsVideoModalOpen(true)}
-                    fetchPriority="high"
-                  />
+                  <iframe 
+                    src="https://www.instagram.com/reel/DESJgwduXSY/embed?autoplay=1&mute=0"
+                    className="w-full h-full object-cover rounded-lg"
+                    allow="autoplay; encrypted-media"
+                    allowFullScreen
+                    title="Sentia 2025 Instagram Reel"
+                    frameBorder="0"
+                    scrolling="no"
+                  ></iframe>
                 </div>
               </div>
             </div>
-            
             {/* Right Card - Description */}
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <h3 className="text-xl font-bold text-black/80 mb-4">Thousands of students gather for the institute's flagship intercollegiate festival, SENTIA, for an exciting three-day celebration of literature, culture, art, and innovation that promises to be an unforgettable and thrilling event, fostering creativity, collaboration, and lifelong memories.</h3>
