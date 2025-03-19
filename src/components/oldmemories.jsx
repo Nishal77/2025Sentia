@@ -368,77 +368,49 @@ export function OldMemories() {
     return () => window.removeEventListener('scroll', checkScrollTop);
   }, [showScrollTop]);
 
-  
-
-  
   return (
     <div className="min-h-screen bg-[#f7f7f7]">
       {/* Hero Section with Image */}
-      <div className="relative h-[60vh] w-full overflow-hidden">
-        {/* Back to Home Button - Now positioned at top left */}
-        <div className="absolute top-4 left-4 z-30">
-          <Link to="/">
-            <Button 
-              variant="outline" 
-              className="bg-black/80 hover:bg-black/60 text-white border-white/40 backdrop-blur-sm shadow-lg text-xs sm:text-sm py-1 px-2 sm:py-2 sm:px-3"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 sm:w-5 sm:h-5 mr-1 sm:mr-2">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-              </svg>
-              Back
-              <span className="hidden sm:inline"> to Home</span>
-            </Button>
-          </Link>
-        </div>
-
+      <div className="relative h-[60vh] w-full overflow-hidden mt-2">
         <picture>
           <source media="(min-width: 1024px)" srcSet={HeroImage} />
           <source media="(max-width: 1023px)" srcSet={HeroImageSmall} />
           <img
             src={HeroImage}
             alt="Sentia Memories"
-            className="absolute inset-0 w-full h-full mt-20 object-cover"
+            className="absolute inset-0 w-full h-full "
           />
         </picture>
-        
-        {/* Scroll indicator at the bottom of the hero section */}
-        <div className="absolute bottom-4 left-0 right-0 flex justify-center items-center z-30">
-          <motion.div
-            className="p-2 bg-white/20 backdrop-blur-sm rounded-full cursor-pointer shadow-lg"
-            onClick={scrollToContent}
-            initial={{ y: 0 }}
-            animate={{ y: [0, 10, 0] }}
-            transition={{ 
-              repeat: Infinity, 
-              duration: 1.5,
-              ease: "easeInOut"
-            }}
-          >
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              viewBox="0 0 24 24" 
-              fill="none" 
-              stroke="white" 
-              strokeWidth="2" 
-              strokeLinecap="round" 
-              strokeLinejoin="round" 
-              className="w-6 h-6"
-            >
-              <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
-            </svg>
-          </motion.div>
-        </div>
+
+       
       </div>
-        <div id="content-section" className="container mx-auto max-w-6xl py-12 px-4">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">About SENTIA</h2>
-          <p className="text-sm md:text-xl text-gray-700 mx-auto leading-relaxed">
-            SENTIA, the flagship technical and cultural fest of Mangalore Institute of Technology & Engineering (MITE), 
-            has been a cornerstone of innovation and creativity since its inception. This grand celebration brings together 
-            thousands of students from across the country to participate in various technical competitions, cultural performances, 
-            workshops, and exhibitions. Each year, SENTIA showcases the brilliant minds and diverse talents of our student community, 
-            fostering an environment of learning, competition, and celebration.
-          </p>
-        </div>
+
+      {/* Back to Home Button - Now positioned below the image and centered */}
+      <div className="flex justify-center items-center mt-2">
+        <Link to="/">
+          <Button 
+            variant="outline" 
+            className="bg-white hover:bg-gray-100 text-black border-black/40 shadow-lg text-xs sm:text-sm py-1 px-2 sm:py-2 sm:px-3"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 sm:w-5 sm:h-5 mr-1 sm:mr-2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+            </svg>
+            Back
+            <span className="hidden sm:inline"> to Home</span>
+          </Button>
+        </Link>
+      </div>
+
+      <div id="content-section" className="container mx-auto max-w-6xl py-12 px-4">
+        <h2 className="text-3xl md:text-4xl font-bold mb-6">About SENTIA</h2>
+        <p className="text-sm md:text-xl text-gray-700 mx-auto leading-relaxed">
+          SENTIA, the flagship technical and cultural fest of Mangalore Institute of Technology & Engineering (MITE), 
+          has been a cornerstone of innovation and creativity since its inception. This grand celebration brings together 
+          thousands of students from across the country to participate in various technical competitions, cultural performances, 
+          workshops, and exhibitions. Each year, SENTIA showcases the brilliant minds and diverse talents of our student community, 
+          fostering an environment of learning, competition, and celebration.
+        </p>
+      </div>
 
         {/* Timeline section */}
         <div className="container mx-auto max-w-6xl px-4">

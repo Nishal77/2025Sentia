@@ -21,6 +21,7 @@ import Senhacks from "/assets/eventslogo/Hackathon.jpeg";
 import quizlogo from '/assets/eventslogo/quiz.png';
 import mastermindlogo from '/assets/eventslogo/mastermindlogo.png';
 import awardnite from '/assets/eventslogo/awardwinning.jpeg'
+import djnight from '/assets/eventslogo/DJNight.jpeg'
 
 import fashionwalkvideo from '/assets/events/fashionwalk.mp4'
 import battleofbands from '/assets/events/battleofband1.mp4'
@@ -32,6 +33,7 @@ import itquizvideo from '/assets/events/itquiz.mp4'
 import managervideo from '/assets/events/manager.mp4'
 import awardwinning from '/assets/events/awardwinning.mp4'
 import senhacksvideo from '/assets/events/hackthon.mp4'
+import djnightvideo from '/assets/events/djnight.mp4'
 
 import Sentia2025Brochure from '../assets/Sentia2025_Brochure.pdf'
 
@@ -312,7 +314,7 @@ export function Events({ setGlobalVideoHovered }) {
       title: "Battle of bands",
       description: "Get ready for an electrifying intercollege showdown where the best bands clash in a high-energy musical battle! Who will steal the spotlight and claim the ultimate glory?",
       time: "Begins at 7 PM",
-      building: "Venue Mite Greens",
+      building: "Venue: Mite Greens",
       day: 1
     },
     {
@@ -320,7 +322,7 @@ export function Events({ setGlobalVideoHovered }) {
       title: "Fashion walk",
       description: "A dazzling runway showdown where style, confidence, and glamour take center stage! Witness creative designs and bold fashion statements in this spectacular event.",
       time: "Begins at 7 PM",
-      building: "Venue Mite Greens",
+      building: "Venue: Mite Greens",
       day: 2
     },
     {
@@ -328,7 +330,7 @@ export function Events({ setGlobalVideoHovered }) {
       title: "Robo Wars",
       description: "Witness the ultimate robot showdown as machines battle for supremacy in high-energy combat. Engineering excellence meets competitive spirit in this thrilling arena of mechanical warfare!",
       time: "3rd & 4th April",
-      building: "Venue Mite Greens",
+      building: "Venue: Quadrangle",
       day: 1
     },
     {
@@ -336,7 +338,7 @@ export function Events({ setGlobalVideoHovered }) {
       title: "Robo Soccer",
       description: "Experience the excitement as robots compete in a thrilling soccer match, showcasing precision control and strategic gameplay. A unique fusion of sports and robotics engineering!",
       time: "3rd & 4th April",
-      building: "Venue Mite Greens",
+      building: "Venue: Quadrangle",
       day: 1
     },
     {
@@ -344,7 +346,7 @@ export function Events({ setGlobalVideoHovered }) {
       title: "Eastern Dance",
       description: "Experience the rhythmic beauty of traditional eastern dance forms as talented performers showcase classical and folk styles with graceful movements and cultural richness.",
       time: "Begins at 10:30 AM",
-      building: "Venue Main Stage",
+      building: "Venue: Main Stage",
       day: 1
     },
     {
@@ -352,7 +354,7 @@ export function Events({ setGlobalVideoHovered }) {
       title: "Western Dance",
       description: "Witness the energy and creativity of contemporary western dance styles as performers deliver captivating routines combining technical skill with dynamic expressions and modern choreography.",
       time: "Begins at 10:30 PM",
-      building: "Venue Main Stage",
+      building: "Venue: Main Stage",
       day: 1
     },
     {
@@ -360,7 +362,7 @@ export function Events({ setGlobalVideoHovered }) {
       title: "Senhacks",
       description: "Join our flagship 24-hour hackathon where innovation meets code! Form a team, tackle real-world challenges, and build impressive solutions with mentorship from industry experts. Perfect for coders of all levels!",
       time: "Begins at 10 AM (Both days)",
-      building: "Innovation Center (Main Building 3rd floor)",
+      building: "Venue: Innovation Center (Main Block)",
       day: 1
     },
     {
@@ -368,7 +370,7 @@ export function Events({ setGlobalVideoHovered }) {
       title: "Quiz quest",
       description: "Test your knowledge, quick thinking, and competitive spirit in this challenging quiz competition covering a wide range of topics from technology to pop culture.",
       time: "Begins at 2 PM",
-      building: "PG Block",
+      building: "Venue: PG Block",
       roomNumber: "MCA402",
       day: 1
     },
@@ -377,7 +379,7 @@ export function Events({ setGlobalVideoHovered }) {
       title: "Master minds",
       description: "Showcase your problem-solving abilities, critical thinking, and strategic planning in this ultimate battle of intellects. Only the sharpest minds will emerge victorious!",
       time: "Begins at 12 PM",
-      building: "PG Block",
+      building: "Venue: PG Block",
       roomNumber: "VR Lab 01",
       day: 1
     },
@@ -386,33 +388,33 @@ export function Events({ setGlobalVideoHovered }) {
       title: "Award nite",
       description: "The grand finale celebration recognizing outstanding achievements and performances throughout the event. Join us for an evening of accolades, entertainment, and inspiring moments.",
       time: "Begins at 8 PM",
-      building: "Venue Mite Greens",
+      building: "Venue: Mite Greens",
       day: 2
     },
     // Adding three additional event cards with the same content
     {
       id: "extra-event-1",
       title: "DJ Night",
-      description: "Join our exciting new event featuring competitions, performances, and interactive activities. A perfect opportunity to showcase your talents and enjoy a day of fun and engagement!",
+      description: "Join us for an electrifying DJ Night with top DJs, mesmerizing lights, and non-stop music! This exclusive event is open only to MITE students, ensuring a night of unforgettable fun and camaraderie.",
       time: "Begins at 11 AM",
-      building: "Venue Mite Greens",
-      day: 1
+      building: "Venue: Mite Greens",
+      day: 3
     },
     {
       id: "extra-event-2",
       title: "Faculty Performance",
-      description: "Join our exciting new event featuring competitions, performances, and interactive activities. A perfect opportunity to showcase your talents and enjoy a day of fun and engagement!",
+      description: "Join our exciting new event featuring competitions, performances, and interactive activities by our talented faculty members. A perfect opportunity to showcase their talents and enjoy a day of fun and engagement!",
       time: "Begins at 1 PM",
-      building: "Venue Mite Greens",
-      day: 2
+      building: "Venue: Mite Greens",
+      day: 1
     },
     {
       id: "extra-event-3",
       title: "Varity",
-      description: "Join our exciting new event featuring competitions, performances, and interactive activities. A perfect opportunity to showcase your talents and enjoy a day of fun and engagement!",
+      description: "Join our exciting new event featuring a variety of performances including music, dance, drama, and more. This is a perfect opportunity to showcase your diverse talents and enjoy a day filled with creativity, fun, and engagement!",
       time: "Begins at 3 PM",
-      building: "Innovation Center (Main Building 2nd floor)",
-      day: 1
+      building: "Venue: Main Stage",
+      day: 2
     }
   ];
 
@@ -422,6 +424,7 @@ export function Events({ setGlobalVideoHovered }) {
     const danceVideoRef = useRef(null);
     const awardVideoRef = useRef(null);
     const senhacksVideoRef = useRef(null);
+    const djNightVideoRef = useRef(null);
     
     // Add state to track hover for cards with video effects
     const [isHovered, setIsHovered] = useState(false);
@@ -449,6 +452,7 @@ export function Events({ setGlobalVideoHovered }) {
       if (id === 'master-minds') return mindsVideoRef;
       if (id === 'award-nite') return awardVideoRef;
       if (id === 'senhacks') return senhacksVideoRef;
+      if (id === 'extra-event-1') return djNightVideoRef;
       return null;
     };
     
@@ -456,7 +460,7 @@ export function Events({ setGlobalVideoHovered }) {
     React.useEffect(() => {
       const videoRef = getVideoRef();
       
-      if ((id === 'fashion-walk' || id === 'battle-of-bands' || id === 'eastern-dance' || id === 'western-dance' || id === 'robo-wars' || id === 'robo-soccer' || id === 'quiz-quest' || id === 'master-minds' || id === 'award-nite' || id === 'senhacks') && videoRef?.current) {
+      if ((id === 'fashion-walk' || id === 'battle-of-bands' || id === 'eastern-dance' || id === 'western-dance' || id === 'robo-wars' || id === 'robo-soccer' || id === 'quiz-quest' || id === 'master-minds' || id === 'award-nite' || id === 'senhacks' || id === 'extra-event-1') && videoRef?.current) {
         if (isHovered) {
           // Reset video to beginning for consistent experience
           videoRef.current.currentTime = 0;
@@ -562,6 +566,17 @@ export function Events({ setGlobalVideoHovered }) {
               />
             </div>
           );
+        case 'extra-event-1':
+          return (
+            <div className="w-full h-full flex items-center justify-center overflow-hidden">
+              <img 
+                src={djnight}
+                alt="DJ Night"
+                className="w-full h-full object-cover"
+                style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+              />
+            </div>
+          );
         case 'robo-wars':
           return (
             <div className="w-full h-full flex items-center justify-center overflow-hidden">
@@ -644,7 +659,7 @@ export function Events({ setGlobalVideoHovered }) {
           <div className="w-full h-full flex items-center justify-center overflow-hidden">
               <img 
                 src={awardnite} 
-                alt="Fashion Walk"
+                alt="Award Night"
                 className="w-full h-full object-cover"
                 style={{ objectFit: 'cover', width: '100%', height: '100%' }}
               />
@@ -662,7 +677,7 @@ export function Events({ setGlobalVideoHovered }) {
 
     return (
       <div 
-        className={`bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow flex flex-col h-full relative ${id === 'fashion-walk' || id === 'battle-of-bands' || id === 'eastern-dance' || id === 'western-dance' || id === 'robo-wars' || id === 'robo-soccer' || id === 'quiz-quest' || id === 'master-minds' || id === 'award-nite' || id === 'senhacks' ? 'group' : ''}`}
+        className={`bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow flex flex-col h-full relative ${id === 'fashion-walk' || id === 'battle-of-bands' || id === 'eastern-dance' || id === 'western-dance' || id === 'robo-wars' || id === 'robo-soccer' || id === 'quiz-quest' || id === 'master-minds' || id === 'award-nite' || id === 'senhacks' || id === 'extra-event-1' ? 'group' : ''}`}
         style={{ 
           height: '100%', 
           width: '100%',
@@ -670,7 +685,7 @@ export function Events({ setGlobalVideoHovered }) {
           transition: 'box-shadow 0.3s ease'
         }}
         onMouseEnter={() => {
-          if (id === 'fashion-walk' || id === 'battle-of-bands' || id === 'eastern-dance' || id === 'western-dance' || id === 'robo-wars' || id === 'robo-soccer' || id === 'quiz-quest' || id === 'master-minds' || id === 'award-nite' || id === 'senhacks') {
+          if (id === 'fashion-walk' || id === 'battle-of-bands' || id === 'eastern-dance' || id === 'western-dance' || id === 'robo-wars' || id === 'robo-soccer' || id === 'quiz-quest' || id === 'master-minds' || id === 'award-nite' || id === 'senhacks' || id === 'extra-event-1') {
             setIsHovered(true);
             // If global state setter is available, use it to pause slider
             if (typeof setGlobalVideoHovered === 'function') {
@@ -684,7 +699,7 @@ export function Events({ setGlobalVideoHovered }) {
           }
         }}
         onMouseLeave={() => {
-          if (id === 'fashion-walk' || id === 'battle-of-bands' || id === 'eastern-dance' || id === 'western-dance' || id === 'robo-wars' || id === 'robo-soccer' || id === 'quiz-quest' || id === 'master-minds' || id === 'award-nite' || id === 'senhacks') {
+          if (id === 'fashion-walk' || id === 'battle-of-bands' || id === 'eastern-dance' || id === 'western-dance' || id === 'robo-wars' || id === 'robo-soccer' || id === 'quiz-quest' || id === 'master-minds' || id === 'award-nite' || id === 'senhacks' || id === 'extra-event-1') {
             setIsHovered(false);
             // Reset global state when no longer hovering
             if (typeof setGlobalVideoHovered === 'function') {
@@ -842,6 +857,21 @@ export function Events({ setGlobalVideoHovered }) {
             />
           </div>
         )}
+
+        {/* Video background for DJ Night card */}
+        {id === 'extra-event-1' && (
+          <div className="absolute inset-0 w-full h-full z-0 pointer-events-none opacity-0 group-hover:opacity-40 transition-opacity duration-300 ">
+            <video 
+              ref={djNightVideoRef}
+              className="w-full h-full object-cover"
+              src={djnightvideo}
+              muted 
+              playsInline
+              loop
+              preload="auto"
+            />
+          </div>
+        )}
         
         <div className="p-5 flex flex-col flex-grow relative z-10" style={{ minHeight: '230px' }}>
           {/* Revert to horizontal layout but with better alignment */}
@@ -859,8 +889,8 @@ export function Events({ setGlobalVideoHovered }) {
                 )}
               </p>
               
-              {/* Add disclaimer for extra-event-1 */}
-              {id === 'extra-event-1' && (
+              {/* Add disclaimer only for extra events */}
+              {(id === 'extra-event-1' || id === 'extra-event-2' || id === 'extra-event-3') && (
                 <div className="mt-1.5 inline-block bg-red-100 text-red-700 px-2.5 py-1 rounded-lg text-xs font-medium">
                   Exclusive for MITE Students
                 </div>
@@ -978,7 +1008,10 @@ export function Events({ setGlobalVideoHovered }) {
                         {id === 'award-nite' && (
                           <img src={awardnite} alt="Awards" className="w-9 h-9 rounded-full object-cover" />
                         )}
-                        {!['fashion-walk', 'battle-of-bands', 'robo-wars', 'robo-soccer', 'eastern-dance', 'western-dance', 'quiz-quest', 'master-minds', 'award-nite'].includes(id) && (
+                        {id === 'extra-event-1' && (
+                          <img src={djnight} alt="DJ Night" className="w-9 h-9 rounded-full object-cover" />
+                        )}
+                        {!['fashion-walk', 'battle-of-bands', 'robo-wars', 'robo-soccer', 'eastern-dance', 'western-dance', 'quiz-quest', 'master-minds', 'award-nite', 'extra-event-1'].includes(id) && (
                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 18.75h-9m9 0a3 3 0 0 1 3 3h-15a3 3 0 0 1 3-3m9 0v-3.375c0-.621-.503-1.125-1.125-1.125h-.871M7.5 18.75v-3.375c0-.621.504-1.125 1.125-1.125h.872m5.007 0H9.497m5.007 0a7.454 7.454 0 0 1-.982-3.172M9.497 14.25a7.454 7.454 0 0 0 .981-3.172M5.25 4.236c-.982.143-1.954.317-2.916.52A6.003 6.003 0 0 0 7.73 9.728M5.25 4.236V4.5c0 2.108.966 3.99 2.48 5.228M5.25 4.236V2.721C7.456 2.41 9.71 2.25 12 2.25c2.291 0 4.545.16 6.75.47v1.516M7.73 9.728a6.726 6.726 0 0 0 2.748 1.35m8.272-6.842V4.5c0 2.108-.966 3.99-2.48 5.228m2.48-5.492a46.32 46.32 0 0 1 2.916.52 6.003 6.003 0 0 1-5.395 4.972m0 0a6.726 6.726 0 0 1-2.749 1.35m0 0a6.772 6.772 0 0 1-3.044 0" />
                           </svg>
@@ -1188,6 +1221,12 @@ export function Events({ setGlobalVideoHovered }) {
               onClick={() => setActiveTab('day2')}
             >
               Day 2
+            </button>
+            <button 
+              className={`px-6 py-2 rounded-full text-sm font-medium ${activeTab === 'day3' ? 'bg-white text-indigo-900' : 'text-white'}`}
+              onClick={() => setActiveTab('day3')}
+            >
+              Day 3
             </button>
           </div>
         </div>

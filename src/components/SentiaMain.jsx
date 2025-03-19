@@ -1559,6 +1559,72 @@ export function SentiaMain() {
             </div>
           </div>
           
+          {/* Second Additional Cards Row - 3 extra cards added below */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mt-5">
+            {/* Extra Card 1 */}
+            <div className="bg-white p-4 rounded-lg shadow-sm overflow-hidden flex flex-col h-full">
+              <h2 className="text-2xl font-bold text-black/80 mb-3">Past Events</h2>
+              <p className="text-gray-600">
+                Explore our rich history of successful tech fests. Sentia has grown over the years to become one of the most anticipated annual events in the region.
+              </p>
+              <div className="flex-grow relative mt-1 rounded-lg overflow-hidden min-h-[200px]">
+                <img 
+                  src="/assets/events/pastevents.jpg" 
+                  alt="Past Events" 
+                  className="w-full h-full object-cover rounded-lg cursor-pointer"
+                />
+              </div>
+            </div>
+            
+            {/* Extra Card 2 */}
+            <div className="bg-white p-4 rounded-lg shadow-sm">
+              <h2 className="text-2xl font-bold text-black/80 mb-5">Sponsors</h2>
+              
+              <div className="flex items-start gap-3 mb-4">
+                <div className="bg-indigo-100 text-indigo-600 rounded-full w-10 h-10 flex items-center justify-center flex-shrink-0">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 11.25v8.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 1 0 9.375 7.5H12m0-2.625A2.625 2.625 0 1 1 14.625 7.5H12m0 0V21m-8.625-9.75h18c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125h-18c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="font-semibold">Our Valued Partners</h3>
+                  <p className="text-gray-500">We're proud to be supported by industry leaders and local businesses who help make Sentia possible.</p>
+                </div>
+              </div>
+              
+              <div className="mt-5 grid grid-cols-3 gap-3">
+                <div className="bg-gray-100 rounded-lg p-3 flex items-center justify-center">
+                  <div className="text-center text-sm text-gray-600">Sponsor 1</div>
+                </div>
+                <div className="bg-gray-100 rounded-lg p-3 flex items-center justify-center">
+                  <div className="text-center text-sm text-gray-600">Sponsor 2</div>
+                </div>
+                <div className="bg-gray-100 rounded-lg p-3 flex items-center justify-center">
+                  <div className="text-center text-sm text-gray-600">Sponsor 3</div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Extra Card 3 */}
+            <div className="bg-white p-6 rounded-lg shadow-sm flex flex-col h-full">
+              <div className="flex-grow">
+                <h2 className="text-3xl font-bold text-black/80 mb-2">Workshops & Seminars</h2>
+                <p className="text-gray-500 mb-6">Enhance your skills with our expert-led workshops and seminars on cutting-edge technologies.</p>
+              </div>
+              
+              <div className="space-y-3 mt-auto">
+                <button 
+                  className="w-full px-5 py-4 bg-[rgb(61,6,246)] hover:bg-blue-700 text-white rounded-md transition-colors duration-200 flex items-center justify-center"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  View Schedule
+                </button>
+              </div>
+            </div>
+          </div>
+          
           {/* Programme Section */}
           <Events setGlobalVideoHovered={setIsAnyVideoHovered} />
         </div>
