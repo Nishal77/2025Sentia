@@ -387,21 +387,21 @@ export function Events({ setGlobalVideoHovered }) {
     },
     {
       id: "award-nite",
-      title: "Award nite",
+      title: "Award Nite",
       description: "The grand finale celebration recognizing outstanding achievements and performances throughout the event. Join us for an evening of accolades, entertainment, and inspiring moments.",
       time: "Begins at 8 PM",
       building: "Venue: Mite Greens",
       day: 2
     },
     // Adding three additional event cards with the same content
-    {
-      id: "extra-event-1",
-      title: "DJ Night",
-      description: "Join us for an electrifying DJ Night with top DJs, mesmerizing lights, and non-stop music! This exclusive event is open only to MITE students, ensuring a night of unforgettable fun and camaraderie.",
-      time: "Begins at 11 AM",
-      building: "Venue: Mite Greens",
-      day: 3
-    },
+    // {
+    //   id: "extra-event-1",
+    //   title: "DJ Night",
+    //   description: "Join us for an electrifying DJ Night with top DJs, mesmerizing lights, and non-stop music! This exclusive event is open only to MITE students, ensuring a night of unforgettable fun and camaraderie.",
+    //   time: "Begins at 11 AM",
+    //   building: "Venue: Mite Greens",
+    //   day: 3
+    // },
     {
       id: "extra-event-2",
       title: "Faculty Performance",
@@ -412,7 +412,7 @@ export function Events({ setGlobalVideoHovered }) {
     },
     {
       id: "extra-event-3",
-      title: "Varity",
+      title: "Variety",
       description: "Join our exciting new event featuring a variety of performances including music, dance, drama, and more. This is a perfect opportunity to showcase your diverse talents and enjoy a day filled with creativity, fun, and engagement!",
       time: "Begins at 3 PM",
       building: "Venue: Main Stage",
@@ -701,7 +701,7 @@ export function Events({ setGlobalVideoHovered }) {
 
     return (
       <div 
-        className={`bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow flex flex-col h-full relative ${id === 'fashion-walk' || id === 'battle-of-bands' || id === 'eastern-dance' || id === 'western-dance' || id === 'robo-wars' || id === 'robo-soccer' || id === 'quiz-quest' || id === 'master-minds' || id === 'award-nite' || id === 'senhacks' || id === 'extra-event-1' ? 'group' : ''}`}
+        className={`bg-white rounded-lg shadow-sm border border-black overflow-hidden hover:shadow-md transition-shadow flex flex-col h-full relative ${id === 'fashion-walk' || id === 'battle-of-bands' || id === 'eastern-dance' || id === 'western-dance' || id === 'robo-wars' || id === 'robo-soccer' || id === 'quiz-quest' || id === 'master-minds' || id === 'award-nite' || id === 'senhacks' || id === 'extra-event-1' ? 'group' : ''}`}
         style={{ 
           height: '100%', 
           width: '100%',
@@ -897,7 +897,7 @@ export function Events({ setGlobalVideoHovered }) {
           </div>
         )}
         
-        <div className="p-5 flex flex-col flex-grow relative z-10" style={{ minHeight: '230px', height: '100%', display: 'flex', flexDirection: 'column' }}>
+        <div className="p-5 flex flex-col flex-grow relative z-10" style={{ minHeight: '300px', height: '100%', display: 'flex', flexDirection: 'column' }}>
           {/* Revert to horizontal layout but with better alignment */}
           <div className="flex items-start mb-3">
             {/* Icon with margin-top and size adjustments - removed padding for icons */}
@@ -913,12 +913,12 @@ export function Events({ setGlobalVideoHovered }) {
                 )}
               </p>
               
-              {/* Add disclaimer only for extra events */}
+              {/* Add disclaimer only for extra events
               {(id === 'extra-event-1' || id === 'extra-event-2' || id === 'extra-event-3') && (
                 <div className="mt-1.5 inline-block bg-red-100 text-red-700 px-2.5 py-1 rounded-lg text-xs font-medium">
                   Exclusive for MITE Students
                 </div>
-              )}
+              )} */}
               
               {/* Coordinator badge - hide for award-nite */}
               {eventRules[id]?.coordinators && id !== 'award-nite' && (
@@ -1039,7 +1039,7 @@ export function Events({ setGlobalVideoHovered }) {
                           <img src={facultylogo} alt="Faculty Performance" className="w-9 h-9 rounded-full object-cover" />
                         )}
                         {id === 'extra-event-3' && (
-                          <img src={yakshagana} alt="Varity" className="w-9 h-9 rounded-full object-cover" />
+                          <img src={yakshagana} alt="Variety" className="w-9 h-9 rounded-full object-cover" />
                         )}
                         {!['fashion-walk', 'battle-of-bands', 'robo-wars', 'robo-soccer', 'eastern-dance', 'western-dance', 'quiz-quest', 'master-minds', 'award-nite', 'extra-event-1', 'extra-event-2', 'extra-event-3'].includes(id) && (
                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -1122,7 +1122,7 @@ export function Events({ setGlobalVideoHovered }) {
                             // Regular rule
                             return (
                               <div key={index} className="flex items-start bg-white rounded-lg p-1 md:p-2 hover:bg-gray-50 transition-colors">
-                                <div className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 bg-indigo-100 rounded-full flex items-center justify-center flex-shrink-0 mr-2 sm:mr-3 mt-0.5">
+                                <div className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md-h-6 bg-indigo-100 rounded-full flex items-center justify-center flex-shrink-0 mr-2 sm:mr-3 mt-0.5">
                                   <span className="text-indigo-700 text-xs md:text-sm font-semibold">{rule.startsWith('•') ? '•' : index + 1}</span>
                                 </div>
                                 <p className="text-gray-700 text-xs md:text-sm flex-1">
@@ -1232,7 +1232,7 @@ export function Events({ setGlobalVideoHovered }) {
         <h2 className="text-4xl font-bold text-center text-black/80 mb-2">Programme</h2>
         <p className="text-center text-gray-500 mb-8">April 2 - April 4th, 2025</p>
         
-        {/* Day tabs with Home button */}
+        {/* Day tabs with Home button - Removed Day 3 */}
         <div className="flex justify-center mb-12">
           <div className="inline-flex bg-black rounded-full p-1">
             <button 
@@ -1252,12 +1252,6 @@ export function Events({ setGlobalVideoHovered }) {
               onClick={() => setActiveTab('day2')}
             >
               Day 2
-            </button>
-            <button 
-              className={`px-6 py-2 rounded-full text-sm font-medium ${activeTab === 'day3' ? 'bg-white text-indigo-900' : 'text-white'}`}
-              onClick={() => setActiveTab('day3')}
-            >
-              Day 3
             </button>
           </div>
         </div>
@@ -1280,7 +1274,7 @@ export function Events({ setGlobalVideoHovered }) {
               className="flex flex-col items-center"
             >
               <div 
-                className={`bg-black text-white py-2.5 px-5 rounded-lg font-medium text-sm flex items-center space-x-2 shadow-md transition-shadow duration-300 ${isDownloadHovered ? 'shadow-lg' : ''}`}
+                className={`bg-red-600 text-white py-2.5 px-5 rounded-lg font-medium text-sm flex items-center space-x-2 shadow-md transition-shadow duration-300 ${isDownloadHovered ? 'shadow-lg' : ''}`}
                 style={{ transform: 'none' }}
               >
                 {/* Subtle gradient border on hover */}
@@ -1295,7 +1289,7 @@ export function Events({ setGlobalVideoHovered }) {
               </div>
             </a>
 
-            <a 
+            {/* <a 
               href="https://www.youtube.com/watch?v=d9IKg-nizhQ"
               target="_blank"
               rel="noopener noreferrer" 
@@ -1309,7 +1303,7 @@ export function Events({ setGlobalVideoHovered }) {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347c-.75.412-1.667-.13-1.667-.986V5.653Z" />
                 </svg>
               </div>
-            </a>
+            </a> */}
           </div>
           
           <p className="text-gray-500 mt-3 text-center text-sm max-w-xs">
@@ -1366,6 +1360,7 @@ export function Events({ setGlobalVideoHovered }) {
           /* Fixed card heights */
           .grid[style*="grid-auto-rows"] > div {
             height: 100% !important;
+            min-height: 320px !important;
           }
           
           /* Ensure dialog buttons display properly on same line */

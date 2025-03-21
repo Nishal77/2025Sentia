@@ -30,11 +30,11 @@ const CollegeLogoSizes = {
 };
 
 // MITE Logo from Cloudinary
-const MiteLogo = 'https://res.cloudinary.com/dqmryiyhz/image/upload/v1742053263/sentia/bbihqv0vhpezbfnhluzr.png';
+const MiteLogo = 'https://res.cloudinary.com/dqmryiyhz/image/upload/v1742476079/sentia/fzsbrp782yor2btgx8mz.png';
 const MiteLogoSizes = {
-  sm: 'https://res.cloudinary.com/dqmryiyhz/image/upload/w_160,q_auto,f_auto/v1742053263/sentia/bbihqv0vhpezbfnhluzr.png',
-  md: 'https://res.cloudinary.com/dqmryiyhz/image/upload/w_200,q_auto,f_auto/v1742053263/sentia/bbihqv0vhpezbfnhluzr.png',
-  lg: 'https://res.cloudinary.com/dqmryiyhz/image/upload/w_250,q_auto,f_auto/v1742053263/sentia/bbihqv0vhpezbfnhluzr.png'
+  sm: 'https://res.cloudinary.com/dqmryiyhz/image/upload/w_160,q_auto,f_auto/v1742476079/sentia/fzsbrp782yor2btgx8mz.png',
+  md: 'https://res.cloudinary.com/dqmryiyhz/image/upload/w_200,q_auto,f_auto/v1742476079/sentia/fzsbrp782yor2btgx8mz.png',
+  lg: 'https://res.cloudinary.com/dqmryiyhz/image/upload/w_250,q_auto,f_auto/v1742476079/sentia/fzsbrp782yor2btgx8mz.png'
 };
 
 // Club Logo from Cloudinary
@@ -320,13 +320,13 @@ export function HeroSection() {
           <img
             src={MiteLogo}
             srcSet={`
-              ${MiteLogoSizes.sm} 160w,
-              ${MiteLogoSizes.md} 200w,
-              ${MiteLogoSizes.lg} 250w
+              ${MiteLogoSizes.sm} 200w,
+              ${MiteLogoSizes.md} 250w,
+              ${MiteLogoSizes.lg} 300w
             `}
-            sizes="(max-width: 640px) 160px, (max-width: 768px) 200px, 250px"
+            sizes="(max-width: 640px) 200px, (max-width: 768px) 250px, 300px"
             alt="MITE Logo"
-            className="hidden md:block h-12 md:h-16 object-contain"
+            className="hidden md:block h-16 md:h-20 object-contain"
             loading="eager"
           />
         </div>
@@ -345,7 +345,7 @@ export function HeroSection() {
       </div>
       {/* Content container */}
       <div className="container mx-auto max-w-7xl relative z-10 py-15 min-h-screen flex flex-col justify-center">
-      <div className="flex flex-col items-center justify-center text-center mt-16 sm:mt-20">
+      <div className="flex flex-col items-center justify-center text-center mt-12 sm:mt-20">
           <img 
             src={SentiaLogo}
             srcSet={`
@@ -355,9 +355,9 @@ export function HeroSection() {
               ${SentiaLogoSizes.xl} 750w,
               ${SentiaLogoSizes.xxl} 900w
             `}
-            sizes="(max-width: 640px) 280px, (max-width: 768px) 450px, (max-width: 1024px) 600px, (max-width: 1280px) 750px, 900px"
+            sizes="(max-width: 640px) 450px, (max-width: 768px) 600px, (max-width: 1024px) 600px, (max-width: 1280px) 750px, 900px"
             alt="Sentia 2025 Logo"
-            className="w-[280px] sm:w-[450px] md:w-[600px] lg:w-[750px] xl:w-[900px] h-auto mb-8 mx-auto drop-shadow-lg animate-subtle-zoom"
+            className="w-[450px] sm:w-[600px] md:w-[600px] lg:w-[750px] xl:w-[900px] h-auto mb-8 mx-auto drop-shadow-lg"
             loading="eager"
             fetchPriority="high"
           />
@@ -365,11 +365,19 @@ export function HeroSection() {
 
          
 
-          <div className="flex flex-col sm:flex-row gap-5 justify-center w-full px-5 sm:px-0 mb-12 sm:mb-16 md:mb-20">
+          <div className="flex flex-col sm:flex-row gap-5 justify-center w-full px-5 sm:px-0 mb-12 sm:mb-16 md:mb-20 absolute bottom-10 sm:bottom-6 left-0 right-0">
             <Button 
-              className="relative overflow-hidden bg-[#322e81] hover:bg-[#473e95] text-white rounded-full sm:rounded-md md:rounded-md py-4 sm:py-5 px-6 sm:px-7 flex items-center justify-center gap-2 transition-all duration-300 shadow-[0_4px_15px_rgba(80,70,170,0.6)] border border-[#8f82ff]/40 group w-full sm:w-auto"
+              className="relative overflow-hidden text-white rounded-full sm:rounded-md md:rounded-md flex items-center justify-center gap-2 transition-all duration-300 group w-full sm:w-auto"
               style={{
-                backgroundImage: 'linear-gradient(135deg, #322e81 0%, #5a4aad 100%)',
+                fontFamily: 'inherit',
+                cursor: 'pointer',
+                fontWeight: 500,
+                fontSize: '18px',
+                padding: '1.5rem',
+                background: 'linear-gradient(to right, #0f0c29, #302b63, #24243e)',
+                border: '1px solid rgba(255, 255, 255, 0.5)', // Thin white border
+                letterSpacing: '0.05em',
+                borderRadius: '16px',
               }}
               onClick={() => {
                 const startDate = '20250404';
@@ -380,79 +388,137 @@ export function HeroSection() {
                 window.open(calendarUrl, '_blank');
               }}
             >
-              <span className="relative z-10 font-medium">Add to calendar</span>
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 relative z-10 transition-transform group-hover:rotate-3">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 relative z-10 transition-transform group-hover:translate-x-1">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 9v7.5" />
               </svg>
-              
-              {/* Magical sparkling effects */}
-              <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#60a5fa]/50 to-transparent"></div>
-              <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-300 bg-[radial-gradient(circle,_#ffffff_0%,_transparent_70%)]"></div>
-              
-              {/* Sparkling effect on hover */}
-              <div className="absolute top-0 left-1/4 w-1 h-1 rounded-full bg-white opacity-0 scale-0 group-hover:opacity-70 group-hover:scale-100 group-hover:animate-pulse transition-all duration-300 blur-[1px]"></div>
-              <div className="absolute top-3 right-1/4 w-[3px] h-[3px] rounded-full bg-white opacity-0 scale-0 group-hover:opacity-50 group-hover:scale-100 group-hover:animate-pulse transition-all duration-500 blur-[1px]"></div>
-              <div className="absolute bottom-2 left-1/3 w-[2px] h-[2px] rounded-full bg-white opacity-0 scale-0 group-hover:opacity-60 group-hover:scale-100 group-hover:animate-pulse transition-all duration-700 blur-[1px]"></div>
+              <span className="relative z-10 font-medium">Add to calendar</span>
             </Button>
             <Link to="/register" className="relative w-full sm:w-auto">
               <Button 
-                className="relative overflow-hidden bg-[#4a3db2] hover:bg-[#634fd6] text-white rounded-full sm:rounded-md md:rounded-md py-4 sm:py-5 px-6 sm:px-7 flex items-center justify-center gap-2 transition-all duration-300 shadow-[0_4px_15px_rgba(105,90,227,0.5)] border border-[#a293ff]/40 group w-full"
+                className="relative overflow-hidden text-white rounded-full sm:rounded-md md:rounded-md flex items-center justify-center gap-2 transition-all duration-300 group w-full"
                 style={{
-                  backgroundImage: 'linear-gradient(135deg, #4a3db2 0%, #6651d4 100%)',
+                  fontFamily: 'inherit',
+                  cursor: 'pointer',
+                  fontWeight: 500,
+                  fontSize: '18px',
+                  padding: '1.5rem',
+                  background: 'linear-gradient(to right, #0f0c29, #302b63, #24243e)',
+                  border: '1px solid rgba(255, 255, 255, 0.5)', // Thin white border
+                  letterSpacing: '0.05em',
+                  borderRadius: '16px',
                 }}
               >
-                <span className="relative z-10 font-medium">Register Now</span>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 relative z-10 transition-transform group-hover:translate-x-1">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 0 1 0 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 0 1 0-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375Z" />
                 </svg>
-                
-                {/* Magical sparkling effects */}
-                <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#93c5fd]/50 to-transparent"></div>
-                <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-300 bg-[radial-gradient(circle,_#ffffff_0%,_transparent_70%)]"></div>
-                
-                {/* Sparkling effect on hover */}
-                <div className="absolute top-1 right-1/4 w-1 h-1 rounded-full bg-white opacity-0 scale-0 group-hover:opacity-70 group-hover:scale-100 group-hover:animate-pulse transition-all duration-300 blur-[1px]"></div>
-                <div className="absolute top-4 left-1/5 w-[3px] h-[3px] rounded-full bg-white opacity-0 scale-0 group-hover:opacity-50 group-hover:scale-100 group-hover:animate-pulse transition-all duration-500 blur-[1px]"></div>
-                <div className="absolute bottom-3 right-1/3 w-[2px] h-[2px] rounded-full bg-white opacity-0 scale-0 group-hover:opacity-60 group-hover:scale-100 group-hover:animate-pulse transition-all duration-700 blur-[1px]"></div>
+                <span className="relative z-10 font-medium">Register Now</span>
               </Button>
-              <div className="absolute -bottom-1 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#93c5fd]/40 to-transparent"></div>
             </Link>
           </div>
         </div>
         
         {/* Scroll indicator at the bottom of the screen */}
-        <div className="absolute bottom-10 sm:bottom-6 left-0 right-0 flex flex-col items-center justify-center z-20">
-          
-          <motion.div 
-            className="flex flex-col items-center cursor-pointer"
+        <div className="absolute bottom-8 sm:bottom-4 left-0 right-0 flex flex-col items-center justify-center z-20">
+          <div 
+            className="scrolldown" 
+            style={{ '--color': 'skyblue' }}
             onClick={scrollToContent}
-            whileHover={{ scale: 1.1 }}
           >
-            <motion.div
-              className="bg-white/30 backdrop-blur-sm p-2 rounded-full shadow-lg border border-white/20"
-              initial={{ y: 0 }}
-              animate={{ y: [0, 6, 0] }}
-              transition={{ 
-                repeat: Infinity, 
-                duration: 1.5,
-                ease: "easeInOut"
-              }}
-            >
-              <svg 
-                xmlns="http://www.w3.org/2000/svg" 
-                fill="none" 
-                viewBox="0 0 24 24" 
-                stroke="white" 
-                className="w-5 h-5 sm:w-6 sm:h-6"
-                strokeWidth="2"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M19 13l-7 7-7-7m14-8l-7 7-7-7" />
-              </svg>
-            </motion.div>
-          </motion.div>
+            <div className="chevrons">
+              <div className="chevrondown"></div>
+              <div className="chevrondown"></div>
+            </div>
+          </div>
         </div>
+        <style jsx="true">{`
+          .scrolldown {
+            --color: white;
+            --sizeX: 24px;
+            --sizeY: 40px;
+            position: relative;
+            width: var(--sizeX);
+            height: var(--sizeY);
+            margin-left: calc(var(--sizeX) / 2);
+            border: calc(var(--sizeX) / 10) solid var(--color);
+            border-radius: 50px;
+            box-sizing: border-box;
+            margin-bottom: 12px;
+            cursor: pointer;
+          }
+
+          .scrolldown::before {
+            content: "";
+            position: absolute;
+            bottom: 24px;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            margin-left: -2.5px;
+            background-color: var(--color);
+            border-radius: 100%;
+            animation: scrolldown-anim 2s infinite;
+            box-sizing: border-box;
+            box-shadow: 0px -4px 2px 1px #2a547066;
+          }
+
+          @keyframes scrolldown-anim {
+            0% {
+              opacity: 0;
+              height: 5px;
+            }
+            40% {
+              opacity: 1;
+              height: 8px;
+            }
+            80% {
+              transform: translate(0, 16px);
+              height: 8px;
+              opacity: 0;
+            }
+            100% {
+              height: 2px;
+              opacity: 0;
+            }
+          }
+
+          .chevrons {
+            padding: 4px 0 0 0;
+            margin-left: -2.5px;
+            margin-top: 38px;
+            width: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          }
+
+          .chevrondown {
+            margin-top: -5px;
+            position: relative;
+            border: solid var(--color);
+            border-width: 0 2.5px 2.5px 0;
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            transform: rotate(45deg);
+          }
+
+          .chevrondown:nth-child(odd) {
+            animation: pulse54012 500ms ease infinite alternate;
+          }
+
+          .chevrondown:nth-child(even) {
+            animation: pulse54012 500ms ease infinite alternate 250ms;
+          }
+
+          @keyframes pulse54012 {
+            from {
+              opacity: 0;
+            }
+            to {
+              opacity: 0.5;
+            }
+          }
+        `}</style>
       
       {/* CSS for animated gradient */}
       <style jsx="true">{`

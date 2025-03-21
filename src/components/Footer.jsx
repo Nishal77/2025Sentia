@@ -13,7 +13,6 @@ export function Footer() {
               <h2 className="text-lg font-bold font-panchang">Sentia</h2>
             </a>
 
-            
             <div className="mt-2">
               <a href="mailto:info@mite.ac.in" target="_blank" rel="noopener noreferrer">
                 <Button variant='secondary' className="bg-gray-50 hover:bg-gray-100">
@@ -29,7 +28,7 @@ export function Footer() {
               © {new Date().getFullYear()} Sentia. All rights reserved.
             </p>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-2 gap-8">
             <div>
               <h3 className="font-semibold mb-4">Quick Links</h3>
               <ul className="space-y-2">
@@ -71,21 +70,6 @@ export function Footer() {
                 <li>
                   <a href="https://www.instagram.com/sentia.mite/" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white">
                     Instagram
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-4">Legal</h3>
-              <ul className="space-y-2">
-                <li>
-                  <a href="/privacy" className="text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white">
-                    Privacy Policy
-                  </a>
-                </li>
-                <li>
-                  <a href="/terms" className="text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white">
-                    Terms of Service
                   </a>
                 </li>
               </ul>

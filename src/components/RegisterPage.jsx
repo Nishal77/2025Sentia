@@ -16,45 +16,40 @@ const allEvents = [
     id: "battle-of-bands",
     title: "Battle of bands",
     description: "Where music ignites passion and talent takes the stage 🎸🎤. Let the rhythm of your soul lead the way! 🌟 A fierce competition where every note counts, and every band aims to leave a mark 🎶. Who will claim the crown of musical greatness? 👑",
-    time: "9:00 - 10:00",
-    building: "Main Stage",
-    roomNumber: "MCA101",
+    time: "Begins at 7.00 PM",
+    building: "MITE Greens",
     day: 1
   },
   {
     id: "fashion-walk",
     title: "Fashion walk",
     description: "Strut, shine, and make a statement 💃✨. The runway awaits your style to steal the spotlight! 🌟 Showcase your unique sense of fashion, blending elegance 👗, boldness 💥, and creativity 🎨. It's not just a walk; it's a powerful display of individuality and flair! 🔥",
-    time: "10:00 - 10:30",
-    building: "Mite Greens",
-    roomNumber: "CSE202",
-    day: 1
+    time: "Begins at 7.00 PM",
+    building: "MITE Greens",
+    day: 2
   },
   {
     id: "robo-wars-soccer",
     title: "Robo Soccer",
     description: "Battle of Titans! 🤖⚡ Witness an electrifying clash where innovation meets brute strength! Cutting-edge machines go head-to-head in a high-intensity showdown—only the smartest and strongest will survive. Will your bot reign supreme? 🏆💥",
-    time: "10:30 - 11:00",
-    building: "Mite Greens",
-    roomNumber: "SC105",
+    time: "3rd & 4th April (10:00 Onwards)",
+    building: "Quadrangle",
     day: 1
   },
   {
     id: "eastern-western-dance",
     title: "Eastern & Western Dance",
     description: "A cultural fusion of rhythms and styles! 💃🕺✨ From the graceful storytelling of Eastern traditions to the energetic beats of Western choreography. Express yourself through movement and showcase both elegance and attitude in this captivating dance competition! 🎶🌏🔥",
-    time: "11:00 - 13:00",
+    time: " Begins at 10.30 AM",
     building: "Main Stage",
-    roomNumber: "PHY303",
     day: 1
   },
   {
     id: "robo-mania",
     title: "Robo Wars",
     description: "Innovation Unleashed! 🤖🔍 Dive into a world of robotics where your imagination and technical prowess come together. Design, build, and program robots to solve challenges and demonstrate your engineering excellence. Will your creation stand out from the crowd? 🛠️🚀",
-    time: "14:00 - 16:00",
-    building: "Mite Greens",
-    roomNumber: "ECE101",
+    time: "3rd & 4th April (10:00 Onwards)",
+    building: "Quadrangle",
     day: 2
   },
   {
@@ -62,7 +57,7 @@ const allEvents = [
     title: "Quiz quest",
     description: "Challenge your mind and conquer every question 🧠❓. The quest for knowledge begins now! 📚 With every round, the questions get tougher, and the stakes get higher 🎯. Test your wit, knowledge, and speed ⏱️—only the sharpest minds will make it to the top! 🏆",
     building: "PG Block",
-    roomNumber: "MCA402",
+    time: "Begins at 2.00 PM",
     day: 1,
     disclaimer: "Only for MCA students"
   },
@@ -70,16 +65,15 @@ const allEvents = [
     id: "master-minds",
     title: "Master minds",
     description: "Lead, innovate, and rise above the rest 💼🚀. Only the sharpest minds will claim the title of the best manager! 🏅 Face real-world challenges and strategic decisions that test your leadership and managerial skills 🧑‍💼. Can you outthink, outlast, and outmanage your competition? 💡",
-    time: "10:00 - 12:00",
+    time: "Begins at 12.00 PM",
     building: "PG Block",
-    roomNumber: "VR Lab 01",
     day: 2,
     disclaimer: "Only for MBA students"
   },
 ];
 
 // Simple Event Card component for registration page
-const SimpleEventCard = ({ id, title, description, time, building, roomNumber, disclaimer }) => {
+const SimpleEventCard = ({ id, title, description, time, building, day, disclaimer }) => {
   // Helper function to get icon for the event
   const getEventIcon = () => {
     switch(id) {
@@ -173,7 +167,7 @@ const SimpleEventCard = ({ id, title, description, time, building, roomNumber, d
           </div>
           <div>
             <h3 className="font-semibold text-black/80 text-lg group-hover:text-black">{title}</h3>
-            <p className="text-gray-500 text-sm">{building} • Room no: {roomNumber}</p>
+            <p className="text-gray-500 text-sm">{building} • Day: {day}</p>
             {time && <p className="text-gray-500 text-xs">{time}</p>}
             {disclaimer && (
               <p className="text-xs font-medium text-red-600 mt-1 bg-red-50 inline-block px-2 py-0.5 rounded-full border border-red-200">
@@ -340,7 +334,7 @@ export function RegisterPage() {
               description={event.description}
               time={event.time}
               building={event.building}
-              roomNumber={event.roomNumber}
+              day={event.day}
               disclaimer={event.disclaimer}
             />
           ))}
