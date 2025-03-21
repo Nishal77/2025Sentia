@@ -8,10 +8,17 @@ import cleanupDefaultTeams from './utils/cleanupUtil'
 // Run cleanup before rendering anything
 cleanupDefaultTeams();
 
-// Clear any cached data on every page load
-localStorage.removeItem('sentiaLiveEvents');
-localStorage.removeItem('sentiaEvents');
-console.log('Cleared localStorage on application startup');
+// Only clear cached data on first visit, not on refreshes
+// This ensures added events persist after page refresh
+const isFirstVisit = !localStorage.getItem('sentiaAppInitialized');
+if (isFirstVisit) {
+  localStorage.removeItem('sentiaLiveEvents');
+  localStorage.removeItem('sentiaEvents');
+  localStorage.setItem('sentiaAppInitialized', 'true');
+  console.log('First visit: Cleared localStorage on application startup');
+} else {
+  console.log('Return visit: Preserving localStorage data');
+}
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

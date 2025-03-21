@@ -148,10 +148,9 @@ const getVideoSource = (videoType) => {
 
 // Limit the number of simultaneous videos
 const MAX_VIDEOS = 3;
-const [activeVideos, setActiveVideos] = useState([]);
 
 // Track active videos
-const registerVideo = (id) => {
+const registerVideo = (id, setActiveVideos) => {
   setActiveVideos(current => {
     // If we already have this video, no change needed
     if (current.includes(id)) return current;
@@ -166,7 +165,7 @@ const registerVideo = (id) => {
   });
 };
 
-const unregisterVideo = (id) => {
+const unregisterVideo = (id, setActiveVideos) => {
   setActiveVideos(current => current.filter(videoId => videoId !== id));
 };
 
@@ -259,6 +258,7 @@ export function SentiaMain() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(0.5);
   const [songIndex, setSongIndex] = useState(0);
+  const [activeVideos, setActiveVideos] = useState([]);
   const audioRef = useRef(null);
   const [videoEnded, setVideoEnded] = useState(false);
   const songs = [Sonisoni, WhatJhumka, TheBreakupSong];
