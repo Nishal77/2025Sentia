@@ -144,6 +144,113 @@ const getVideoSource = (videoType) => {
   }
 };
 
+// Add these optimizations to SentiaMain.jsx
+
+// Limit the number of simultaneous videos
+const MAX_VIDEOS = 3;
+const [activeVideos, setActiveVideos] = useState([]);
+
+// Track active videos
+const registerVideo = (id) => {
+  setActiveVideos(current => {
+    // If we already have this video, no change needed
+    if (current.includes(id)) return current;
+    
+    // If we're at capacity, remove the oldest video
+    if (current.length >= MAX_VIDEOS) {
+      return [...current.slice(1), id];
+    }
+    
+    // Otherwise add the new video
+    return [...current, id];
+  });
+};
+
+const unregisterVideo = (id) => {
+  setActiveVideos(current => current.filter(videoId => videoId !== id));
+};
+
+// For Instagram and YouTube embeds, use a lazy loading approach
+function LazyIframe({ src, className, ...props }) {
+  const [shouldLoad, setShouldLoad] = useState(false);
+  const iframeRef = useRef(null);
+  
+  useEffect(() => {
+    const options = {
+      root: null,
+      rootMargin: '100px',
+      threshold: 0.1
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setShouldLoad(true);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, options);
+    
+    if (iframeRef.current) {
+      observer.observe(iframeRef.current);
+    }
+    
+    return () => {
+      if (iframeRef.current) {
+        observer.unobserve(iframeRef.current);
+      }
+    };
+  }, []);
+  
+  return (
+    <div ref={iframeRef} className={className}>
+      {shouldLoad ? (
+        <iframe 
+          src={src}
+          className="w-full h-full"
+          {...props}
+        />
+      ) : (
+        <div className="w-full h-full flex items-center justify-center bg-gray-100">
+          <p>Loading content...</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// mediaManager.js
+class MediaManager {
+  constructor(maxPlayers = 5) {
+    this.maxPlayers = maxPlayers;
+    this.activePlayers = new Set();
+  }
+  
+  register(element) {
+    if (this.activePlayers.size >= this.maxPlayers) {
+      // Stop the oldest player
+      const oldest = Array.from(this.activePlayers)[0];
+      this.unregister(oldest);
+    }
+    
+    this.activePlayers.add(element);
+    return true;
+  }
+  
+  unregister(element) {
+    if (element && this.activePlayers.has(element)) {
+      if (element.pause) {
+        element.pause();
+      }
+      this.activePlayers.delete(element);
+      return true;
+    }
+    return false;
+  }
+}
+
+export default new MediaManager();
+
 export function SentiaMain() {
   const [activeView, setActiveView] = useState("events");
   const [events, setEvents] = useState([]);
@@ -1333,7 +1440,7 @@ export function SentiaMain() {
                 </div>
 
                 <div className="h-full w-full sm:h-[250px] md:h-[200px] lg:h-full">
-                  <iframe
+                  <LazyIframe
                     src="https://www.instagram.com/reel/DESJgwduXSY/embed?autoplay=1&mute=0"
                     className="w-full h-full object-cover rounded-lg"
                     allow="autoplay; encrypted-media"
@@ -1342,7 +1449,7 @@ export function SentiaMain() {
                     frameBorder="0"
                     scrolling="no"
                     style={{ minHeight: "250px" }}
-                  ></iframe>
+                  />
                 </div>
               </div>
             </div>
