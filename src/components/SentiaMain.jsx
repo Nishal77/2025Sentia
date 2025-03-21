@@ -95,42 +95,35 @@ const oldmitefestivals = [
 // Get teams from localStorage only - NEVER use default data
 const getTeamsFromStorage = () => {
   try {
-    const storedEvents = localStorage.getItem("sentiaLiveEvents");
+    const storedEvents = localStorage.getItem('sentiaLiveEvents');
     if (!storedEvents) {
       return [];
     }
-
+    
     // Parse the events
     const parsedEvents = JSON.parse(storedEvents);
-
+    
     // Extra safety check - if the parsed events contain our known default team names,
     // we'll return an empty array to force admin panel data entry
-    const defaultTeamNames = [
-      "Tech Titans",
-      "Elegance Elite",
-      "Bhangra Beats",
-      "Fusion Flames",
-    ];
-    const hasDefaultTeams = parsedEvents.some(
-      (event) =>
-        defaultTeamNames.includes(event.name) ||
-        defaultTeamNames.includes(event.event)
+    const defaultTeamNames = ["Tech Titans", "Elegance Elite", "Bhangra Beats", "Fusion Flames"];
+    const hasDefaultTeams = parsedEvents.some(event => 
+      defaultTeamNames.includes(event.name) || defaultTeamNames.includes(event.event)
     );
-
+    
     if (hasDefaultTeams) {
       // Clear localStorage if default teams are found
-      localStorage.removeItem("sentiaLiveEvents");
-      localStorage.removeItem("sentiaEvents");
-      console.log("Default teams detected and removed from storage");
+      localStorage.removeItem('sentiaLiveEvents');
+      localStorage.removeItem('sentiaEvents');
+      console.log('Default teams detected and removed from storage');
       return [];
     }
-
+    
     return parsedEvents;
   } catch (error) {
-    console.error("Error loading events from storage:", error);
+    console.error('Error loading events from storage:', error);
     // Clear localStorage on error to be safe
-    localStorage.removeItem("sentiaLiveEvents");
-    localStorage.removeItem("sentiaEvents");
+    localStorage.removeItem('sentiaLiveEvents');
+    localStorage.removeItem('sentiaEvents');
     return [];
   }
 };
@@ -167,16 +160,19 @@ export function SentiaMain() {
   const [isContactPopupOpen, setIsContactPopupOpen] = useState(false);
   const [randomContacts, setRandomContacts] = useState([]);
 
-  // One-time initialization to clear any stale data
+  // Modify the initialization code to preserve data
   useEffect(() => {
-    // Force clean localStorage on every page load for deployed environment
-    localStorage.removeItem("sentiaLiveEvents");
-    localStorage.removeItem("sentiaEvents");
-
-    // Set a flag for future reference
-    localStorage.setItem("sentiaAppInitialized", "true");
-
-    console.log("Initialized app with clean storage");
+    // Only clean local storage if no initialization flag exists
+    const isInitialized = localStorage.getItem('sentiaAppInitialized');
+    
+    if (!isInitialized) {
+      // First-time initialization only
+      console.log('First time initialization');
+      localStorage.setItem('sentiaAppInitialized', 'true');
+    } else {
+      // For subsequent loads, we'll keep the existing data
+      console.log('App already initialized, preserving event data');
+    }
   }, []);
 
   // Function to get random contacts
@@ -1195,10 +1191,10 @@ export function SentiaMain() {
   useEffect(() => {
     // Initialize with data from localStorage - forcing an empty array if not available
     const teamsFromStorage = getTeamsFromStorage();
-    console.log("Initial teams from storage:", teamsFromStorage.length);
+    console.log('Initial teams from storage:', teamsFromStorage.length);
     setPerformingTeams(teamsFromStorage);
     setNoEventsData(teamsFromStorage.length === 0);
-
+    
     // Handle localStorage changes (for compatibility with non-Ably updates)
     const handleStorageChange = () => {
       const updatedTeams = getTeamsFromStorage();
@@ -1291,7 +1287,7 @@ export function SentiaMain() {
       <HeroSection />
 
       {/* Detailed Content Sections */}
-      <div className="pb-8 px-2 sm:px-4">
+      <div className="pb-8 px-2 sm:px-4 pt-12">
         <div className="max-w-7xl mx-auto space-y-6">
           {/* Top Row - Conference Info */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
