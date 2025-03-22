@@ -418,7 +418,7 @@ export function HeroSection() {
         </div>
         
         {/* Scroll indicator at the bottom of the screen */}
-        <div className="absolute bottom-8 sm:bottom-4 left-0 right-0 flex flex-col items-center justify-center z-20">
+        <div className="absolute bottom-2 sm:bottom-2 md:bottom-4 left-0 right-0 flex flex-col items-center justify-center z-20">
           <div 
             className="scrolldown" 
             style={{ '--color': 'skyblue' }}
@@ -434,7 +434,7 @@ export function HeroSection() {
           .scrolldown {
             --color: white;
             --sizeX: 24px;
-            --sizeY: 40px;
+            --sizeY: 38px;
             position: relative;
             width: var(--sizeX);
             height: var(--sizeY);
@@ -444,12 +444,18 @@ export function HeroSection() {
             box-sizing: border-box;
             margin-bottom: 12px;
             cursor: pointer;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+          }
+
+          .scrolldown:hover {
+            opacity: 1;
           }
 
           .scrolldown::before {
             content: "";
             position: absolute;
-            bottom: 24px;
+            bottom: 22px;
             left: 50%;
             width: 5px;
             height: 5px;
