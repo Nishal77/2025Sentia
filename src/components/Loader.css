@@ -9,7 +9,6 @@
   top: 0;
   left: 0;
   z-index: 9999;
-  background: radial-gradient(circle at center, #f9f9f9, #eaeaea);
   overflow: hidden;
   transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
               transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);

@@ -1299,7 +1299,17 @@ export function SentiaMain() {
     return Date.now();
   };
 
-  // Add a timestamp check to update mechanism
+  // Function to get API URL with proxy if needed
+  const getProxiedApiUrl = (url) => {
+    // Use a CORS proxy if on production site
+    if (window.location.hostname === 'www.sentiamite.me') {
+      // Using a public CORS proxy (for demo purposes - consider setting up your own for production)
+      return `https://corsproxy.io/?${encodeURIComponent(url)}`;
+    }
+    // Return original URL for development or if hostname doesn't match production
+    return url;
+  };
+
   const syncWithLatestData = async () => {
     try {
       // Check when we last synced data
@@ -1310,30 +1320,49 @@ export function SentiaMain() {
       if (!lastSync || (currentTime - parseInt(lastSync)) > 5 * 60 * 1000) {
         console.log('Syncing with latest data from server');
         
-        // Get data from server
-        const response = await fetch('https://sentia-api.onrender.com/api/events/getAll');
-        
-        if (response.ok) {
-          const data = await response.json();
-          if (data && data.events && data.events.length > 0) {
-            console.log('Fetched updated events from server:', data.events.length);
-            
-            // Compare the timestamp of the server data with our local data
-            const serverTimestamp = data.timestamp || currentTime;
-            const localTimestamp = localStorage.getItem('sentiaDataTimestamp') || 0;
-            
-            // Only update if server data is newer or we don't have local data
-            if (serverTimestamp > localTimestamp || !localStorage.getItem('sentiaLiveEvents')) {
-              console.log('Server data is newer, updating local data');
-              setPerformingTeams(data.events);
-              setNoEventsData(false);
-              
-              // Store these events in localStorage
-              localStorage.setItem('sentiaLiveEvents', JSON.stringify(data.events));
-              localStorage.setItem('sentiaDataTimestamp', serverTimestamp.toString());
-            } else {
-              console.log('Local data is newer or same as server data');
+        try {
+          // Get data from server with CORS proxy
+          const apiUrl = getProxiedApiUrl('https://sentia-api.onrender.com/api/events/getAll');
+          console.log('Using API URL:', apiUrl);
+          
+          const response = await fetch(apiUrl, {
+            headers: {
+              'Content-Type': 'application/json'
             }
+          });
+          
+          if (response.ok) {
+            const data = await response.json();
+            if (data && data.events && data.events.length > 0) {
+              console.log('Fetched updated events from server:', data.events.length);
+              
+              // Compare the timestamp of the server data with our local data
+              const serverTimestamp = data.timestamp || currentTime;
+              const localTimestamp = localStorage.getItem('sentiaDataTimestamp') || 0;
+              
+              // Only update if server data is newer or we don't have local data
+              if (serverTimestamp > localTimestamp || !localStorage.getItem('sentiaLiveEvents')) {
+                console.log('Server data is newer, updating local data');
+                setPerformingTeams(data.events);
+                setNoEventsData(false);
+                
+                // Store these events in localStorage
+                localStorage.setItem('sentiaLiveEvents', JSON.stringify(data.events));
+                localStorage.setItem('sentiaDataTimestamp', serverTimestamp.toString());
+              } else {
+                console.log('Local data is newer or same as server data');
+              }
+            }
+          }
+        } catch (fetchError) {
+          console.error('CORS error, falling back to local data:', fetchError);
+          // If API call fails due to CORS, use local fallback data
+          const fallbackData = localStorage.getItem('sentiaLiveEvents');
+          if (fallbackData) {
+            console.log('Using cached local data instead');
+            const parsedData = JSON.parse(fallbackData);
+            setPerformingTeams(parsedData);
+            setNoEventsData(parsedData.length === 0);
           }
         }
         
@@ -1369,8 +1398,15 @@ export function SentiaMain() {
     // Function to fetch events from server as a backup if localStorage is empty
     const fetchEventsFromServer = async () => {
       try {
-        // Use the same API endpoint that the admin panel would call
-        const response = await fetch('https://sentia-api.onrender.com/api/events/getAll');
+        // Use the same API endpoint with proxy
+        const apiUrl = getProxiedApiUrl('https://sentia-api.onrender.com/api/events/getAll');
+        console.log('Fetching events from:', apiUrl);
+        
+        const response = await fetch(apiUrl, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
         
         if (response.ok) {
           const data = await response.json();
@@ -1384,6 +1420,14 @@ export function SentiaMain() {
         }
       } catch (error) {
         console.error('Error fetching events from server:', error);
+        // If API call fails due to CORS, try to use any existing data
+        const fallbackData = localStorage.getItem('sentiaLiveEvents');
+        if (fallbackData) {
+          console.log('Using cached local data instead');
+          const parsedData = JSON.parse(fallbackData);
+          setPerformingTeams(parsedData);
+          setNoEventsData(parsedData.length === 0);
+        }
       }
     };
     
