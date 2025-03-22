@@ -1,7 +1,23 @@
 import { EVENTS_CHANNEL, EVENT_UPDATED, EVENT_ADDED, EVENT_DELETED, EVENT_STATUS_CHANGED, ALL_EVENTS_UPDATED } from './ably';
+import ablyClient from './ablyClient';
 
-// Base URL for API calls - in production this would be different
-const API_BASE_URL = 'http://localhost:5000/api';
+// Base URL for API calls - use production URL for sentiamite.me domain
+const API_BASE_URL = window.location.hostname === 'localhost' 
+  ? 'http://localhost:5000/api'
+  : 'https://sentia-api.onrender.com/api'; // Update this to your actual production API URL
+
+// Fallback function to publish directly to Ably when API fails
+const publishToAbly = (eventType, data) => {
+  try {
+    const channel = ablyClient.channels.get(EVENTS_CHANNEL);
+    channel.publish(eventType, data);
+    console.log(`Direct Ably publish for ${eventType} successful`);
+    return true;
+  } catch (error) {
+    console.error(`Error publishing directly to Ably for ${eventType}:`, error);
+    return false;
+  }
+};
 
 // Service to handle API calls
 const apiService = {
@@ -19,9 +35,28 @@ const apiService = {
           channelName: EVENTS_CHANNEL
         }),
       });
-      return await response.json();
+      
+      // If API call is successful, return the response
+      if (response.ok) {
+        return await response.json();
+      }
+      
+      // If API call fails, publish directly to Ably as fallback
+      const published = publishToAbly(EVENT_ADDED, { event });
+      if (published) {
+        return { success: true, fallback: true };
+      }
+      
+      throw new Error('API call failed and fallback publishing failed');
     } catch (error) {
       console.error('Error adding event:', error);
+      
+      // Try direct Ably publish as last resort
+      const published = publishToAbly(EVENT_ADDED, { event });
+      if (published) {
+        return { success: true, fallback: true };
+      }
+      
       return { error: 'Failed to add event' };
     }
   },
@@ -40,9 +75,28 @@ const apiService = {
           channelName: EVENTS_CHANNEL
         }),
       });
-      return await response.json();
+      
+      // If API call is successful, return the response
+      if (response.ok) {
+        return await response.json();
+      }
+      
+      // If API call fails, publish directly to Ably as fallback
+      const published = publishToAbly(EVENT_UPDATED, { event });
+      if (published) {
+        return { success: true, fallback: true };
+      }
+      
+      throw new Error('API call failed and fallback publishing failed');
     } catch (error) {
       console.error('Error updating event:', error);
+      
+      // Try direct Ably publish as last resort
+      const published = publishToAbly(EVENT_UPDATED, { event });
+      if (published) {
+        return { success: true, fallback: true };
+      }
+      
       return { error: 'Failed to update event' };
     }
   },
@@ -61,9 +115,28 @@ const apiService = {
           channelName: EVENTS_CHANNEL
         }),
       });
-      return await response.json();
+      
+      // If API call is successful, return the response
+      if (response.ok) {
+        return await response.json();
+      }
+      
+      // If API call fails, publish directly to Ably as fallback
+      const published = publishToAbly(EVENT_DELETED, { eventId });
+      if (published) {
+        return { success: true, fallback: true };
+      }
+      
+      throw new Error('API call failed and fallback publishing failed');
     } catch (error) {
       console.error('Error deleting event:', error);
+      
+      // Try direct Ably publish as last resort
+      const published = publishToAbly(EVENT_DELETED, { eventId });
+      if (published) {
+        return { success: true, fallback: true };
+      }
+      
       return { error: 'Failed to delete event' };
     }
   },
@@ -82,9 +155,28 @@ const apiService = {
           channelName: EVENTS_CHANNEL
         }),
       });
-      return await response.json();
+      
+      // If API call is successful, return the response
+      if (response.ok) {
+        return await response.json();
+      }
+      
+      // If API call fails, publish directly to Ably as fallback
+      const published = publishToAbly(EVENT_STATUS_CHANGED, { eventId, newStatus });
+      if (published) {
+        return { success: true, fallback: true };
+      }
+      
+      throw new Error('API call failed and fallback publishing failed');
     } catch (error) {
       console.error('Error updating event status:', error);
+      
+      // Try direct Ably publish as last resort
+      const published = publishToAbly(EVENT_STATUS_CHANGED, { eventId, newStatus });
+      if (published) {
+        return { success: true, fallback: true };
+      }
+      
       return { error: 'Failed to update event status' };
     }
   },
@@ -103,9 +195,28 @@ const apiService = {
           channelName: EVENTS_CHANNEL
         }),
       });
-      return await response.json();
+      
+      // If API call is successful, return the response
+      if (response.ok) {
+        return await response.json();
+      }
+      
+      // If API call fails, publish directly to Ably as fallback
+      const published = publishToAbly(ALL_EVENTS_UPDATED, { events });
+      if (published) {
+        return { success: true, fallback: true };
+      }
+      
+      throw new Error('API call failed and fallback publishing failed');
     } catch (error) {
       console.error('Error updating all events:', error);
+      
+      // Try direct Ably publish as last resort
+      const published = publishToAbly(ALL_EVENTS_UPDATED, { events });
+      if (published) {
+        return { success: true, fallback: true };
+      }
+      
       return { error: 'Failed to update all events' };
     }
   }

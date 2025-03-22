@@ -1294,6 +1294,70 @@ export function SentiaMain() {
   const [performingTeams, setPerformingTeams] = useState(getTeamsFromStorage());
   const [noEventsData, setNoEventsData] = useState(false);
 
+  // Add this timestamp function below the getTeamsFromStorage function
+  const getCurrentTimestamp = () => {
+    return Date.now();
+  };
+
+  // Add a timestamp check to update mechanism
+  const syncWithLatestData = async () => {
+    try {
+      // Check when we last synced data
+      const lastSync = localStorage.getItem('sentiaLastSync');
+      const currentTime = getCurrentTimestamp();
+      
+      // If we haven't synced in the last 5 minutes, or never synced
+      if (!lastSync || (currentTime - parseInt(lastSync)) > 5 * 60 * 1000) {
+        console.log('Syncing with latest data from server');
+        
+        // Get data from server
+        const response = await fetch('https://sentia-api.onrender.com/api/events/getAll');
+        
+        if (response.ok) {
+          const data = await response.json();
+          if (data && data.events && data.events.length > 0) {
+            console.log('Fetched updated events from server:', data.events.length);
+            
+            // Compare the timestamp of the server data with our local data
+            const serverTimestamp = data.timestamp || currentTime;
+            const localTimestamp = localStorage.getItem('sentiaDataTimestamp') || 0;
+            
+            // Only update if server data is newer or we don't have local data
+            if (serverTimestamp > localTimestamp || !localStorage.getItem('sentiaLiveEvents')) {
+              console.log('Server data is newer, updating local data');
+              setPerformingTeams(data.events);
+              setNoEventsData(false);
+              
+              // Store these events in localStorage
+              localStorage.setItem('sentiaLiveEvents', JSON.stringify(data.events));
+              localStorage.setItem('sentiaDataTimestamp', serverTimestamp.toString());
+            } else {
+              console.log('Local data is newer or same as server data');
+            }
+          }
+        }
+        
+        // Update last sync time
+        localStorage.setItem('sentiaLastSync', currentTime.toString());
+      }
+    } catch (error) {
+      console.error('Error syncing with server:', error);
+    }
+  };
+  
+  // Add this inside the export function SentiaMain() after state declarations
+  useEffect(() => {
+    // Sync with latest data when component mounts
+    syncWithLatestData();
+    
+    // Also sync periodically
+    const syncInterval = setInterval(syncWithLatestData, 2 * 60 * 1000); // Every 2 minutes
+    
+    return () => {
+      clearInterval(syncInterval);
+    };
+  }, []);
+
   // Update performing teams whenever data changes via Ably or localStorage
   useEffect(() => {
     // Initialize with data from localStorage - forcing an empty array if not available
@@ -1302,80 +1366,131 @@ export function SentiaMain() {
     setPerformingTeams(teamsFromStorage);
     setNoEventsData(teamsFromStorage.length === 0);
     
+    // Function to fetch events from server as a backup if localStorage is empty
+    const fetchEventsFromServer = async () => {
+      try {
+        // Use the same API endpoint that the admin panel would call
+        const response = await fetch('https://sentia-api.onrender.com/api/events/getAll');
+        
+        if (response.ok) {
+          const data = await response.json();
+          if (data && data.events && data.events.length > 0) {
+            console.log('Fetched events from server:', data.events.length);
+            setPerformingTeams(data.events);
+            setNoEventsData(false);
+            // Store these events in localStorage
+            localStorage.setItem('sentiaLiveEvents', JSON.stringify(data.events));
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching events from server:', error);
+      }
+    };
+    
+    // If no data in localStorage, try to fetch from server
+    if (teamsFromStorage.length === 0) {
+      console.log('No teams in storage, trying to fetch from server');
+      fetchEventsFromServer();
+    }
+    
     // Handle localStorage changes (for compatibility with non-Ably updates)
-    const handleStorageChange = () => {
-      const updatedTeams = getTeamsFromStorage();
-      setPerformingTeams(updatedTeams);
-      setNoEventsData(updatedTeams.length === 0);
+    const handleStorageChange = (e) => {
+      if (e.key === 'sentiaLiveEvents') {
+        const updatedTeams = getTeamsFromStorage();
+        console.log('Storage change detected, updating teams:', updatedTeams.length);
+        setPerformingTeams(updatedTeams);
+        setNoEventsData(updatedTeams.length === 0);
+      }
     };
 
     // Subscribe to Ably events for real-time updates
     const channel = ablyClient.channels.get(EVENTS_CHANNEL);
+    
+    // Reconnect function for Ably to ensure persistent connection
+    const ensureAblyConnection = () => {
+      if (ablyClient.connection.state !== 'connected') {
+        console.log('Reconnecting to Ably...');
+        ablyClient.connect();
+      }
+    };
+    
+    // Set interval to check connection periodically
+    const connectionCheckInterval = setInterval(ensureAblyConnection, 30000); // Check every 30 seconds
 
     // Handler for when all events are updated
     channel.subscribe(ALL_EVENTS_UPDATED, (message) => {
       const data = message.data;
       console.log("Real-time update: All events updated", data);
-      setPerformingTeams(data.events);
-      setNoEventsData(data.events.length === 0);
-      // Also update localStorage to keep it in sync
-      localStorage.setItem("sentiaLiveEvents", JSON.stringify(data.events));
+      if (data && data.events && data.events.length > 0) {
+        setPerformingTeams(data.events);
+        setNoEventsData(false);
+        // Also update localStorage to keep it in sync
+        localStorage.setItem("sentiaLiveEvents", JSON.stringify(data.events));
+      }
     });
 
     // Handler for when a single event is added
     channel.subscribe(EVENT_ADDED, (message) => {
       const data = message.data;
       console.log("Real-time update: Event added", data);
-      setPerformingTeams((prevTeams) => {
-        const updatedTeams = [...prevTeams, data.event];
-        // Also update localStorage to keep it in sync
-        localStorage.setItem("sentiaLiveEvents", JSON.stringify(updatedTeams));
-        return updatedTeams;
-      });
-      setNoEventsData(false);
+      if (data && data.event) {
+        setPerformingTeams((prevTeams) => {
+          const updatedTeams = [...prevTeams, data.event];
+          // Also update localStorage to keep it in sync
+          localStorage.setItem("sentiaLiveEvents", JSON.stringify(updatedTeams));
+          return updatedTeams;
+        });
+        setNoEventsData(false);
+      }
     });
 
     // Handler for when a single event is updated
     channel.subscribe(EVENT_UPDATED, (message) => {
       const data = message.data;
       console.log("Real-time update: Event updated", data);
-      setPerformingTeams((prevTeams) => {
-        const updatedTeams = prevTeams.map((team) =>
-          team.id === data.event.id ? data.event : team
-        );
-        // Also update localStorage to keep it in sync
-        localStorage.setItem("sentiaLiveEvents", JSON.stringify(updatedTeams));
-        return updatedTeams;
-      });
+      if (data && data.event) {
+        setPerformingTeams((prevTeams) => {
+          const updatedTeams = prevTeams.map((team) =>
+            team.id === data.event.id ? data.event : team
+          );
+          // Also update localStorage to keep it in sync
+          localStorage.setItem("sentiaLiveEvents", JSON.stringify(updatedTeams));
+          return updatedTeams;
+        });
+      }
     });
 
     // Handler for when a single event is deleted
     channel.subscribe(EVENT_DELETED, (message) => {
       const data = message.data;
       console.log("Real-time update: Event deleted", data);
-      setPerformingTeams((prevTeams) => {
-        const updatedTeams = prevTeams.filter(
-          (team) => team.id !== data.eventId
-        );
-        // Also update localStorage to keep it in sync
-        localStorage.setItem("sentiaLiveEvents", JSON.stringify(updatedTeams));
-        setNoEventsData(updatedTeams.length === 0);
-        return updatedTeams;
-      });
+      if (data && data.eventId) {
+        setPerformingTeams((prevTeams) => {
+          const updatedTeams = prevTeams.filter(
+            (team) => team.id !== data.eventId
+          );
+          // Also update localStorage to keep it in sync
+          localStorage.setItem("sentiaLiveEvents", JSON.stringify(updatedTeams));
+          setNoEventsData(updatedTeams.length === 0);
+          return updatedTeams;
+        });
+      }
     });
 
     // Handler for when an event status is changed
     channel.subscribe(EVENT_STATUS_CHANGED, (message) => {
       const data = message.data;
       console.log("Real-time update: Event status changed", data);
-      setPerformingTeams((prevTeams) => {
-        const updatedTeams = prevTeams.map((team) =>
-          team.id === data.eventId ? { ...team, status: data.newStatus } : team
-        );
-        // Also update localStorage to keep it in sync
-        localStorage.setItem("sentiaLiveEvents", JSON.stringify(updatedTeams));
-        return updatedTeams;
-      });
+      if (data && data.eventId && data.newStatus) {
+        setPerformingTeams((prevTeams) => {
+          const updatedTeams = prevTeams.map((team) =>
+            team.id === data.eventId ? { ...team, status: data.newStatus } : team
+          );
+          // Also update localStorage to keep it in sync
+          localStorage.setItem("sentiaLiveEvents", JSON.stringify(updatedTeams));
+          return updatedTeams;
+        });
+      }
     });
 
     // Listen for storage events (for cross-tab compatibility)
@@ -1383,6 +1498,7 @@ export function SentiaMain() {
 
     // Cleanup function
     return () => {
+      clearInterval(connectionCheckInterval);
       channel.unsubscribe();
       window.removeEventListener("storage", handleStorageChange);
     };
