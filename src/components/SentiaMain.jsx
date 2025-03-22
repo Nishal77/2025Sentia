@@ -1310,6 +1310,22 @@ export function SentiaMain() {
     return url;
   };
 
+  // Function to safely parse JSON with error handling
+  const safeJsonParse = (text) => {
+    try {
+      // Check if the text looks like JSON before attempting to parse
+      if (typeof text === 'string' && 
+          (text.trim().startsWith('{') || text.trim().startsWith('['))) {
+        return JSON.parse(text);
+      }
+      console.error('Invalid JSON format:', text);
+      return null;
+    } catch (error) {
+      console.error('JSON parse error:', error);
+      return null;
+    }
+  };
+
   // Try to fetch with no-cors as a last resort (only for local saving, can't read response)
   const tryFetchNoCors = async (url) => {
     try {
@@ -1406,6 +1422,11 @@ export function SentiaMain() {
           
           const response = await fetch(apiUrl);
           
+          // Check for 404 errors specifically
+          if (response.status === 404) {
+            throw new Error('API endpoint not found (404)');
+          }
+          
           if (response.ok) {
             let data;
             
@@ -1413,12 +1434,33 @@ export function SentiaMain() {
             if (apiUrl.includes('allorigins')) {
               // For allorigins proxy, the response is wrapped
               const proxyResponse = await response.json();
-              if (proxyResponse && proxyResponse.contents) {
-                data = JSON.parse(proxyResponse.contents);
+              
+              // Check if the proxy response has content and status
+              if (proxyResponse && typeof proxyResponse === 'object') {
+                // Check if the response has content property
+                if (proxyResponse.contents) {
+                  // Check if contents is a valid JSON string before parsing
+                  data = safeJsonParse(proxyResponse.contents);
+                  
+                  // If parsing failed, throw error
+                  if (!data) {
+                    throw new Error('Invalid JSON in proxy response contents');
+                  }
+                } else if (proxyResponse.status && proxyResponse.status.http_code >= 400) {
+                  // The proxy successfully got an error response from the API
+                  throw new Error(`API error: HTTP ${proxyResponse.status.http_code}`);
+                }
+              } else {
+                throw new Error('Invalid proxy response format');
               }
             } else {
               // Standard response
-              data = await response.json();
+              const responseText = await response.text();
+              data = safeJsonParse(responseText);
+              
+              if (!data) {
+                throw new Error('Invalid JSON in direct API response');
+              }
             }
             
             if (data && data.events && data.events.length > 0) {
@@ -1440,6 +1482,9 @@ export function SentiaMain() {
               } else {
                 console.log('Local data is newer or same as server data');
               }
+            } else {
+              console.warn('No events data found in response:', data);
+              throw new Error('No events data in response');
             }
           } else {
             throw new Error(`HTTP error: ${response.status}`);
@@ -1512,6 +1557,11 @@ export function SentiaMain() {
         
         const response = await fetch(apiUrl);
         
+        // Check for 404 errors specifically
+        if (response.status === 404) {
+          throw new Error('API endpoint not found (404)');
+        }
+        
         if (response.ok) {
           let data;
           
@@ -1519,12 +1569,33 @@ export function SentiaMain() {
           if (apiUrl.includes('allorigins')) {
             // For allorigins proxy, the response is wrapped
             const proxyResponse = await response.json();
-            if (proxyResponse && proxyResponse.contents) {
-              data = JSON.parse(proxyResponse.contents);
+            
+            // Check if the proxy response has content and status
+            if (proxyResponse && typeof proxyResponse === 'object') {
+              // Check if the response has content property
+              if (proxyResponse.contents) {
+                // Check if contents is a valid JSON string before parsing
+                data = safeJsonParse(proxyResponse.contents);
+                
+                // If parsing failed, throw error
+                if (!data) {
+                  throw new Error('Invalid JSON in proxy response contents');
+                }
+              } else if (proxyResponse.status && proxyResponse.status.http_code >= 400) {
+                // The proxy successfully got an error response from the API
+                throw new Error(`API error: HTTP ${proxyResponse.status.http_code}`);
+              }
+            } else {
+              throw new Error('Invalid proxy response format');
             }
           } else {
             // Standard response
-            data = await response.json();
+            const responseText = await response.text();
+            data = safeJsonParse(responseText);
+            
+            if (!data) {
+              throw new Error('Invalid JSON in direct API response');
+            }
           }
           
           if (data && data.events && data.events.length > 0) {
@@ -1534,7 +1605,8 @@ export function SentiaMain() {
             // Store these events in localStorage
             localStorage.setItem('sentiaLiveEvents', JSON.stringify(data.events));
           } else {
-            throw new Error('No events in response');
+            console.warn('No events data found in response:', data);
+            throw new Error('No events data in response');
           }
         } else {
           throw new Error(`HTTP error: ${response.status}`);
