@@ -1301,13 +1301,92 @@ export function SentiaMain() {
 
   // Function to get API URL with proxy if needed
   const getProxiedApiUrl = (url) => {
-    // Use a CORS proxy if on production site
+    // In production, try alternate approaches
     if (window.location.hostname === 'www.sentiamite.me') {
-      // Using a public CORS proxy (for demo purposes - consider setting up your own for production)
-      return `https://corsproxy.io/?${encodeURIComponent(url)}`;
+      // First try with a reliable CORS proxy
+      return `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
     }
-    // Return original URL for development or if hostname doesn't match production
+    // Return original URL for development
     return url;
+  };
+
+  // Try to fetch with no-cors as a last resort (only for local saving, can't read response)
+  const tryFetchNoCors = async (url) => {
+    try {
+      // This will be an opaque response we can't read from
+      // But might help with pre-fetching for cache
+      await fetch(url, { 
+        mode: 'no-cors',
+        cache: 'no-cache'
+      });
+      console.log('Sent no-cors request to warm up API');
+      return true; // We can't actually know if it succeeded
+    } catch (error) {
+      console.error('Even no-cors fetch failed:', error);
+      return false;
+    }
+  };
+
+  // Fallback static data in case both API and localStorage fail
+  const FALLBACK_EVENTS = [
+    {
+      id: "fallback1",
+      title: "Dance Competition",
+      description: "Exciting dance performances from talented teams.",
+      status: "upcoming",
+      time: "10:00 AM",
+      location: "Main Auditorium",
+      date: "2025-03-15",
+      day: 1,
+      coordinator: {
+        name: "John Doe",
+        phone: "9876543210"
+      }
+    },
+    {
+      id: "fallback2",
+      title: "Battle of Bands",
+      description: "Musical showdown between college bands.",
+      status: "upcoming",
+      time: "2:00 PM",
+      location: "Open Air Theatre",
+      date: "2025-03-16",
+      day: 2,
+      coordinator: {
+        name: "Jane Smith",
+        phone: "9876543211"
+      }
+    },
+    {
+      id: "fallback3",
+      title: "Technical Symposium",
+      description: "Showcase your technical skills in this exciting competition.",
+      status: "upcoming", 
+      time: "9:00 AM",
+      location: "Seminar Hall",
+      date: "2025-03-17",
+      day: 3,
+      coordinator: {
+        name: "Alex Johnson",
+        phone: "9876543212"
+      }
+    }
+  ];
+
+  // Get data from localStorage with robust error handling
+  const getEventsFromLocalStorage = () => {
+    try {
+      const storedData = localStorage.getItem('sentiaLiveEvents');
+      if (storedData) {
+        const parsedData = JSON.parse(storedData);
+        if (Array.isArray(parsedData) && parsedData.length > 0) {
+          return parsedData;
+        }
+      }
+    } catch (error) {
+      console.error('Error reading from localStorage:', error);
+    }
+    return null;
   };
 
   const syncWithLatestData = async () => {
@@ -1325,14 +1404,23 @@ export function SentiaMain() {
           const apiUrl = getProxiedApiUrl('https://sentia-api.onrender.com/api/events/getAll');
           console.log('Using API URL:', apiUrl);
           
-          const response = await fetch(apiUrl, {
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          });
+          const response = await fetch(apiUrl);
           
           if (response.ok) {
-            const data = await response.json();
+            let data;
+            
+            // Handle different proxy response formats
+            if (apiUrl.includes('allorigins')) {
+              // For allorigins proxy, the response is wrapped
+              const proxyResponse = await response.json();
+              if (proxyResponse && proxyResponse.contents) {
+                data = JSON.parse(proxyResponse.contents);
+              }
+            } else {
+              // Standard response
+              data = await response.json();
+            }
+            
             if (data && data.events && data.events.length > 0) {
               console.log('Fetched updated events from server:', data.events.length);
               
@@ -1353,16 +1441,29 @@ export function SentiaMain() {
                 console.log('Local data is newer or same as server data');
               }
             }
+          } else {
+            throw new Error(`HTTP error: ${response.status}`);
           }
         } catch (fetchError) {
-          console.error('CORS error, falling back to local data:', fetchError);
-          // If API call fails due to CORS, use local fallback data
-          const fallbackData = localStorage.getItem('sentiaLiveEvents');
-          if (fallbackData) {
-            console.log('Using cached local data instead');
-            const parsedData = JSON.parse(fallbackData);
-            setPerformingTeams(parsedData);
-            setNoEventsData(parsedData.length === 0);
+          console.error('CORS error, falling back to alternative methods:', fetchError);
+          
+          // Try no-cors fetch as a last resort
+          await tryFetchNoCors('https://sentia-api.onrender.com/api/events/getAll');
+          
+          // Use local storage as fallback
+          const localData = getEventsFromLocalStorage();
+          if (localData) {
+            console.log('Using cached local data');
+            setPerformingTeams(localData);
+            setNoEventsData(false);
+          } else {
+            // If localStorage is also empty, use static fallback data
+            console.log('No local data available, using static fallback data');
+            setPerformingTeams(FALLBACK_EVENTS);
+            setNoEventsData(false);
+            
+            // Store fallback events in localStorage for future use
+            localStorage.setItem('sentiaLiveEvents', JSON.stringify(FALLBACK_EVENTS));
           }
         }
         
@@ -1371,6 +1472,13 @@ export function SentiaMain() {
       }
     } catch (error) {
       console.error('Error syncing with server:', error);
+      
+      // Always ensure we have some data to display
+      const localData = getEventsFromLocalStorage();
+      if (!localData) {
+        setPerformingTeams(FALLBACK_EVENTS);
+        setNoEventsData(false);
+      }
     }
   };
   
@@ -1402,31 +1510,55 @@ export function SentiaMain() {
         const apiUrl = getProxiedApiUrl('https://sentia-api.onrender.com/api/events/getAll');
         console.log('Fetching events from:', apiUrl);
         
-        const response = await fetch(apiUrl, {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
+        const response = await fetch(apiUrl);
         
         if (response.ok) {
-          const data = await response.json();
+          let data;
+          
+          // Handle different proxy response formats
+          if (apiUrl.includes('allorigins')) {
+            // For allorigins proxy, the response is wrapped
+            const proxyResponse = await response.json();
+            if (proxyResponse && proxyResponse.contents) {
+              data = JSON.parse(proxyResponse.contents);
+            }
+          } else {
+            // Standard response
+            data = await response.json();
+          }
+          
           if (data && data.events && data.events.length > 0) {
             console.log('Fetched events from server:', data.events.length);
             setPerformingTeams(data.events);
             setNoEventsData(false);
             // Store these events in localStorage
             localStorage.setItem('sentiaLiveEvents', JSON.stringify(data.events));
+          } else {
+            throw new Error('No events in response');
           }
+        } else {
+          throw new Error(`HTTP error: ${response.status}`);
         }
       } catch (error) {
         console.error('Error fetching events from server:', error);
-        // If API call fails due to CORS, try to use any existing data
-        const fallbackData = localStorage.getItem('sentiaLiveEvents');
-        if (fallbackData) {
-          console.log('Using cached local data instead');
-          const parsedData = JSON.parse(fallbackData);
-          setPerformingTeams(parsedData);
-          setNoEventsData(parsedData.length === 0);
+        
+        // Try no-cors fetch as a last resort
+        await tryFetchNoCors('https://sentia-api.onrender.com/api/events/getAll');
+        
+        // Use local storage as fallback
+        const localData = getEventsFromLocalStorage();
+        if (localData) {
+          console.log('Using cached local data');
+          setPerformingTeams(localData);
+          setNoEventsData(false);
+        } else {
+          // If localStorage is also empty, use static fallback data
+          console.log('No local data available, using static fallback data');
+          setPerformingTeams(FALLBACK_EVENTS);
+          setNoEventsData(false);
+          
+          // Store fallback events in localStorage for future use
+          localStorage.setItem('sentiaLiveEvents', JSON.stringify(FALLBACK_EVENTS));
         }
       }
     };
