@@ -1302,7 +1302,8 @@ export function SentiaMain() {
   // Function to get API URL with proxy if needed
   const getProxiedApiUrl = (url) => {
     // In production, try alternate approaches
-    if (window.location.hostname === 'www.sentiamite.me') {
+    if (window.location.hostname === 'www.sentiamite.me' || 
+        window.location.hostname === 'www.sentia.mite.ac.in') {
       // First try with a reliable CORS proxy
       return `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
     }
