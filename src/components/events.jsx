@@ -1107,26 +1107,26 @@ export function Events({ setGlobalVideoHovered }) {
                     </div>
                   </div>
                   
-                  {/* Footer moved to bottom */}
-                  <AlertDialogFooter className="flex justify-between items-center sm:justify-end sm:gap-2 p-3 sm:p-4 bg-gray-50 border-t border-gray-200 sticky bottom-0">
-                    <AlertDialogCancel 
-                      className="rounded-lg px-3 py-2 text-sm bg-white border border-gray-300 text-gray-700 hover:bg-gray-100 transition-colors"
-                      onClick={() => setIsDialogOpen(false)}
-                    >
-                      Close
-                    </AlertDialogCancel>
-                    
+                  {/* Footer with improved styling for mobile */}
+                  <AlertDialogFooter className="flex flex-row justify-end items-center p-3 sm:p-4 bg-gray-50 border-t border-gray-200 sticky bottom-0 gap-2 flex-nowrap">
                     {/* For events that support registration, include Register button */}
                     {(id === 'battle-of-bands' || id === 'fashion-walk' || id === 'senhacks') && (
-                      <Link to="/register">
+                      <Link to="/register" className="flex-shrink-0">
                         <AlertDialogAction 
-                          className="rounded-lg px-4 py-2.5 text-sm font-medium bg-indigo-600 text-white hover:bg-indigo-700 transition-colors shadow-md"
+                          className="rounded-lg px-4 py-2.5 text-sm font-medium bg-black text-white hover:bg-gray-800 transition-colors shadow-md whitespace-nowrap"
                           onClick={() => setIsDialogOpen(false)}
                         >
                           Register Now
                         </AlertDialogAction>
                       </Link>
                     )}
+                    
+                    <AlertDialogCancel 
+                      className="rounded-lg px-3 py-2 text-sm bg-white border border-gray-300 text-gray-700 hover:bg-gray-100 transition-colors flex-shrink-0"
+                      onClick={() => setIsDialogOpen(false)}
+                    >
+                      Close
+                    </AlertDialogCancel>
                   </AlertDialogFooter>
                 </AlertDialogContent>
               </AlertDialog>
@@ -1284,39 +1284,69 @@ export function Events({ setGlobalVideoHovered }) {
         }
 
         /* Mobile styling improvements */
-        @media (max-width: 768px) {
-          /* Fix card structure on small/medium screens */
-          .flex.flex-col.h-full {
-            display: flex !important;
-            flex-direction: column !important;
+        @media (max-width: 640px) {
+          /* Make coordinator items display better on mobile */
+          [class*="flex flex-col space-y-2 md:space-y-3"] > div {
+            padding: 8px !important;
+          }
+          
+          /* Improve rule items spacing */
+          [class*="space-y-0.5 sm:space-y-1"] > div {
+            padding: 5px !important;
+            margin-bottom: 2px;
+          }
+          
+          /* Fix title size on mobile */
+          [class*="text-2xl font-bold mb-1"] {
+            font-size: 1.25rem !important;
+          }
+          
+          /* Improve alert dialog on mobile */
+          [class*="AlertDialogContent"] {
+            height: auto !important;
+            max-height: 85vh !important;
+          }
+          
+          /* Make phone numbers more visible */
+          a[href^="tel:"] {
+            font-size: 13px !important;
+            font-weight: 500 !important;
+          }
+          
+          /* Fixed card heights */
+          .grid[style*="grid-auto-rows"] > div {
             height: 100% !important;
+            min-height: 320px !important;
           }
           
-          /* Ensure the footer stays at the bottom */
-          [class*="p-5 flex flex-col"] {
+          /* Ensure dialog buttons display properly on same line */
+          [class*="AlertDialogFooter"] {
             display: flex !important;
-            flex-direction: column !important;
-            height: 100% !important;
-            justify-content: space-between !important;
-          }
-          
-          /* Fix the description to have proper spacing */
-          .text-gray-600.flex-grow {
-            margin-bottom: auto !important;
-            flex: 1 1 auto !important;
-          }
-          
-          /* Ensure the footer is at the bottom */
-          [class*="flex items-center"][class*="mt-auto"] {
-            margin-top: auto !important;
-            position: relative !important;
-            bottom: 0 !important;
+            justify-content: flex-end !important;
+            flex-direction: row !important;
             width: 100% !important;
+            flex-wrap: nowrap !important;
+            gap: 8px !important;
+            padding: 12px !important;
           }
           
-          /* Ensure the button stays right-aligned */
-          [class*="h-10 bg-black"] {
-            margin-left: auto !important;
+          /* Make sure buttons don't wrap text */
+          [class*="AlertDialogFooter"] button,
+          [class*="AlertDialogFooter"] a {
+            white-space: nowrap !important;
+            flex-shrink: 0 !important;
+            min-width: auto !important;
+            padding-left: 12px !important;
+            padding-right: 12px !important;
+          }
+          
+          /* Ensure description in cards uses limited lines */
+          p.text-gray-600 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            max-height: 4.5em;
           }
         }
       `}</style>
