@@ -14,8 +14,8 @@ export function Footer() {
             </a>
 
             <div className="mt-2">
-              <a href="mailto:info@mite.ac.in" target="_blank" rel="noopener noreferrer">
-                <Button variant='secondary' className="bg-gray-50 hover:bg-gray-100">
+              <a href="mailto:euphoria@mite.ac.in" target="_blank" rel="noopener noreferrer" className="cursor-pointer">
+                <Button variant='secondary' className="bg-gray-50 hover:bg-gray-100 cursor-pointer" onClick={() => window.location.href = 'mailto:euphoria@mite.ac.in'}>
                   Share Your Thoughts
                   <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-1">
                     <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
@@ -38,12 +38,12 @@ export function Footer() {
                   </a>
                 </li>
                 <li>
-                  <a href="#venue" className="text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white">
+                  <a href="https://maps.app.goo.gl/nSvnC4G3jJRe8nsK7" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white">
                     Venue
                   </a>
                 </li>
                 <li>
-                  <a href="#registration" className="text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white">
+                  <a href="/register" className="text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white">
                     Registration
                   </a>
                 </li>
@@ -58,12 +58,12 @@ export function Footer() {
                   </a>
                 </li>
                 <li>
-                  <a href="https://www.linkedin.com/company/miteedu/" className="text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white">
+                  <a href="https://www.linkedin.com/company/miteedu/" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white">
                     LinkedIn
                   </a>
                 </li>
                 <li>
-                  <a href="https://www.facebook.com/MITEedu/" className="text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white">
+                  <a href="https://www.facebook.com/MITEedu/" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white">
                     Facebook
                   </a>
                 </li>

@@ -375,7 +375,7 @@ export function Events({ setGlobalVideoHovered }) {
       id: "extra-event-2",
       title: "Faculty Performance",
       description: "Join our exciting new event featuring competitions, performances, and interactive activities by our talented faculty members. A perfect opportunity to showcase their talents and enjoy a day of fun and engagement!",
-      time: "Begins at 1 PM",
+      time: "Begins at 7:00 PM",
       building: "Venue: Mite Greens",
       day: 1
     },

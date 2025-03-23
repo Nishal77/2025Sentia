@@ -282,18 +282,16 @@ export function SentiaMain() {
       console.log('App already initialized, preserving event data');
     }
 
-    // Check if we should show the screen size popup (only on small screens)
-    const hasSeenPopup = localStorage.getItem('sentiaScreenSizePopupSeen');
+    // Check if screen size is small or medium - ALWAYS show the popup on small screens
     const isSmallScreen = window.innerWidth < 768; // Typically tablet and below
     
-    if (!hasSeenPopup && isSmallScreen) {
+    if (isSmallScreen) {
       setShowScreenSizePopup(true);
       
-      // Set a timer to automatically close the popup after 5 seconds
+      // Set a timer to automatically close the popup after 3 seconds
       const popupTimer = setTimeout(() => {
         setShowScreenSizePopup(false);
-        localStorage.setItem('sentiaScreenSizePopupSeen', 'true');
-      }, 5000);
+      }, 3000);
       
       return () => clearTimeout(popupTimer);
     }
@@ -1160,11 +1158,103 @@ export function SentiaMain() {
   // Function to manually close the popup
   const closeScreenSizePopup = () => {
     setShowScreenSizePopup(false);
-    localStorage.setItem('sentiaScreenSizePopupSeen', 'true');
   };
+
+  // Add a useEffect to handle window resize
+  useEffect(() => {
+    // Function to check screen size and show popup if needed
+    const checkScreenSize = () => {
+      const isSmallScreen = window.innerWidth < 768;
+      if (isSmallScreen) {
+        setShowScreenSizePopup(true);
+        
+        // Auto-close after 3 seconds
+        const popupTimer = setTimeout(() => {
+          setShowScreenSizePopup(false);
+        }, 3000);
+        
+        return popupTimer;
+      }
+      return null;
+    };
+    
+    // Check on mount
+    let popupTimer = checkScreenSize();
+    
+    // Add resize listener
+    const handleResize = () => {
+      // Clear any existing timer
+      if (popupTimer) {
+        clearTimeout(popupTimer);
+      }
+      // Check screen size again
+      popupTimer = checkScreenSize();
+    };
+    
+    window.addEventListener('resize', handleResize);
+    
+    // Cleanup
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      if (popupTimer) {
+        clearTimeout(popupTimer);
+      }
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-100">
+      {/* Enhanced Screen Size Popup at the top */}
+      {showScreenSizePopup && (
+        <div className="fixed top-0 left-0 right-0 z-[99999] flex justify-center bg-gradient-to-r from-indigo-700 to-purple-700 shadow-xl animate-in fade-in slide-in-from-top duration-300">
+          <div className="w-full px-2 sm:px-4 py-2 sm:py-3 flex items-center justify-between">
+            <div className="flex items-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5 sm:h-6 sm:w-6 mr-2 sm:mr-3 text-white"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                />
+              </svg>
+              <div>
+                <p className="font-bold text-white text-xs sm:text-sm md:text-base leading-tight">
+                  SENTIA 2025: USE LARGER SCREEN
+                </p>
+                <p className="text-white/80 text-[10px] sm:text-xs leading-tight">
+                  For best experience, use desktop/laptop
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={closeScreenSizePopup}
+              className="text-white/80 hover:text-white ml-2 flex-shrink-0 bg-white/10 rounded-full p-1 sm:p-1.5 hover:bg-white/20 transition-colors"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-4 w-4 sm:h-5 sm:w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Hero Section */}
       <HeroSection />
 
@@ -1734,14 +1824,14 @@ export function SentiaMain() {
               <div className="flex-grow relative mt-1 rounded-lg overflow-hidden min-h-[200px]">
                 <iframe
                   className="w-full h-full object-cover rounded-lg cursor-pointer"
-                  src="https://www.youtube.com/embed/tx61kRUNfCE?autoplay=1&mute=1&si=h3jh7SZSXVOE-UAS"
+                  src="https://www.youtube.com/embed/tx61kRUNfCE?autoplay=1&mute=1&loop=1&playlist=tx61kRUNfCE&si=h3jh7SZSXVOE-UAS"
                   title="YouTube video player"
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                   onClick={(e) => {
                     e.target.src =
-                      "https://www.youtube.com/embed/tx61kRUNfCE?autoplay=1&mute=0&si=h3jh7SZSXVOE-UAS";
+                      "https://www.youtube.com/embed/tx61kRUNfCE?autoplay=1&mute=0&loop=1&playlist=tx61kRUNfCE&si=h3jh7SZSXVOE-UAS";
                   }}
                 ></iframe>
               </div>
@@ -1795,7 +1885,7 @@ export function SentiaMain() {
     loading="lazy"
     referrerPolicy="no-referrer-when-downgrade"
     className="absolute inset-0"
-    title="NMAMIT Campus Map"
+    title="MITE Campus Map"
   ></iframe>
 </div>
             </div>
@@ -2079,48 +2169,6 @@ export function SentiaMain() {
       )}
 
       <audio ref={audioRef} src={songs[songIndex]} />
-
-      {/* Screen Size Popup */}
-      {showScreenSizePopup && (
-        <div 
-          style={{
-            position: 'fixed',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            backgroundColor: '#000',
-            color: '#fff',
-            border: '1px solid #333',
-            borderRadius: '10px',
-            padding: '20px',
-            zIndex: 9999,
-            maxWidth: '90%',
-            width: '300px',
-            boxShadow: '0 0 20px rgba(0, 0, 0, 0.5)',
-            textAlign: 'center'
-          }}
-        >
-          <button 
-            onClick={closeScreenSizePopup}
-            style={{
-              position: 'absolute',
-              top: '10px',
-              right: '10px',
-              background: 'none',
-              border: 'none',
-              color: '#fff',
-              fontSize: '18px',
-              cursor: 'pointer'
-            }}
-          >
-            ×
-          </button>
-          <h3 style={{ margin: '0 0 10px 0' }}>Optimal Experience</h3>
-          <p style={{ margin: '0 0 15px 0' }}>
-            For an optimal experience, please use a larger screen.
-          </p>
-        </div>
-      )}
     </div>
   );
 }

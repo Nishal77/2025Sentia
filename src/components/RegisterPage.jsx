@@ -44,14 +44,7 @@ const allEvents = [
     building: "Main Stage",
     day: 1
   },
-  {
-    id: "robo-mania",
-    title: "Robo Wars",
-    description: "Innovation Unleashed! 🤖🔍 Dive into a world of robotics where your imagination and technical prowess come together. Design, build, and program robots to solve challenges and demonstrate your engineering excellence. Will your creation stand out from the crowd? 🛠️🚀",
-    time: "3rd & 4th April (10:00 Onwards)",
-    building: "Quadrangle",
-    day: 2
-  },
+  
   {
     id: "quiz-quest",
     title: "Quiz quest",
@@ -93,16 +86,6 @@ const SimpleEventCard = ({ id, title, description, time, building, day, disclaim
             <img 
               src={fashionlogo} 
               alt="Fashion Walk"
-              className="w-full h-full object-cover"
-            />
-          </div>
-        );
-      case 'robo-wars-soccer':
-        return (
-          <div className="w-full h-full flex items-center justify-center overflow-hidden">
-            <img 
-              src={robowarslogo} 
-              alt="Robo Wars"
               className="w-full h-full object-cover"
             />
           </div>
