@@ -280,7 +280,7 @@ export function HeroSection() {
       </div>
       
       {/* Screen size disclaimer for small/medium screens */}
-      {showScreenSizeDisclaimer && (
+      {!localStorage.getItem('disclaimerDismissed') && showScreenSizeDisclaimer && (
         <div className="fixed top-4 left-0 right-0 mx-auto w-[90%] max-w-md z-50 bg-black/80 backdrop-blur-md text-white p-4 rounded-lg shadow-lg border border-white/20 transition-all duration-300 animate-fade-in">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-2">
@@ -290,7 +290,10 @@ export function HeroSection() {
               <p className="text-sm font-medium">For an optimal experience, please use a larger screen.</p>
             </div>
             <button 
-              onClick={() => setShowScreenSizeDisclaimer(false)} 
+              onClick={() => {
+                setShowScreenSizeDisclaimer(false);
+                localStorage.setItem('disclaimerDismissed', 'true');
+              }} 
               className="text-white hover:text-gray-300 transition-colors"
             >
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">

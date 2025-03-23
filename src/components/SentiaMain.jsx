@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { Button } from "./ui/button";
 import { HeroSection } from "./HeroSection";
 import Events from "./events";
@@ -31,7 +31,7 @@ import drum from "/assets/drum.mp4";
 import fashionwalk from "/assets/fashionwalk.mp4";
 import robowars from "/assets/robowars.mp4";
 import dance from "/assets/dance.mp4";
-import SentiaDressUpdate from "/assets/SentiaDressUpdate.mp4";
+const SentiaDressUpdate = "https://res.cloudinary.com/dqmryiyhz/video/upload/v1742703692/sentia/fmmzstqedsoskrihu0ko.mp4";
 
 // Random contacts data
 const contacts = [
@@ -259,6 +259,7 @@ export function SentiaMain() {
   const [volume, setVolume] = useState(0.5);
   const [songIndex, setSongIndex] = useState(0);
   const [activeVideos, setActiveVideos] = useState([]);
+  const [showScreenSizePopup, setShowScreenSizePopup] = useState(false);
   const audioRef = useRef(null);
   const [videoEnded, setVideoEnded] = useState(false);
   const songs = [Sonisoni, WhatJhumka, TheBreakupSong];
@@ -267,7 +268,7 @@ export function SentiaMain() {
   const [isContactPopupOpen, setIsContactPopupOpen] = useState(false);
   const [randomContacts, setRandomContacts] = useState([]);
 
-  // Modify the initialization code to preserve data
+  // Modify the initialization code to check for screen size popup
   useEffect(() => {
     // Only clean local storage if no initialization flag exists
     const isInitialized = localStorage.getItem('sentiaAppInitialized');
@@ -279,6 +280,22 @@ export function SentiaMain() {
     } else {
       // For subsequent loads, we'll keep the existing data
       console.log('App already initialized, preserving event data');
+    }
+
+    // Check if we should show the screen size popup (only on small screens)
+    const hasSeenPopup = localStorage.getItem('sentiaScreenSizePopupSeen');
+    const isSmallScreen = window.innerWidth < 768; // Typically tablet and below
+    
+    if (!hasSeenPopup && isSmallScreen) {
+      setShowScreenSizePopup(true);
+      
+      // Set a timer to automatically close the popup after 5 seconds
+      const popupTimer = setTimeout(() => {
+        setShowScreenSizePopup(false);
+        localStorage.setItem('sentiaScreenSizePopupSeen', 'true');
+      }, 5000);
+      
+      return () => clearTimeout(popupTimer);
     }
   }, []);
 
@@ -532,504 +549,49 @@ export function SentiaMain() {
 
   // Function to render events view with thumbnails
   const renderEventsView = () => {
-    // Show a message when there are no events
-    if (noEventsData || performingTeams.length === 0) {
+    if (noEventsData || !events || events.length === 0) {
       return (
-        <div className="h-full flex flex-col items-center justify-center text-center p-6">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-16 w-16 text-gray-300 mb-4"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={1.5}
-              d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"
-            />
-          </svg>
-          <h3 className="text-lg text-gray-700 font-medium mb-2">
-            No Events Available
-          </h3>
-          <p className="text-gray-500 max-w-md mx-auto">
-            Events need to be updated soon. Stay tuned for the latest updates
-            and check back regularly!
-          </p>
-        </div>
-      );
-    }
-
-    // Filter for main events only (if we have type field)
-    const mainEvents = performingTeams.filter(
-      (event) => event.type === "mainEvent" || !event.type
-    );
-
-    // If no main events, show only the teams
-    if (mainEvents.length === 0) {
-      // Get live, ended and upcoming events from teams
-      const liveEvents = performingTeams.filter(
-        (event) => event.status === "LIVE"
-      );
-      const endedEvents = performingTeams.filter(
-        (event) => event.status === "ENDED"
-      );
-      const upNextEvents = performingTeams.filter(
-        (event) => event.status === "UP NEXT"
-      );
-      const beReadyEvents = performingTeams.filter(
-        (event) => event.status === "BE READY"
-      );
-
-      return (
-        <div className="space-y-3 h-full overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
-          {/* Main Heading */}
-          <div className="sticky top-0 bg-white z-10 py-2 border-b border-gray-100">
-            <h2 className="text-sm font-semibold text-gray-800 flex items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-4 mr-1.5 text-gray-600"
-                fill="none"
-                viewBox="0 0 24 24"
+        <div className="py-6 px-4 text-center w-full">
+          <div className="bg-white/10 backdrop-blur-md rounded-lg p-6 shadow-lg max-w-full mx-auto border border-purple-500/30">
+            <h3 className="text-xl md:text-2xl font-bold text-white mb-3">No Events Scheduled</h3>
+            <p className="text-white text-sm md:text-base mb-3">
+              Events will be scheduled soon. Stay tuned for exciting updates!
+            </p>
+            <div className="mt-2">
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                className="h-12 w-12 mx-auto text-purple-500 animate-pulse" 
+                fill="none" 
+                viewBox="0 0 24 24" 
                 stroke="currentColor"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={1.5} 
+                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" 
                 />
               </svg>
-              CURRENT EVENTS
-            </h2>
+            </div>
           </div>
-
-          {/* Live Events Section */}
-          {liveEvents.length > 0 && (
-            <div className="mb-3">
-              <h3 className="text-xs uppercase text-green-800 font-medium mb-2 flex items-center">
-                <span className="w-2 h-2 bg-green-500 rounded-full mr-1.5 relative">
-                  <span className="absolute inset-0 bg-green-500 rounded-full animate-ping opacity-75"></span>
-                </span>
-                Live Now
-              </h3>
-              <div className="space-y-2">
-                {liveEvents.map((event) => (
-                  <div
-                    key={`live-${event.id}`}
-                    className="flex items-center gap-2 bg-gradient-to-r from-green-50 to-transparent p-2.5 rounded-lg border-l-3 border-green-600 hover:shadow-md transition-all duration-300 group"
-                    onMouseEnter={(e) => {
-                      // Set global hovering state to pause slider
-                      setIsAnyVideoHovered(true);
-
-                      const video = e.currentTarget.querySelector("video");
-                      if (video) {
-                        video.currentTime = 0;
-                        const playPromise = video.play();
-                        if (playPromise !== undefined) {
-                          playPromise.catch((error) => {
-                            console.error("Error playing video:", error);
-                          });
-                        }
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      // Reset global hovering state to resume slider
-                      setIsAnyVideoHovered(false);
-
-                      const video = e.currentTarget.querySelector("video");
-                      if (video) {
-                        video.pause();
-                        video.currentTime = 0;
-                      }
-                    }}
-                  >
-                    <div className="w-10 h-10 rounded-md flex-shrink-0 overflow-hidden">
-                      <video
-                        src={getVideoSource(event.video)}
-                        className="w-full h-full object-cover"
-                        muted
-                        loop
-                        playsInline
-                        preload="auto"
-                      ></video>
-                    </div>
-                    <div className="flex-grow">
-                      <div className="flex items-center justify-between">
-                        <h3 className="font-semibold text-sm">
-                          {event.event || event.name}
-                        </h3>
-                        <div className="flex items-center gap-1 bg-green-100 px-1.5 py-0.5 rounded-full">
-                          <span className="w-2 h-2 bg-green-500 rounded-full relative flex-shrink-0">
-                            <span className="absolute inset-0 bg-green-500 rounded-full animate-ping opacity-75"></span>
-                          </span>
-                          <span className="text-xs font-medium text-green-800">
-                            LIVE
-                          </span>
-                        </div>
-                      </div>
-                      <p className="text-gray-500 text-xs">{event.location}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Ended Events Section */}
-          {endedEvents.length > 0 && (
-            <div className="mb-3">
-              <h3 className="text-xs uppercase text-red-800 font-medium mb-2 flex items-center">
-                <span className="w-2 h-2 bg-red-500 rounded-full mr-1.5"></span>
-                Ended Events
-              </h3>
-              <div className="space-y-2">
-                {endedEvents.map((event) => (
-                  <div
-                    key={`ended-${event.id}`}
-                    className="flex items-center gap-2 bg-gradient-to-r from-red-50 to-transparent p-2.5 rounded-lg border-l-3 border-red-600 hover:shadow-md transition-all duration-300 opacity-80 group"
-                    onMouseEnter={(e) => {
-                      // Set global hovering state to pause slider
-                      setIsAnyVideoHovered(true);
-
-                      const video = e.currentTarget.querySelector("video");
-                      if (video) {
-                        video.currentTime = 0;
-                        const playPromise = video.play();
-                        if (playPromise !== undefined) {
-                          playPromise.catch((error) => {
-                            console.error("Error playing video:", error);
-                          });
-                        }
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      // Reset global hovering state to resume slider
-                      setIsAnyVideoHovered(false);
-
-                      const video = e.currentTarget.querySelector("video");
-                      if (video) {
-                        video.pause();
-                        video.currentTime = 0;
-                      }
-                    }}
-                  >
-                    <div className="w-10 h-10 rounded-md flex-shrink-0 overflow-hidden">
-                      <video
-                        src={getVideoSource(event.video)}
-                        className="w-full h-full object-cover"
-                        muted
-                        loop
-                        playsInline
-                        preload="auto"
-                      ></video>
-                    </div>
-                    <div className="flex-grow">
-                      <div className="flex items-center justify-between">
-                        <h3 className="font-semibold text-sm">
-                          {event.event || event.name}
-                        </h3>
-                        <div className="flex items-center gap-1 bg-red-100 px-1.5 py-0.5 rounded-full">
-                          <span className="w-2 h-2 bg-red-500 rounded-full flex-shrink-0"></span>
-                          <span className="text-xs font-medium text-red-800">
-                            ENDED
-                          </span>
-                        </div>
-                      </div>
-                      <p className="text-gray-500 text-xs">{event.location}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Coming up next banner */}
-          {upNextEvents.length > 0 && (
-            <div>
-              <h3 className="text-xs uppercase text-amber-800 font-medium mb-2 flex items-center">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-3.5 h-3.5 mr-1.5 text-amber-700"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                  />
-                </svg>
-                Coming Up Next
-              </h3>
-              <div className="bg-gradient-to-r from-amber-50 to-transparent p-2.5 rounded-lg border-l-3 border-amber-500">
-                <div className="flex items-center text-xs font-medium text-amber-900">
-                  {upNextEvents[0].event || upNextEvents[0].name} at{" "}
-                  {upNextEvents[0].location}
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Be Ready banner */}
-          {beReadyEvents.length > 0 && (
-            <div>
-              <h3 className="text-xs uppercase text-blue-800 font-medium mb-2 flex items-center">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-3.5 h-3.5 mr-1.5 text-blue-700"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                  />
-                </svg>
-                Be Ready
-              </h3>
-              <div className="bg-gradient-to-r from-blue-50 to-transparent p-2.5 rounded-lg border-l-3 border-blue-500">
-                <div className="flex items-center text-xs font-medium text-blue-900">
-                  {beReadyEvents[0].event || beReadyEvents[0].name} at{" "}
-                  {beReadyEvents[0].location}
-                </div>
-              </div>
-            </div>
-          )}
         </div>
       );
     }
-
-    // Get live, ended and upcoming events from main events
-    const liveEvents = mainEvents.filter((event) => event.status === "LIVE");
-    const endedEvents = mainEvents.filter((event) => event.status === "ENDED");
-    const upNextEvents = mainEvents.filter(
-      (event) => event.status === "UP NEXT"
-    );
-    const beReadyEvents = mainEvents.filter(
-      (event) => event.status === "BE READY"
-    );
-
+    
+    // For when we have events data
     return (
-      <div className="space-y-3 h-full overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
-        {/* Main Heading */}
-        <div className="sticky top-0 bg-white z-10 py-2 border-b border-gray-100">
-          <h2 className="text-sm font-semibold text-gray-800 flex items-center">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-4 w-4 mr-1.5 text-gray-600"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-              />
-            </svg>
-            CURRENT EVENTS
-          </h2>
-        </div>
-
-        {/* Live Events Section */}
-        {liveEvents.length > 0 && (
-          <div className="mb-3">
-            <h3 className="text-xs uppercase text-green-800 font-medium mb-2 flex items-center">
-              <span className="w-2 h-2 bg-green-500 rounded-full mr-1.5 relative">
-                <span className="absolute inset-0 bg-green-500 rounded-full animate-ping opacity-75"></span>
-              </span>
-              Live Now
-            </h3>
-            <div className="space-y-2">
-              {liveEvents.map((event) => (
-                <div
-                  key={`live-${event.id}`}
-                  className="flex items-center gap-2 bg-gradient-to-r from-green-50 to-transparent p-2.5 rounded-lg border-l-3 border-green-600 hover:shadow-md transition-all duration-300 group"
-                  onMouseEnter={(e) => {
-                    // Set global hovering state to pause slider
-                    setIsAnyVideoHovered(true);
-
-                    const video = e.currentTarget.querySelector("video");
-                    if (video) {
-                      video.currentTime = 0;
-                      const playPromise = video.play();
-                      if (playPromise !== undefined) {
-                        playPromise.catch((error) => {
-                          console.error("Error playing video:", error);
-                        });
-                      }
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    // Reset global hovering state to resume slider
-                    setIsAnyVideoHovered(false);
-
-                    const video = e.currentTarget.querySelector("video");
-                    if (video) {
-                      video.pause();
-                      video.currentTime = 0;
-                    }
-                  }}
-                >
-                  <div className="w-10 h-10 rounded-md flex-shrink-0 overflow-hidden">
-                    <video
-                      src={getVideoSource(event.video)}
-                      className="w-full h-full object-cover"
-                      muted
-                      loop
-                      playsInline
-                      preload="auto"
-                    ></video>
-                  </div>
-                  <div className="flex-grow">
-                    <div className="flex items-center justify-between">
-                      <h3 className="font-semibold text-sm">{event.name}</h3>
-                      <div className="flex items-center gap-1 bg-green-100 px-1.5 py-0.5 rounded-full">
-                        <span className="w-2 h-2 bg-green-500 rounded-full relative flex-shrink-0">
-                          <span className="absolute inset-0 bg-green-500 rounded-full animate-ping opacity-75"></span>
-                        </span>
-                        <span className="text-xs font-medium text-green-800">
-                          LIVE
-                        </span>
-                      </div>
-                    </div>
-                    <p className="text-gray-500 text-xs">{event.location}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Ended Events Section */}
-        {endedEvents.length > 0 && (
-          <div className="mb-3">
-            <h3 className="text-xs uppercase text-red-800 font-medium mb-2 flex items-center">
-              <span className="w-2 h-2 bg-red-500 rounded-full mr-1.5"></span>
-              Ended Events
-            </h3>
-            <div className="space-y-2">
-              {endedEvents.map((event) => (
-                <div
-                  key={`ended-${event.id}`}
-                  className="flex items-center gap-2 bg-gradient-to-r from-red-50 to-transparent p-2.5 rounded-lg border-l-3 border-red-600 hover:shadow-md transition-all duration-300 opacity-80 group"
-                  onMouseEnter={(e) => {
-                    // Set global hovering state to pause slider
-                    setIsAnyVideoHovered(true);
-
-                    const video = e.currentTarget.querySelector("video");
-                    if (video) {
-                      video.currentTime = 0;
-                      const playPromise = video.play();
-                      if (playPromise !== undefined) {
-                        playPromise.catch((error) => {
-                          console.error("Error playing video:", error);
-                        });
-                      }
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    // Reset global hovering state to resume slider
-                    setIsAnyVideoHovered(false);
-
-                    const video = e.currentTarget.querySelector("video");
-                    if (video) {
-                      video.pause();
-                      video.currentTime = 0;
-                    }
-                  }}
-                >
-                  <div className="w-10 h-10 rounded-md flex-shrink-0 overflow-hidden">
-                    <video
-                      src={getVideoSource(event.video)}
-                      className="w-full h-full object-cover"
-                      muted
-                      loop
-                      playsInline
-                      preload="auto"
-                    ></video>
-                  </div>
-                  <div className="flex-grow">
-                    <div className="flex items-center justify-between">
-                      <h3 className="font-semibold text-sm">{event.name}</h3>
-                      <div className="flex items-center gap-1 bg-red-100 px-1.5 py-0.5 rounded-full">
-                        <span className="w-2 h-2 bg-red-500 rounded-full flex-shrink-0"></span>
-                        <span className="text-xs font-medium text-red-800">
-                          ENDED
-                        </span>
-                      </div>
-                    </div>
-                    <p className="text-gray-500 text-xs">{event.location}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Coming up next banner */}
-        {upNextEvents.length > 0 && (
-          <div>
-            <h3 className="text-xs uppercase text-amber-800 font-medium mb-2 flex items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-3.5 h-3.5 mr-1.5 text-amber-700"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                />
-              </svg>
-              Coming Up Next
-            </h3>
-            <div className="bg-gradient-to-r from-amber-50 to-transparent p-2.5 rounded-lg border-l-3 border-amber-500">
-              <div className="flex items-center text-xs font-medium text-amber-900">
-                {upNextEvents[0].name} at {upNextEvents[0].location}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Be Ready Section */}
-        {beReadyEvents.length > 0 && (
-          <div>
-            <h3 className="text-xs uppercase text-blue-800 font-medium mb-2 flex items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-3.5 h-3.5 mr-1.5 text-blue-700"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                />
-              </svg>
-              Be Ready
-            </h3>
-            <div className="bg-gradient-to-r from-blue-50 to-transparent p-2.5 rounded-lg border-l-3 border-blue-500">
-              <div className="flex items-center text-xs font-medium text-blue-900">
-                {beReadyEvents[0].name} at {beReadyEvents[0].location}
-              </div>
-            </div>
-          </div>
-        )}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+        {/* Filter events by the active view */}
+        {filteredEvents.map((event, index) => (
+          <EventCard
+            key={index}
+            event={event}
+            isHovered={hoveredEventCard === index}
+            onMouseEnter={() => setHoveredEventCard(index)}
+            onMouseLeave={() => setHoveredEventCard(null)}
+            className="w-full h-full"
+          />
+        ))}
       </div>
     );
   };
@@ -1393,17 +955,20 @@ export function SentiaMain() {
   // Get data from localStorage with robust error handling
   const getEventsFromLocalStorage = () => {
     try {
-      const storedData = localStorage.getItem('sentiaLiveEvents');
-      if (storedData) {
-        const parsedData = JSON.parse(storedData);
-        if (Array.isArray(parsedData) && parsedData.length > 0) {
-          return parsedData;
+      const storedEvents = localStorage.getItem('sentiaLiveEvents');
+      if (storedEvents) {
+        const parsedEvents = JSON.parse(storedEvents);
+        // Validate that we have proper data
+        if (Array.isArray(parsedEvents) && parsedEvents.length > 0) {
+          console.log('Retrieved events from localStorage:', parsedEvents.length);
+          return parsedEvents;
         }
       }
+      return null;
     } catch (error) {
-      console.error('Error reading from localStorage:', error);
+      console.error('Error retrieving events from localStorage:', error);
+      return null;
     }
-    return null;
   };
 
   const syncWithLatestData = async () => {
@@ -1474,8 +1039,15 @@ export function SentiaMain() {
               // Only update if server data is newer or we don't have local data
               if (serverTimestamp > localTimestamp || !localStorage.getItem('sentiaLiveEvents')) {
                 console.log('Server data is newer, updating local data');
-                setPerformingTeams(data.events);
-                setNoEventsData(false);
+                // Check if we have valid events data
+                if (Array.isArray(data.events) && data.events.length > 0) {
+                  setPerformingTeams(data.events);
+                  setNoEventsData(false);
+                } else {
+                  // Handle empty events array
+                  setPerformingTeams([]);
+                  setNoEventsData(true);
+                }
                 
                 // Store these events in localStorage
                 localStorage.setItem('sentiaLiveEvents', JSON.stringify(data.events));
@@ -1485,45 +1057,73 @@ export function SentiaMain() {
               }
             } else {
               console.warn('No events data found in response:', data);
+              // We received a response but no events data
+              setPerformingTeams([]);
+              setNoEventsData(true);
               throw new Error('No events data in response');
             }
           } else {
             throw new Error(`HTTP error: ${response.status}`);
           }
         } catch (fetchError) {
-          console.error('CORS error, falling back to alternative methods:', fetchError);
+          console.error('API fetch error, falling back to local data:', fetchError);
           
           // Try no-cors fetch as a last resort
           await tryFetchNoCors('https://sentia-api.onrender.com/api/events/getAll');
           
           // Use local storage as fallback
           const localData = getEventsFromLocalStorage();
-          if (localData) {
+          if (localData && localData.length > 0) {
             console.log('Using cached local data');
             setPerformingTeams(localData);
             setNoEventsData(false);
           } else {
-            // If localStorage is also empty, use static fallback data
-            console.log('No local data available, using static fallback data');
-            setPerformingTeams(FALLBACK_EVENTS);
-            setNoEventsData(false);
-            
-            // Store fallback events in localStorage for future use
-            localStorage.setItem('sentiaLiveEvents', JSON.stringify(FALLBACK_EVENTS));
+            // If localStorage is also empty, use static fallback data if available
+            if (FALLBACK_EVENTS && FALLBACK_EVENTS.length > 0) {
+              console.log('No local data available, using static fallback data');
+              setPerformingTeams(FALLBACK_EVENTS);
+              setNoEventsData(false);
+              
+              // Store fallback events in localStorage for future use
+              localStorage.setItem('sentiaLiveEvents', JSON.stringify(FALLBACK_EVENTS));
+            } else {
+              // No events available at all
+              setPerformingTeams([]);
+              setNoEventsData(true);
+            }
           }
         }
         
         // Update last sync time
         localStorage.setItem('sentiaLastSync', currentTime.toString());
+      } else {
+        // If we're not syncing with the server, load from localStorage
+        const localData = getEventsFromLocalStorage();
+        if (localData && localData.length > 0) {
+          setPerformingTeams(localData);
+          setNoEventsData(false);
+        } else if (FALLBACK_EVENTS && FALLBACK_EVENTS.length > 0) {
+          setPerformingTeams(FALLBACK_EVENTS);
+          setNoEventsData(false);
+        } else {
+          setPerformingTeams([]);
+          setNoEventsData(true);
+        }
       }
     } catch (error) {
       console.error('Error syncing with server:', error);
       
       // Always ensure we have some data to display
       const localData = getEventsFromLocalStorage();
-      if (!localData) {
+      if (localData && localData.length > 0) {
+        setPerformingTeams(localData);
+        setNoEventsData(false);
+      } else if (FALLBACK_EVENTS && FALLBACK_EVENTS.length > 0) {
         setPerformingTeams(FALLBACK_EVENTS);
         setNoEventsData(false);
+      } else {
+        setPerformingTeams([]);
+        setNoEventsData(true);
       }
     }
   };
@@ -1752,6 +1352,12 @@ export function SentiaMain() {
       window.removeEventListener("storage", handleStorageChange);
     };
   }, []);
+
+  // Function to manually close the popup
+  const closeScreenSizePopup = () => {
+    setShowScreenSizePopup(false);
+    localStorage.setItem('sentiaScreenSizePopupSeen', 'true');
+  };
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -2669,6 +2275,48 @@ export function SentiaMain() {
       )}
 
       <audio ref={audioRef} src={songs[songIndex]} />
+
+      {/* Screen Size Popup */}
+      {showScreenSizePopup && (
+        <div 
+          style={{
+            position: 'fixed',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            backgroundColor: '#000',
+            color: '#fff',
+            border: '1px solid #333',
+            borderRadius: '10px',
+            padding: '20px',
+            zIndex: 9999,
+            maxWidth: '90%',
+            width: '300px',
+            boxShadow: '0 0 20px rgba(0, 0, 0, 0.5)',
+            textAlign: 'center'
+          }}
+        >
+          <button 
+            onClick={closeScreenSizePopup}
+            style={{
+              position: 'absolute',
+              top: '10px',
+              right: '10px',
+              background: 'none',
+              border: 'none',
+              color: '#fff',
+              fontSize: '18px',
+              cursor: 'pointer'
+            }}
+          >
+            ×
+          </button>
+          <h3 style={{ margin: '0 0 10px 0' }}>Optimal Experience</h3>
+          <p style={{ margin: '0 0 15px 0' }}>
+            For an optimal experience, please use a larger screen.
+          </p>
+        </div>
+      )}
     </div>
   );
 }
