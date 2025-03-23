@@ -900,7 +900,7 @@ export function Events({ setGlobalVideoHovered }) {
           )}
           
           {/* Footer with time and rules/register button */}
-          <div className={`flex items-center ${showTime ? 'justify-between' : 'justify-end'}`}>
+          <div className={`flex items-center ${showTime ? 'justify-between' : 'justify-end'} mt-auto w-full`}>
             {showTime && (
               <div className="bg-indigo-50 text-indigo-700 px-4 py-1.5 rounded-full font-medium text-sm">
                 {time}
@@ -920,7 +920,7 @@ export function Events({ setGlobalVideoHovered }) {
                   link.click();
                   document.body.removeChild(link);
                 }}
-                className="w-auto h-10 bg-black hover:bg-gray-800 rounded-full flex items-center justify-center text-white transition-colors px-4"
+                className="w-auto h-10 bg-black hover:bg-gray-800 rounded-full flex items-center justify-center text-white transition-colors px-4 ml-auto"
                 style={{ transform: 'none' }}
               >
                 <span className="mr-2 text-sm">Download Guidelines</span>
@@ -943,7 +943,7 @@ export function Events({ setGlobalVideoHovered }) {
               >
                 <AlertDialogTrigger asChild>
                   <button 
-                    className="w-auto h-10 bg-black hover:bg-gray-800 rounded-full flex items-center justify-center text-white transition-colors px-4"
+                    className="w-auto h-10 bg-black hover:bg-gray-800 rounded-full flex items-center justify-center text-white transition-colors px-4 ml-auto"
                     style={{ transform: 'none' }}
                     onClick={(e) => {
                       e.preventDefault();
@@ -971,7 +971,7 @@ export function Events({ setGlobalVideoHovered }) {
                         )}
                         
                         {id === 'robo-soccer' && (
-                          <img src={robowarslogo} alt="Robo Soccer" className="w-9 h-9 rounded-full object-cover" />
+                          <img src={robosccer} alt="Robo Soccer" className="w-9 h-9 rounded-full object-cover" />
                         )}
                         {id === 'eastern-dance' && (
                           <img src={easterndance} alt="Eastern Dance" className="w-9 h-9 rounded-full object-cover" />
@@ -1284,56 +1284,39 @@ export function Events({ setGlobalVideoHovered }) {
         }
 
         /* Mobile styling improvements */
-        @media (max-width: 640px) {
-          /* Make coordinator items display better on mobile */
-          [class*="flex flex-col space-y-2 md:space-y-3"] > div {
-            padding: 8px !important;
-          }
-          
-          /* Improve rule items spacing */
-          [class*="space-y-0.5 sm:space-y-1"] > div {
-            padding: 5px !important;
-            margin-bottom: 2px;
-          }
-          
-          /* Fix title size on mobile */
-          [class*="text-2xl font-bold mb-1"] {
-            font-size: 1.25rem !important;
-          }
-          
-          /* Improve alert dialog on mobile */
-          [class*="AlertDialogContent"] {
-            height: auto !important;
-            max-height: 85vh !important;
-          }
-          
-          /* Make phone numbers more visible */
-          a[href^="tel:"] {
-            font-size: 13px !important;
-            font-weight: 500 !important;
-          }
-          
-          /* Fixed card heights */
-          .grid[style*="grid-auto-rows"] > div {
+        @media (max-width: 768px) {
+          /* Fix card structure on small/medium screens */
+          .flex.flex-col.h-full {
+            display: flex !important;
+            flex-direction: column !important;
             height: 100% !important;
-            min-height: 320px !important;
           }
           
-          /* Ensure dialog buttons display properly on same line */
-          [class*="AlertDialogFooter"] {
-            display: flex;
+          /* Ensure the footer stays at the bottom */
+          [class*="p-5 flex flex-col"] {
+            display: flex !important;
+            flex-direction: column !important;
+            height: 100% !important;
             justify-content: space-between !important;
-            flex-direction: row !important;
-            width: 100%;
           }
           
-          /* Ensure description in cards uses limited lines */
-          p.text-gray-600 {
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            max-height: 4.5em;
+          /* Fix the description to have proper spacing */
+          .text-gray-600.flex-grow {
+            margin-bottom: auto !important;
+            flex: 1 1 auto !important;
+          }
+          
+          /* Ensure the footer is at the bottom */
+          [class*="flex items-center"][class*="mt-auto"] {
+            margin-top: auto !important;
+            position: relative !important;
+            bottom: 0 !important;
+            width: 100% !important;
+          }
+          
+          /* Ensure the button stays right-aligned */
+          [class*="h-10 bg-black"] {
+            margin-left: auto !important;
           }
         }
       `}</style>

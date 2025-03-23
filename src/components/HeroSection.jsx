@@ -76,34 +76,34 @@ export function HeroSection() {
 
   // Detect small/medium screens and show disclaimer
   useEffect(() => {
+    // Check if disclaimer was previously dismissed
+    const disclaimerDismissed = localStorage.getItem('disclaimerDismissed') === 'true';
+    
+    if (disclaimerDismissed) {
+      // Don't show disclaimer if previously dismissed
+      return;
+    }
+    
     const checkScreenSize = () => {
       // Show for screens smaller than 1024px (tailwind's lg breakpoint)
       const isSmallOrMediumScreen = window.innerWidth < 1024;
-      setShowScreenSizeDisclaimer(isSmallOrMediumScreen);
+      
+      if (isSmallOrMediumScreen) {
+        setShowScreenSizeDisclaimer(true);
+        
+        // Auto-hide and permanently dismiss after 3 seconds
+        setTimeout(() => {
+          setShowScreenSizeDisclaimer(false);
+          localStorage.setItem('disclaimerDismissed', 'true');
+        }, 3000);
+      }
     };
     
     // Check on mount
     checkScreenSize();
     
-    // Check on resize
-    window.addEventListener('resize', checkScreenSize);
-    
-    return () => {
-      window.removeEventListener('resize', checkScreenSize);
-    };
+    // No need to add resize listener since we want to show it only once
   }, []);
-
-  // Hide disclaimer after a delay or when dismissed
-  useEffect(() => {
-    if (showScreenSizeDisclaimer) {
-      // Auto-hide after 8 seconds
-      const timer = setTimeout(() => {
-        setShowScreenSizeDisclaimer(false);
-      }, 8000);
-      
-      return () => clearTimeout(timer);
-    }
-  }, [showScreenSizeDisclaimer]);
 
   // Improved play function with multiple fallbacks
   const attemptPlay = () => {
