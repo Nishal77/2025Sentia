@@ -37,7 +37,7 @@ import awardwinning from '/assets/events/awardwinning.mp4'
 import senhacksvideo from '/assets/events/hackthon.mp4'
 import djnightvideo from '/assets/events/djnight.mp4'
 
-import Sentia2025Brochure from '../assets/Sentia2025_Brochure.pdf'
+import Sentia2025Brochure from '/assets/Sentia2025_Brochure_.pdf'
 
 
 import { Link } from 'react-router-dom';
@@ -288,28 +288,11 @@ export function Events({ setGlobalVideoHovered }) {
   // Define all events
   const allEvents = [
     {
-      id: "battle-of-bands",
-      title: "Battle of bands",
-      description: "Get ready for an electrifying intercollege showdown where the best bands clash in a high-energy musical battle! Who will steal the spotlight and claim the ultimate glory?",
-      time: "Begins at 7 PM",
-      building: "Venue: Mite Greens",
-      day: 1
-    },
-    {
-      id: "fashion-walk",
-      title: "Fashion walk",
-      description: "A dazzling runway showdown where style, confidence, and glamour take center stage! Witness creative designs and bold fashion statements in this spectacular event.",
-      time: "Begins at 7 PM",
-      building: "Venue: Mite Greens",
-      day: 2
-    },
-    
-    {
-      id: "robo-soccer",
-      title: "Robo Soccer",
-      description: "Experience the excitement as robots compete in a thrilling soccer match, showcasing precision control and strategic gameplay. A unique fusion of sports and robotics engineering!",
-      time: "3rd & 4th April",
-      building: "Venue: Quadrangle",
+      id: "senhacks",
+      title: "Senhacks",
+      description: "Join our flagship 24-hour hackathon where innovation meets code! Form a team, tackle real-world challenges, and build impressive solutions with mentorship from industry experts. Perfect for coders of all levels!",
+      time: "Begins at 10 AM (Both days)",
+      building: "Venue: Innovation Center (Main Block)",
       day: 1
     },
     {
@@ -324,25 +307,8 @@ export function Events({ setGlobalVideoHovered }) {
       id: "western-dance",
       title: "Western Dance",
       description: "Witness the energy and creativity of contemporary western dance styles as performers deliver captivating routines combining technical skill with dynamic expressions and modern choreography.",
-      time: "Begins at 10:30 PM",
+      time: "Begins at 10:30 AM",
       building: "Venue: Main Stage",
-      day: 1
-    },
-    {
-      id: "senhacks",
-      title: "Senhacks",
-      description: "Join our flagship 24-hour hackathon where innovation meets code! Form a team, tackle real-world challenges, and build impressive solutions with mentorship from industry experts. Perfect for coders of all levels!",
-      time: "Begins at 10 AM (Both days)",
-      building: "Venue: Innovation Center (Main Block)",
-      day: 1
-    },
-    {
-      id: "quiz-quest",
-      title: "Quiz quest",
-      description: "Test your knowledge, quick thinking, and competitive spirit in this challenging quiz competition covering a wide range of topics from technology to pop culture.",
-      time: "Begins at 2 PM",
-      building: "Venue: PG Block",
-      roomNumber: "MCA402",
       day: 1
     },
     {
@@ -355,10 +321,59 @@ export function Events({ setGlobalVideoHovered }) {
       day: 1
     },
     {
+      id: "quiz-quest",
+      title: "Quiz quest",
+      description: "Test your knowledge, quick thinking, and competitive spirit in this challenging quiz competition covering a wide range of topics from technology to pop culture.",
+      time: "Begins at 2 PM",
+      building: "Venue: PG Block",
+      roomNumber: "MCA402",
+      day: 1
+    },
+    {
+      id: "robo-soccer",
+      title: "Robo Soccer",
+      description: "Experience the excitement as robots compete in a thrilling soccer match, showcasing precision control and strategic gameplay. A unique fusion of sports and robotics engineering!",
+      time: "3rd & 4th April (1:00 PM)",
+      building: "Venue: Quadrangle",
+      day: 1
+    },
+    {
+      id: "extra-event-2",
+      title: "Faculty Performance",
+      description: "Join our exciting new event featuring competitions, performances, and interactive activities by our talented faculty members. A perfect opportunity to showcase their talents and enjoy a day of fun and engagement!",
+      time: "Begins at 6:45 PM",
+      building: "Venue: Mite Greens",
+      day: 1
+    },
+    {
+      id: "battle-of-bands",
+      title: "Battle of bands",
+      description: "Get ready for an electrifying intercollege showdown where the best bands clash in a high-energy musical battle! Who will steal the spotlight and claim the ultimate glory?",
+      time: "Begins at 8:00 PM",
+      building: "Venue: Mite Greens",
+      day: 1
+    },
+    {
+      id: "fashion-walk",
+      title: "Fashion walk",
+      description: "A dazzling runway showdown where style, confidence, and glamour take center stage! Witness creative designs and bold fashion statements in this spectacular event.",
+      time: "Begins at 7:00 PM",
+      building: "Venue: Mite Greens",
+      day: 2
+    },
+    {
+      id: "extra-event-3",
+      title: "Variety",
+      description: "Join our exciting new event featuring a variety of performances including music, dance, drama, and more. This is a perfect opportunity to showcase your diverse talents and enjoy a day filled with creativity, fun, and engagement!",
+      time: "Begins at 9:30 AM",
+      building: "Venue: Main Stage",
+      day: 2
+    },
+    {
       id: "award-nite",
       title: "Award Nite",
       description: "The grand finale celebration recognizing outstanding achievements and performances throughout the event. Join us for an evening of accolades, entertainment, and inspiring moments.",
-      time: "Begins at 8 PM",
+      time: "",
       building: "Venue: Mite Greens",
       day: 2
     },
@@ -371,22 +386,6 @@ export function Events({ setGlobalVideoHovered }) {
     //   building: "Venue: Mite Greens",
     //   day: 3
     // },
-    {
-      id: "extra-event-2",
-      title: "Faculty Performance",
-      description: "Join our exciting new event featuring competitions, performances, and interactive activities by our talented faculty members. A perfect opportunity to showcase their talents and enjoy a day of fun and engagement!",
-      time: "Begins at 7:00 PM",
-      building: "Venue: Mite Greens",
-      day: 1
-    },
-    {
-      id: "extra-event-3",
-      title: "Variety",
-      description: "Join our exciting new event featuring a variety of performances including music, dance, drama, and more. This is a perfect opportunity to showcase your diverse talents and enjoy a day filled with creativity, fun, and engagement!",
-      time: "Begins at 3 PM",
-      building: "Venue: Main Stage",
-      day: 2
-    }
   ];
 
   // EventCard component with rules popup
