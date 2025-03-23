@@ -96,11 +96,10 @@ export function HeroSection() {
   // Hide disclaimer after a delay or when dismissed
   useEffect(() => {
     if (showScreenSizeDisclaimer) {
-      // Auto-hide after 3 seconds
+      // Auto-hide after 8 seconds
       const timer = setTimeout(() => {
         setShowScreenSizeDisclaimer(false);
-        localStorage.setItem('disclaimerDismissed', 'true');
-      }, 3000);
+      }, 8000);
       
       return () => clearTimeout(timer);
     }
@@ -281,7 +280,7 @@ export function HeroSection() {
       </div>
       
       {/* Screen size disclaimer for small/medium screens */}
-      {showScreenSizeDisclaimer && !localStorage.getItem('disclaimerDismissed') && (
+      {showScreenSizeDisclaimer && (
         <div className="fixed top-0 left-0 right-0 z-50 flex justify-center items-center bg-white/30 backdrop-blur-md shadow-lg border-b-4 border-indigo-500 animate-fade-in-down">
           <div className="w-full max-w-2xl px-4 py-3 flex items-center justify-between bg-white/60 backdrop-blur-md rounded-lg">
             <div className="flex items-center">
