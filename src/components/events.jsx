@@ -62,20 +62,20 @@ export function Events({ setGlobalVideoHovered }) {
         }
       ],
       rules: [
-        'Team Size: 6-10 members, including minimum 3 instrumentalists and 1 vocalist',
-        'Open to students from any college with valid ID card',
-        'Team leaders will receive Google Form to submit team details & performance video',
-        'Previous live performance videos accepted if audio is clear, unaltered & unedited',
-        'Submit 2-5 min video clip by March 10, 2025',
-        'Top 5 teams will be shortlisted based on submitted video',
-        'Each band will have 15 minutes for setup and performance',
-        'Original compositions and covers both allowed',
-        'Bands must bring their own instruments',
-        'Drum kit and amplifiers will be provided',
-        'No backing tracks or synthesized beats allowed',
-        'Vulgarity and obscenity not permitted',
-        'Lyricists not considered part of the band',
-        'Judges\' decision will be final'
+        'Team Size: 6-10 members, including minimum 3 instrumentalists and 1 vocalist.',
+        'Open to students from any college with valid ID card.',
+        'Team leaders will receive Google Form to submit team details & performance video.',
+        'Previous live performance videos accepted if audio is clear, unaltered & unedited.',
+        'Submit 2-5 min video clip by March 10, 2025.',
+        'Top 5 teams will be shortlisted based on submitted video.',
+        'Each band will have 15 minutes for setup and performance.',
+        'Original compositions and covers both allowed.',
+        'Bands must bring their own instruments.',
+        'Drum kit and amplifiers will be provided.',
+        'No backing tracks or synthesized beats allowed.',
+        'Vulgarity and obscenity not permitted.',
+        'Lyricists not considered part of the band.',
+        'Judges\' decision will be final.'
       ]
     },
     'fashion-walk': {
@@ -93,30 +93,30 @@ export function Events({ setGlobalVideoHovered }) {
       ],
       rules: [
         // Event Time Limit & Setup
-        'Time Limit: 10+5 minutes (inclusive of preparation time, exceeding will lead to negative marks)',
-        'Stage Setup: Can be used for performance',
-        'Track Submission: Submit via shared drive 2 days prior and bring on a pen drive',
-        'Team Reporting: Report to registration desk 2 hours before event; be ready 30 minutes before event',
+        'Time Limit: 10+5 minutes (inclusive of preparation time, exceeding will lead to negative marks).',
+        'Stage Setup: Can be used for performance.',
+        'Track Submission: Submit via shared drive 2 days prior and bring on a pen drive.',
+        'Team Reporting: Report to registration desk 2 hours before event; be ready 30 minutes before event.',
 
         // Rules & Regulations
-        'Team Size: 12-14 models and 5 supporting crew members',
-        'Team Composition: All participants must be from the same institution',
-        'Identification: Valid college ID required',
-        'Online Registration: Mandatory',
-        'Prohibited Materials: No water, fire, fireworks, or security threat items',
-        'Costumes: Decent, no offensive imagery, or political/religious symbols',
-        'Conduct: No intoxication or violation of campus rules; may lead to disqualification',
-        'Judges\' Decisions: Final and binding',
+        'Team Size: 12-14 models and 5 supporting crew members.',
+        'Team Composition: All participants must be from the same institution.',
+        'Identification: Valid college ID required.',
+        'Online Registration: Mandatory.',
+        'Prohibited Materials: No water, fire, fireworks, or security threat items.',
+        'Costumes: Decent, no offensive imagery, or political/religious symbols.',
+        'Conduct: No intoxication or violation of campus rules; may lead to disqualification.',
+        'Judges\' Decisions: Final and binding.',
 
         // Online Screening Round
-        'Team leader receives a Google form for submission',
-        'Portfolio: Upload models\' portfolio in PDF and 2-minute performance video',
-        'Deadline: Submit by March 10, 2025',
-        'Top 6 Teams: Selected based on submission',
+        'Team leader receives a Google form for submission.',
+        'Portfolio: Upload models\' portfolio in PDF and 2-minute performance video.',
+        'Deadline: Submit by March 10, 2025.',
+        'Top 6 Teams: Selected based on submission.',
 
         // Judgment Criteria
-        'Judged on theme integration, outfits, accessories, props creativity, coordination, music, confidence, gestures, and overall presentation',
-        'Walking barefoot: Not allowed'
+        'Judged on theme integration, outfits, accessories, props creativity, coordination, music, confidence, gestures, and overall presentation.',
+        'Walking barefoot: Not allowed.'
       ]
     },
     'robo-soccer': {
@@ -133,14 +133,14 @@ export function Events({ setGlobalVideoHovered }) {
         }
       ],
       rules: [
-        'Each team can have 2-3 members',
-        'Robot dimensions must not exceed 25cm x 25cm x 25cm',
-        'Maximum weight allowed is 2kg per robot',
-        'Robots must be controlled wirelessly',
-        'The robot must be able to push a small ball (provided at the venue)',
-        'Matches will be played in a 5-minute format',
-        'Teams will compete in a league format followed by knockouts',
-        'The team scoring the most goals advances to the next round'
+        'Each team can have 2-3 members.',
+        'Robot dimensions must not exceed 25cm x 25cm x 25cm.',
+        'Maximum weight allowed is 2kg per robot.',
+        'Robots must be controlled wirelessly.',
+        'The robot must be able to push a small ball (provided at the venue).',
+        'Matches will be played in a 5-minute format.',
+        'Teams will compete in a league format followed by knockouts.',
+        'The team scoring the most goals advances to the next round.'
       ]
     },
     
@@ -175,6 +175,10 @@ export function Events({ setGlobalVideoHovered }) {
         {
           name: 'Sujal M H',
           phone: '8867144895'
+        },
+        {
+          name: 'Firas Kola',
+          phone: '8431442980'
         },
       ],
       rules: [
@@ -228,8 +232,8 @@ export function Events({ setGlobalVideoHovered }) {
         }
       ],
       rules: [
-        '### EVENT DETAILS',
-        'Category: Western',
+        '### EVENT DETAILS.',
+        'Category: Western.',
         'One team per college.',
         'Team must consist of 6-14 members.',
         'Styles allowed: Hip Hop, Jazz and Freestyle.',
