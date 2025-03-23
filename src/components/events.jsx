@@ -119,30 +119,6 @@ export function Events({ setGlobalVideoHovered }) {
         'Walking barefoot: Not allowed'
       ]
     },
-    'robo-wars': {
-      title: 'Robo Wars',
-      day: 1,
-      coordinators: [
-        {
-          name: 'Akshay Kumar',
-          phone: '+91 98765 43210'
-        },
-        {
-          name: 'Rahul Singh',
-          phone: '+91 87654 32109'
-        }
-      ],
-      rules: [
-        'Each team can have 3-4 members',
-        'Robot dimensions must not exceed 30cm x 30cm x 30cm',
-        'Maximum weight allowed is 3kg per robot',
-        'Robots must be controlled wirelessly',
-        'The robot must have a clearly visible weapon mechanism',
-        'Sharp, hazardous components are prohibited without proper protection',
-        'Matches will be 3 minutes long with knockout format',
-        'Deliberate damage to the arena will result in disqualification'
-      ]
-    },
     'robo-soccer': {
       title: 'Robo Soccer',
       day: 1,
@@ -601,17 +577,7 @@ export function Events({ setGlobalVideoHovered }) {
               />
             </div>
           );
-        case 'robo-wars':
-          return (
-            <div className="w-full h-full flex items-center justify-center overflow-hidden">
-              <img 
-                src={robowarslogo}
-                alt="Robo Wars"
-                className="w-full h-full object-cover"
-                style={{ objectFit: 'cover', width: '100%', height: '100%' }}
-              />
-            </div>
-          );
+        
         case 'robo-soccer':
           return (
             <div className="w-full h-full flex items-center justify-center overflow-hidden">
@@ -1229,8 +1195,8 @@ export function Events({ setGlobalVideoHovered }) {
   return (
     <div className="py-16" id="programme">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-center text-black/80 mb-2">Programme</h2>
-        <p className="text-center text-gray-500 mb-8">April 2 - April 4th, 2025</p>
+        <h2 className="text-4xl font-bold text-center text-black/80 mb-2">Program</h2>
+        <p className="text-center text-gray-500 mb-8">April 3 - April 5th, 2025</p>
         
         {/* Day tabs with Home button - Removed Day 3 */}
         <div className="flex justify-center mb-12">
