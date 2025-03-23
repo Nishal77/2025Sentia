@@ -551,46 +551,39 @@ export function SentiaMain() {
   const renderEventsView = () => {
     if (noEventsData || !events || events.length === 0) {
       return (
-        <div className="py-6 px-4 text-center w-full">
-          <div className="bg-white/10 backdrop-blur-md rounded-lg p-6 shadow-lg max-w-full mx-auto border border-purple-500/30">
-            <h3 className="text-xl md:text-2xl font-bold text-white mb-3">No Events Scheduled</h3>
-            <p className="text-white text-sm md:text-base mb-3">
-              Events will be scheduled soon. Stay tuned for exciting updates!
-            </p>
-            <div className="mt-2">
-              <svg 
-                xmlns="http://www.w3.org/2000/svg" 
-                className="h-12 w-12 mx-auto text-purple-500 animate-pulse" 
-                fill="none" 
-                viewBox="0 0 24 24" 
-                stroke="currentColor"
-              >
-                <path 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round" 
-                  strokeWidth={1.5} 
-                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" 
-                />
-              </svg>
-            </div>
-          </div>
+        <div className="p-4 flex flex-col items-center justify-center h-full text-center">
+          <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            className="h-10 w-10 mb-3 text-indigo-600" 
+            fill="none" 
+            viewBox="0 0 24 24" 
+            stroke="currentColor"
+          >
+            <path 
+              strokeLinecap="round" 
+              strokeLinejoin="round" 
+              strokeWidth={1.5} 
+              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" 
+            />
+          </svg>
+          <h3 className="text-lg font-semibold mb-1">Coming Soon</h3>
+          <p className="text-gray-500">Events will be scheduled soon. Stay tuned for updates!</p>
         </div>
       );
     }
     
     // For when we have events data
     return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+      <div className="p-4">
         {/* Filter events by the active view */}
         {filteredEvents.map((event, index) => (
-          <EventCard
-            key={index}
-            event={event}
-            isHovered={hoveredEventCard === index}
-            onMouseEnter={() => setHoveredEventCard(index)}
-            onMouseLeave={() => setHoveredEventCard(null)}
-            className="w-full h-full"
-          />
+          <div key={index} className="mb-4">
+            <h3>{event.name || event.event}</h3>
+            <p>{event.description}</p>
+            {event.location && <p>Location: {event.location}</p>}
+            {event.time && <p>Time: {event.time}</p>}
+            {event.team && <p>Team: {event.team}</p>}
+          </div>
         ))}
       </div>
     );
@@ -598,242 +591,53 @@ export function SentiaMain() {
 
   // Function to render teams view with list
   const renderTeamsView = () => {
-    // Show a message when there are no teams
-    if (noEventsData || performingTeams.length === 0) {
+    if (noEventsData || !events || events.length === 0) {
       return (
-        <div className="h-full flex flex-col items-center justify-center text-center p-6">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-16 w-16 text-gray-300 mb-4"
-            fill="none"
-            viewBox="0 0 24 24"
+        <div className="p-4 flex flex-col items-center justify-center h-full text-center">
+          <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            className="h-10 w-10 mb-3 text-indigo-600" 
+            fill="none" 
+            viewBox="0 0 24 24" 
             stroke="currentColor"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={1.5}
-              d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+            <path 
+              strokeLinecap="round" 
+              strokeLinejoin="round" 
+              strokeWidth={1.5} 
+              d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" 
             />
           </svg>
-          <h3 className="text-lg text-gray-700 font-medium mb-2">
-            No Performing Teams
-          </h3>
-          <p className="text-gray-500 max-w-md mx-auto">
-            Performing teams are yet to be updated. Please stay tuned for the
-            latest updates.
-          </p>
+          <h3 className="text-lg font-semibold mb-1">Teams Coming Soon</h3>
+          <p className="text-gray-500">Teams will be announced soon. Stay tuned for updates!</p>
         </div>
       );
     }
 
-    // Filter for team events only (if we have type field)
-    const teams = performingTeams.filter(
-      (event) => event.type === "team" || (!event.type && event.parentEvent)
-    );
-
-    // Get live, upcoming and ended teams
-    const liveTeams = teams.filter((team) => team.status === "LIVE");
-    const upNextTeams = teams.filter((team) => team.status === "UP NEXT");
-    const endedTeams = teams.filter((team) => team.status === "ENDED");
-    const beReadyTeams = teams.filter((team) => team.status === "BE READY");
+    // Group by team name
+    const teams = {};
+    events.forEach((event) => {
+      // Use team or performing team field
+      const teamName = event.team || event.performingTeam || "Unknown Team";
+      if (!teams[teamName]) {
+        teams[teamName] = [];
+      }
+      teams[teamName].push(event);
+    });
 
     return (
-      <div className="h-full overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
-        {/* Main Heading */}
-        <div className="sticky top-0 bg-white z-10 py-2 border-b border-gray-100 mb-3">
-          <h2 className="text-sm font-semibold text-gray-800 flex items-center">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-4 w-4 mr-1.5 text-gray-600"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-              />
-            </svg>
-            PERFORMING TEAMS
-          </h2>
-        </div>
-
-        {/* Live Teams Section */}
-        {liveTeams.length > 0 && (
-          <div className="mb-4">
-            <h3 className="text-xs uppercase text-green-800 font-medium mb-2 flex items-center">
-              <span className="w-2 h-2 bg-green-500 rounded-full mr-1.5 relative">
-                <span className="absolute inset-0 bg-green-500 rounded-full animate-ping opacity-75"></span>
-              </span>
-              Live Performances
-            </h3>
-            <div className="space-y-2">
-              {liveTeams.map((team, index) => (
-                <div
-                  key={`team-live-${index}`}
-                  className="flex items-center justify-between p-2.5 border-b border-gray-100 hover:bg-green-50 transition-colors duration-200 rounded-md"
-                >
-                  <div className="flex items-center gap-3">
-                    <span className="text-green-500 font-medium w-5">
-                      {index + 1}.
-                    </span>
-                    <div>
-                      <p className="font-medium text-gray-800">{team.name}</p>
-                      <p className="text-xs text-gray-500">
-                        {team.event || team.parentEvent} • {team.location}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-1 bg-green-100 px-2 py-0.5 rounded-full">
-                    <span className="w-2 h-2 bg-green-500 rounded-full relative flex-shrink-0">
-                      <span className="absolute inset-0 bg-green-500 rounded-full animate-ping opacity-75"></span>
-                    </span>
-                    <span className="text-xs font-medium text-green-800">
-                      LIVE
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
+      <div className="p-4">
+        {Object.keys(teams).map((teamName, index) => (
+          <div key={index} className="mb-4">
+            <h3>{teamName}</h3>
+            <p>Events: {teams[teamName].length}</p>
+            {teams[teamName].map((event, eventIndex) => (
+              <div key={eventIndex} className="ml-4 mt-1">
+                <p>{event.name || event.event}</p>
+              </div>
+            ))}
           </div>
-        )}
-
-        {/* Up Next Teams Section */}
-        {upNextTeams.length > 0 && (
-          <div className="mb-4">
-            <h3 className="text-xs uppercase text-amber-800 font-medium mb-2 flex items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-3.5 h-3.5 mr-1.5 text-amber-700"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                />
-              </svg>
-              Coming Up Next
-            </h3>
-            <div className="space-y-2">
-              {upNextTeams.map((team, index) => (
-                <div
-                  key={`team-next-${index}`}
-                  className="flex items-center justify-between p-2.5 border-b border-gray-100 hover:bg-amber-50 transition-colors duration-200 rounded-md"
-                >
-                  <div className="flex items-center gap-3">
-                    <span className="text-amber-500 font-medium w-5">
-                      {index + 1}.
-                    </span>
-                    <div>
-                      <p className="font-medium text-gray-800">{team.name}</p>
-                      <p className="text-xs text-gray-500">
-                        {team.event || team.parentEvent} • {team.location}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-1 bg-amber-100 px-2 py-0.5 rounded-full">
-                    <span className="w-2 h-2 bg-amber-500 rounded-full flex-shrink-0"></span>
-                    <span className="text-xs font-medium text-amber-800">
-                      UP NEXT
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Be Ready Teams Section */}
-        {beReadyTeams.length > 0 && (
-          <div className="mb-4">
-            <h3 className="text-xs uppercase text-blue-800 font-medium mb-2 flex items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-3.5 h-3.5 mr-1.5 text-blue-700"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                />
-              </svg>
-              Be Ready
-            </h3>
-            <div className="space-y-2">
-              {beReadyTeams.map((team, index) => (
-                <div
-                  key={`team-ready-${index}`}
-                  className="flex items-center justify-between p-2.5 border-b border-gray-100 hover:bg-blue-50 transition-colors duration-200 rounded-md"
-                >
-                  <div className="flex items-center gap-3">
-                    <span className="text-blue-500 font-medium w-5">
-                      {index + 1}.
-                    </span>
-                    <div>
-                      <p className="font-medium text-gray-800">{team.name}</p>
-                      <p className="text-xs text-gray-500">
-                        {team.event || team.parentEvent} • {team.location}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-1 bg-blue-100 px-2 py-0.5 rounded-full">
-                    <span className="w-2 h-2 bg-blue-500 rounded-full flex-shrink-0"></span>
-                    <span className="text-xs font-medium text-blue-800">
-                      BE READY
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Ended Teams Section */}
-        {endedTeams.length > 0 && (
-          <div>
-            <h3 className="text-xs uppercase text-gray-700 font-medium mb-2 flex items-center">
-              <span className="w-2 h-2 bg-gray-500 rounded-full mr-1.5"></span>
-              Completed Performances
-            </h3>
-            <div className="space-y-2">
-              {endedTeams.map((team, index) => (
-                <div
-                  key={`team-ended-${index}`}
-                  className="flex items-center justify-between p-2.5 border-b border-gray-100 hover:bg-gray-50 transition-colors duration-200 rounded-md"
-                >
-                  <div className="flex items-center gap-3">
-                    <span className="text-gray-500 font-medium w-5">
-                      {index + 1}.
-                    </span>
-                    <div>
-                      <p className="font-medium text-gray-800">{team.name}</p>
-                      <p className="text-xs text-gray-500">
-                        {team.event || team.parentEvent} • {team.location}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-1 bg-gray-100 px-2 py-0.5 rounded-full">
-                    <span className="w-2 h-2 bg-gray-500 rounded-full flex-shrink-0"></span>
-                    <span className="text-xs font-medium text-gray-700">
-                      ENDED
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+        ))}
       </div>
     );
   };

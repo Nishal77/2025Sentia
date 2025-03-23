@@ -303,14 +303,7 @@ export function Events({ setGlobalVideoHovered }) {
       building: "Venue: Mite Greens",
       day: 2
     },
-    {
-      id: "robo-wars",
-      title: "Robo Wars",
-      description: "Witness the ultimate robot showdown as machines battle for supremacy in high-energy combat. Engineering excellence meets competitive spirit in this thrilling arena of mechanical warfare!",
-      time: "3rd & 4th April",
-      building: "Venue: Quadrangle",
-      day: 1
-    },
+    
     {
       id: "robo-soccer",
       title: "Robo Soccer",
@@ -977,9 +970,7 @@ export function Events({ setGlobalVideoHovered }) {
                         {id === 'battle-of-bands' && (
                           <img src={bandicon} alt="Battle of Bands" className="w-9 h-9 rounded-full object-cover" />
                         )}
-                        {id === 'robo-wars' && (
-                          <img src={robowarslogo} alt="Robo Wars" className="w-9 h-9 rounded-full object-cover" />
-                        )}
+                        
                         {id === 'robo-soccer' && (
                           <img src={robowarslogo} alt="Robo Soccer" className="w-9 h-9 rounded-full object-cover" />
                         )}
