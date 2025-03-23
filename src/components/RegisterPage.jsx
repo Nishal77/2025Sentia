@@ -178,7 +178,7 @@ const SimpleEventCard = ({ id, title, description, time, building, day, disclaim
           </button>
         ) : (
           <button 
-            className="w-full mt-4 bg-black hover:bg-gray-800 text-white py-2 text-sm font-medium transition-colors rounded-lg"
+            className="w-full mt-4 bg-black hover:bg-gray-800 text-white py-2 text-sm font-medium transition-colors rounded-lg cursor-pointer"
             onClick={() => {
               if (id === 'quiz-quest') {
                 window.open('https://docs.google.com/forms/d/e/1FAIpQLSeDnWEjjGqzTYJNqLWi3PpTLEpAFrttBKYeLzVXzUaqRSYdzg/viewform', '_blank');

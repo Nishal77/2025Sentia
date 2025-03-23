@@ -317,7 +317,7 @@ export function Events({ setGlobalVideoHovered }) {
       description: "Showcase your problem-solving abilities, critical thinking, and strategic planning in this ultimate battle of intellects. Only the sharpest minds will emerge victorious!",
       time: "Begins at 12 PM",
       building: "Venue: PG Block",
-      roomNumber: "VR Lab 01",
+      roomNumber: "(soon)",
       day: 1
     },
     {
@@ -326,7 +326,7 @@ export function Events({ setGlobalVideoHovered }) {
       description: "Test your knowledge, quick thinking, and competitive spirit in this challenging quiz competition covering a wide range of topics from technology to pop culture.",
       time: "Begins at 2 PM",
       building: "Venue: PG Block",
-      roomNumber: "MCA402",
+      roomNumber: "(soon)",
       day: 1
     },
     {
@@ -342,7 +342,7 @@ export function Events({ setGlobalVideoHovered }) {
       title: "Faculty Performance",
       description: "Join our exciting new event featuring competitions, performances, and interactive activities by our talented faculty members. A perfect opportunity to showcase their talents and enjoy a day of fun and engagement!",
       time: "Begins at 6:45 PM",
-      building: "Venue: Mite Greens",
+      building: "Venue: MITE Greens",
       day: 1
     },
     {
@@ -350,7 +350,7 @@ export function Events({ setGlobalVideoHovered }) {
       title: "Battle of bands",
       description: "Get ready for an electrifying intercollege showdown where the best bands clash in a high-energy musical battle! Who will steal the spotlight and claim the ultimate glory?",
       time: "Begins at 8:00 PM",
-      building: "Venue: Mite Greens",
+      building: "Venue: MITE Greens",
       day: 1
     },
     {
@@ -358,7 +358,7 @@ export function Events({ setGlobalVideoHovered }) {
       title: "Fashion walk",
       description: "A dazzling runway showdown where style, confidence, and glamour take center stage! Witness creative designs and bold fashion statements in this spectacular event.",
       time: "Begins at 7:00 PM",
-      building: "Venue: Mite Greens",
+      building: "Venue: MITE Greens",
       day: 2
     },
     {
@@ -374,7 +374,7 @@ export function Events({ setGlobalVideoHovered }) {
       title: "Award Nite",
       description: "The grand finale celebration recognizing outstanding achievements and performances throughout the event. Join us for an evening of accolades, entertainment, and inspiring moments.",
       time: "",
-      building: "Venue: Mite Greens",
+      building: "Venue: MITE Greens",
       day: 2
     },
     // Adding three additional event cards with the same content

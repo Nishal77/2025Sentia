@@ -2096,6 +2096,181 @@ export function SentiaMain() {
           transform: translateY(-5px);
           box-shadow: 0 10px 20px rgba(97, 0, 255, 0.3);
         }
+        
+        /* Enhanced scroll-to-top button animations */
+        @keyframes ripple-slow {
+          0% {
+            transform: scale(0.8);
+            opacity: 0;
+          }
+          20% {
+            opacity: 0.3;
+          }
+          100% {
+            transform: scale(2.2);
+            opacity: 0;
+          }
+        }
+        
+        @keyframes ripple-medium {
+          0% {
+            transform: scale(0.8);
+            opacity: 0;
+          }
+          40% {
+            opacity: 0.4;
+          }
+          100% {
+            transform: scale(1.6);
+            opacity: 0;
+          }
+        }
+        
+        @keyframes shimmer {
+          0% {
+            transform: translateX(-100%) rotate(-45deg);
+          }
+          100% {
+            transform: translateX(100%) rotate(-45deg);
+          }
+        }
+        
+        @keyframes float {
+          0%, 100% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(-7px);
+          }
+        }
+        
+        @keyframes particle-appear {
+          0% {
+            opacity: 0;
+            transform: scale(0);
+          }
+          60% {
+            opacity: 0.8;
+          }
+          100% {
+            opacity: 0;
+            transform: scale(1.5) translateY(-20px);
+          }
+        }
+        
+        @keyframes draw-arrow {
+          0% {
+            stroke-dashoffset: 40;
+          }
+          60% {
+            stroke-dashoffset: 0;
+          }
+          100% {
+            stroke-dashoffset: 0;
+          }
+        }
+        
+        @keyframes super-pulse {
+          0% {
+            box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.7);
+            transform: scale(0.95);
+          }
+          70% {
+            box-shadow: 0 0 0 15px rgba(139, 92, 246, 0);
+            transform: scale(1);
+          }
+          100% {
+            box-shadow: 0 0 0 0 rgba(139, 92, 246, 0);
+            transform: scale(0.95);
+          }
+        }
+        
+        /* Apply animations to elements */
+        .animate-ripple-slow {
+          animation: ripple-slow 3s ease-out infinite;
+        }
+        
+        .animate-ripple-medium {
+          animation: ripple-medium 3s ease-out infinite 0.5s;
+        }
+        
+        .fancy-scroll-btn {
+          animation: float 3s ease-in-out infinite;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .fancy-scroll-btn:hover {
+          transform: translateY(-5px) scale(1.1);
+        }
+        
+        .fancy-scroll-btn:active {
+          transform: scale(0.97);
+        }
+        
+        .shimmer-effect {
+          position: absolute;
+          width: 50%;
+          height: 100%;
+          background: linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, 0.4) 50%,
+            rgba(255, 255, 255, 0) 100%
+          );
+          animation: shimmer 2s infinite;
+        }
+        
+        .arrow-path {
+          stroke-dasharray: 40;
+          stroke-dashoffset: 0;
+          animation: draw-arrow 1.5s ease-out;
+        }
+        
+        .tooltip-text {
+          pointer-events: none;
+        }
+        
+        /* Particles Container */
+        .particles-container {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          overflow: visible;
+          pointer-events: none;
+        }
+        
+        /* Dynamic particle generation on hover */
+        .fancy-scroll-btn:hover .particles-container::before,
+        .fancy-scroll-btn:hover .particles-container::after {
+          content: '';
+          position: absolute;
+          background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 70%);
+          border-radius: 50%;
+          width: 8px;
+          height: 8px;
+          opacity: 0;
+          top: 50%;
+          left: 50%;
+        }
+        
+        .fancy-scroll-btn:hover .particles-container::before {
+          animation: particle-appear 1.2s ease-out infinite;
+          animation-delay: 0.2s;
+          transform-origin: left bottom;
+        }
+        
+        .fancy-scroll-btn:hover .particles-container::after {
+          animation: particle-appear 1.5s ease-out infinite;
+          animation-delay: 0.6s;
+          transform-origin: right bottom;
+        }
+        
+        /* Super click animation */
+        .scroll-btn-super-click {
+          animation: super-pulse 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+        }
       `}</style>
 
       {/* Contact Popup */}
@@ -2197,35 +2372,65 @@ export function SentiaMain() {
       
       {/* Scroll to Top Button - only on small/medium screens */}
       {showScrollToTop && (
-        <button
-          onClick={() => {
-            scrollToTop();
-            // Add click animation effect to button
-            const button = document.getElementById('scroll-top-btn');
-            button.classList.add('scroll-btn-click');
-            setTimeout(() => {
-              button.classList.remove('scroll-btn-click');
-            }, 300);
-          }}
-          id="scroll-top-btn"
-          className="fixed bottom-6 right-6 bg-[rgb(61,6,246)] text-white p-3 rounded-full shadow-lg z-50 transition-all duration-300 hover:bg-[rgb(41,0,196)] hover:scale-110 active:scale-95 lg:hidden scroll-btn"
-          aria-label="Scroll to top"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6 animate-bounce-subtle"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
+        <div className="fixed bottom-6 right-6 z-50 lg:hidden">
+          {/* Outer ripple pulse effect */}
+          <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-indigo-500/20 to-purple-600/20 animate-ripple-slow"></div>
+          <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-indigo-500/30 to-purple-600/30 animate-ripple-medium"></div>
+          
+          {/* Button with gorgeous gradient */}
+          <button
+            onClick={() => {
+              scrollToTop();
+              // Add super click animation effect
+              const button = document.getElementById('scroll-top-btn');
+              button.classList.add('scroll-btn-super-click');
+              setTimeout(() => {
+                button.classList.remove('scroll-btn-super-click');
+              }, 700);
+            }}
+            id="scroll-top-btn"
+            className="relative p-3.5 rounded-full z-50 fancy-scroll-btn group"
+            aria-label="Scroll to top"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M5 11l7-7 7 7M5 19l7-7 7 7"
-            />
-          </svg>
-        </button>
+            {/* Gradient background with blur effect */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-indigo-600 via-purple-600 to-pink-500 rounded-full blur-[1px] group-hover:blur-[2px] transition-all duration-300"></div>
+            
+            {/* Inner fill with shimmer effect */}
+            <div className="absolute inset-0.5 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 rounded-full overflow-hidden">
+              <div className="shimmer-effect"></div>
+            </div>
+            
+            {/* Glow overlay */}
+            <div className="absolute inset-0 rounded-full shadow-[0_0_15px_rgba(105,30,255,0.6)] group-hover:shadow-[0_0_25px_rgba(125,60,255,0.8)] transition-all duration-500"></div>
+            
+            {/* Arrow icon with enhanced animation */}
+            <div className="relative z-10 flex items-center justify-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 text-white group-hover:scale-110 transition-transform duration-300"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2.5}
+                  d="M5 11l7-7 7 7M5 19l7-7 7 7"
+                  className="arrow-path"
+                />
+              </svg>
+            </div>
+            
+            {/* Mini particles on hover */}
+            <div className="particles-container"></div>
+          </button>
+          
+          {/* Text tooltip that appears on hover - no shadow or background */}
+          <div className="absolute -top-8 right-0 text-white font-medium text-sm opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 whitespace-nowrap tooltip-text">
+            Back to top
+          </div>
+        </div>
       )}
     </div>
   );
