@@ -144,30 +144,7 @@ export function Events({ setGlobalVideoHovered }) {
       ]
     },
     
-    'robo-mania': {
-      title: 'Robo Mania',
-      day: 1,
-      coordinators: [
-        {
-          name: 'Rohan Mehta',
-          phone: '9876543210'
-        },
-        {
-          name: 'Ananya Singh',
-          phone: '8765432109'
-        }
-      ],
-      rules: [
-        'Maximum 4 members per team.',
-        'Robots must be autonomous or remote controlled.',
-        'Maximum robot dimensions: 30cm × 30cm × 30cm.',
-        'Weight limit: 3kg.',
-        'No harmful components allowed (fire, liquids, etc.).',
-        'Each team gets 3 attempts in the arena.',
-        'Time limit: 5 minutes per attempt.',
-        'Teams must register at least 30 minutes before event starts.',
-      ]
-    },
+    
     'senhacks': {
       title: 'Senhacks',
       day: 1,
@@ -175,6 +152,10 @@ export function Events({ setGlobalVideoHovered }) {
         {
           name: 'Sujal M H',
           phone: '8867144895'
+        },
+        {
+          name: 'Firas kola',
+          phone: '8431442980'
         },
       ],
       rules: [
@@ -931,8 +912,8 @@ export function Events({ setGlobalVideoHovered }) {
               </button>
             )}
             
-            {/* Show "Rules" button for all other events except award-nite, robo-wars, and robo-soccer */}
-            {id !== 'award-nite' && id !== 'robo-wars' && id !== 'robo-soccer' && (
+            {/* Show "Rules" button for all other events except award-nite, robo-wars, robo-soccer, extra-event-2, and extra-event-3 */}
+            {id !== 'award-nite' && id !== 'robo-wars' && id !== 'robo-soccer' && id !== 'extra-event-2' && id !== 'extra-event-3' && (
               <AlertDialog 
                 open={isDialogOpen} 
                 onOpenChange={(open) => {

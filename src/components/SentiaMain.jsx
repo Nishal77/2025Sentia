@@ -5,6 +5,7 @@ import Events from "./events";
 import { Link } from "react-router-dom";
 import Footer from "./Footer";
 import ablyClient from "../utils/ablyClient";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import {
   EVENTS_CHANNEL,
   ALL_EVENTS_UPDATED,
@@ -2119,6 +2120,60 @@ export function SentiaMain() {
       )}
 
       <audio ref={audioRef} src={songs[songIndex]} />
+
+      {/* Enhanced Screen Size Popup at the top */}
+      {showScreenSizePopup && (
+        <div className="fixed top-0 left-0 right-0 z-[99999] flex justify-center bg-gradient-to-r from-indigo-700 to-purple-700 shadow-xl animate-in fade-in slide-in-from-top duration-300">
+          <div className="w-full px-2 sm:px-4 py-2 sm:py-3 flex items-center justify-between">
+            <div className="flex items-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5 sm:h-6 sm:w-6 mr-2 sm:mr-3 text-white"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                />
+              </svg>
+              <div>
+                <p className="font-bold text-white text-xs sm:text-sm md:text-base leading-tight">
+                  SENTIA 2025: USE LARGER SCREEN
+                </p>
+                <p className="text-white/80 text-[10px] sm:text-xs leading-tight">
+                  For best experience, use desktop/laptop
+                </p>
+              </div>
+            </div>
+            <button
+              onClick={closeScreenSizePopup}
+              className="text-white/80 hover:text-white ml-2 flex-shrink-0 bg-white/10 rounded-full p-1 sm:p-1.5 hover:bg-white/20 transition-colors"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-4 w-4 sm:h-5 sm:w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      )}
+      
+      {/* Vercel Speed Insights for performance monitoring */}
+      <SpeedInsights />
     </div>
   );
 }
