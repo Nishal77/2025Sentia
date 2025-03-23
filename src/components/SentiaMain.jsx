@@ -263,6 +263,8 @@ export function SentiaMain() {
   const audioRef = useRef(null);
   const [videoEnded, setVideoEnded] = useState(false);
   const songs = [Sonisoni, WhatJhumka, TheBreakupSong];
+  // Add state for scroll-to-top button
+  const [showScrollToTop, setShowScrollToTop] = useState(false);
 
   // State for contact popup
   const [isContactPopupOpen, setIsContactPopupOpen] = useState(false);
@@ -296,6 +298,50 @@ export function SentiaMain() {
       return () => clearTimeout(popupTimer);
     }
   }, []);
+
+  // Add scroll event listener to show/hide scroll-to-top button
+  useEffect(() => {
+    const handleScroll = () => {
+      // Show button when user has scrolled down 300px or more
+      if (window.scrollY > 300) {
+        setShowScrollToTop(true);
+      } else {
+        setShowScrollToTop(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    
+    // Clean up the event listener
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  // Function to scroll to top smoothly
+  const scrollToTop = () => {
+    const duration = 1000; // Duration in milliseconds
+    const start = window.pageYOffset;
+    const startTime = performance.now();
+    
+    // Cubic easing function for smoother animation
+    const easeOutCubic = t => 1 - Math.pow(1 - t, 3);
+    
+    // Animation function
+    const animateScroll = currentTime => {
+      const elapsedTime = currentTime - startTime;
+      const progress = Math.min(elapsedTime / duration, 1);
+      const easeProgress = easeOutCubic(progress);
+      
+      window.scrollTo(0, start * (1 - easeProgress));
+      
+      if (progress < 1) {
+        requestAnimationFrame(animateScroll);
+      }
+    };
+    
+    requestAnimationFrame(animateScroll);
+  };
 
   // Function to get random contacts
   const getRandomContacts = () => {
@@ -1440,7 +1486,7 @@ export function SentiaMain() {
                   Sentia 2024 through these unforgettable highlights!{" "}
                   <Link
                     to="/oldmemories"
-                    className="text-indigo-700 hover:text-indigo-800 text-sm font-medium"
+                    className=" text-indigo-700 hover:bg-indigo-200 hover:text-indigo-800 px-3 py-1 rounded-full text-sm  mt-2 shadow-sm border border-indigo-200"
                   >
                     View all memories →
                   </Link>
@@ -1483,7 +1529,7 @@ export function SentiaMain() {
             </div>
 
             {/* Middle Card - Venue */}
-            <div className="bg-white p-6 rounded-lg shadow-sm">
+            <div className="bg-white p-4 rounded-lg shadow-sm">
               <div className="mb-4">
                 <h2 className="text-3xl font-bold text-black/80 mb-2">
                   Sentia 2025's Biggest Surprise? It's Finally Unveiled!
@@ -2021,6 +2067,35 @@ export function SentiaMain() {
         .animate-fadeIn {
           animation: fadeIn 0.3s ease forwards;
         }
+        
+        /* Scroll-to-top button animations */
+        @keyframes bounce-subtle {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-4px); }
+        }
+        
+        .animate-bounce-subtle {
+          animation: bounce-subtle 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse-ring {
+          0% { transform: scale(.95); box-shadow: 0 0 0 0 rgba(97, 0, 255, 0.7); }
+          70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(97, 0, 255, 0); }
+          100% { transform: scale(.95); box-shadow: 0 0 0 0 rgba(97, 0, 255, 0); }
+        }
+        
+        .scroll-btn-click {
+          animation: pulse-ring 0.5s ease-out;
+        }
+        
+        .scroll-btn {
+          transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .scroll-btn:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 10px 20px rgba(97, 0, 255, 0.3);
+        }
       `}</style>
 
       {/* Contact Popup */}
@@ -2119,6 +2194,39 @@ export function SentiaMain() {
       )}
 
       <audio ref={audioRef} src={songs[songIndex]} />
+      
+      {/* Scroll to Top Button - only on small/medium screens */}
+      {showScrollToTop && (
+        <button
+          onClick={() => {
+            scrollToTop();
+            // Add click animation effect to button
+            const button = document.getElementById('scroll-top-btn');
+            button.classList.add('scroll-btn-click');
+            setTimeout(() => {
+              button.classList.remove('scroll-btn-click');
+            }, 300);
+          }}
+          id="scroll-top-btn"
+          className="fixed bottom-6 right-6 bg-[rgb(61,6,246)] text-white p-3 rounded-full shadow-lg z-50 transition-all duration-300 hover:bg-[rgb(41,0,196)] hover:scale-110 active:scale-95 lg:hidden scroll-btn"
+          aria-label="Scroll to top"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6 animate-bounce-subtle"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M5 11l7-7 7 7M5 19l7-7 7 7"
+            />
+          </svg>
+        </button>
+      )}
     </div>
   );
 }

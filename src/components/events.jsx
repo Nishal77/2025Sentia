@@ -930,8 +930,8 @@ export function Events({ setGlobalVideoHovered }) {
               </button>
             )}
             
-            {/* Show "Rules" button for all other events except award-nite, robo-wars, and robo-soccer */}
-            {id !== 'award-nite' && id !== 'robo-wars' && id !== 'robo-soccer' && (
+            {/* Show "Rules" button for all other events except award-nite, robo-wars, robo-soccer, extra-event-2, and extra-event-3 */}
+            {id !== 'award-nite' && id !== 'robo-wars' && id !== 'robo-soccer' && id !== 'extra-event-2' && id !== 'extra-event-3' && (
               <AlertDialog 
                 open={isDialogOpen} 
                 onOpenChange={(open) => {
