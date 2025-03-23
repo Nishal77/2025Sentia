@@ -280,30 +280,23 @@ export function HeroSection() {
       </div>
       
       {/* Screen size disclaimer for small/medium screens */}
-      {!localStorage.getItem('disclaimerDismissed') && showScreenSizeDisclaimer && (
-        <div className="fixed top-4 left-0 right-0 mx-auto w-[90%] max-w-md z-50 bg-black/80 backdrop-blur-md text-white p-4 rounded-lg shadow-lg border border-white/20 transition-all duration-300 animate-fade-in">
-          <div className="flex justify-between items-center">
-            <div className="flex items-center gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 text-blue-400">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25" />
+      {showScreenSizeDisclaimer && (
+        <div className="fixed top-0 left-0 right-0 z-50 flex justify-center items-center bg-white/30 backdrop-blur-md shadow-lg border-b-4 border-indigo-500 animate-fade-in-down">
+          <div className="w-full max-w-2xl px-4 py-3 flex items-center justify-between bg-white/60 backdrop-blur-md rounded-lg">
+            <div className="flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-indigo-500 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
               </svg>
-              <p className="text-sm font-medium">For an optimal experience, please use a larger screen.</p>
+              <p className="font-semibold text-gray-800 text-sm md:text-base">For an optimal experience, please use a larger screen.</p>
             </div>
-            <button 
-              onClick={() => {
-                setShowScreenSizeDisclaimer(false);
-                localStorage.setItem('disclaimerDismissed', 'true');
-              }} 
-              className="text-white hover:text-gray-300 transition-colors"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            <button onClick={() => { setShowScreenSizeDisclaimer(false); localStorage.setItem('disclaimerDismissed', 'true'); }} className="text-gray-600 hover:text-gray-800 ml-3 transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
           </div>
         </div>
       )}
-      
       {/* College Logo and MITE Description - Top Left */}
       <div className="absolute top-4 md:top-6 z-20 w-full flex justify-between items-center px-4 md:px-6">
         <div className="flex items-center">
