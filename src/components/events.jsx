@@ -1309,7 +1309,15 @@ export function Events({ setGlobalVideoHovered }) {
           [class*="AlertDialogContent"] {
             height: auto !important;
             max-height: 85vh !important;
+            position: fixed !important;
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%) !important;
+            margin: 0 !important;
+            z-index: 9999 !important;
           }
+          
+          /* Remove backdrop blur effect styles */
           
           /* Make phone numbers more visible */
           a[href^="tel:"] {
