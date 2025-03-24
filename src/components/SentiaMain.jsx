@@ -1340,16 +1340,16 @@ export function SentiaMain() {
                   </span>
                   <span className="text-black ml-1">Events</span>
                   <div className="relative ml-2 flex items-center justify-center">
-                    {/* Outer ripple effect */}
-                    <span className="absolute w-4 h-4 rounded-full bg-green-500/10 animate-[ping_2s_ease-in-out_infinite]"></span>
-                    {/* Middle ripple */}
-                    <span className="absolute w-3 h-3 rounded-full bg-green-500/20 animate-[ping_2s_ease-in-out_infinite] delay-75"></span>
+                    {/* Outer glow effect */}
+                    <span className="absolute w-4 h-4 rounded-full bg-red-500/10 animate-[ping_1.5s_ease-in-out_infinite]"></span>
+                    {/* Middle glow */}
+                    <span className="absolute w-3 h-3 rounded-full bg-red-500/20 animate-[ping_1.5s_ease-in-out_infinite] delay-75"></span>
                     {/* Inner glow */}
-                    <span className="absolute w-2 h-2 rounded-full bg-green-500/30 animate-pulse"></span>
+                    <span className="absolute w-2 h-2 rounded-full bg-red-500/30 animate-pulse"></span>
                     {/* Core dot */}
-                    <span className="relative w-1.5 h-1.5 bg-green-500 rounded-full shadow-[0_0_10px_rgba(34,197,94,0.8)] animate-pulse"></span>
+                    <span className="relative w-1.5 h-1.5 bg-red-500 rounded-full shadow-[0_0_15px_rgba(255,0,0,0.8)] animate-blink"></span>
                     {/* Bright center highlight */}
-                    <span className="absolute w-0.5 h-0.5 bg-green-300 rounded-full blur-[0.5px] animate-pulse"></span>
+                    <span className="absolute w-0.5 h-0.5 bg-red-300 rounded-full blur-[0.5px] animate-blink"></span>
                   </div>
                 </h2>
               </div>
