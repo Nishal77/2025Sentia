@@ -1334,22 +1334,25 @@ export function SentiaMain() {
             {/* Live Events Card with Slider */}
             <div className="bg-white p-5 rounded-lg shadow-sm min-h-[400px] flex flex-col">
               <div className="flex items-center gap-2 mb-3">
-                <h2 className="text-xl font-bold flex items-center font-panchang">
-                  <span className="bg-gradient-to-r from-red-600 to-red-400 bg-clip-text text-transparent">
-                    Live
-                  </span>
-                  <span className="text-black ml-1">Events</span>
-                  <div className="relative ml-2 flex items-center justify-center">
+                <h2 className="text-xl font-bold flex items-center justify-between font-panchang">
+                  <div className="flex items-center">
+                    <span className="bg-gradient-to-r from-red-600 to-red-400 bg-clip-text text-transparent">
+                      Live
+                    </span>
+                    <span className="text-black ml-1">Events</span>
+                  </div>
+                  <div className="relative flex items-center justify-center ml-4">
                     {/* Outer glow effect */}
-                    <span className="absolute w-4 h-4 rounded-full bg-red-500/10 animate-[ping_1.5s_ease-in-out_infinite]"></span>
+                    <span className="absolute w-8 h-8 rounded-full bg-red-500/10 animate-[ping_2s_ease-in-out_infinite]"></span>
                     {/* Middle glow */}
-                    <span className="absolute w-3 h-3 rounded-full bg-red-500/20 animate-[ping_1.5s_ease-in-out_infinite] delay-75"></span>
+                    <span className="absolute w-6 h-6 rounded-full bg-red-500/20 animate-[ping_2s_ease-in-out_infinite] delay-100"></span>
                     {/* Inner glow */}
-                    <span className="absolute w-2 h-2 rounded-full bg-red-500/30 animate-pulse"></span>
+                    <span className="absolute w-5 h-5 rounded-full bg-red-500/30 animate-pulse"></span>
                     {/* Core dot */}
-                    <span className="relative w-1.5 h-1.5 bg-red-500 rounded-full shadow-[0_0_15px_rgba(255,0,0,0.8)] animate-blink"></span>
+                    <span className="relative w-4 h-4 bg-red-500 rounded-full shadow-[0_0_25px_rgba(255,0,0,0.9)] animate-blink"></span>
                     {/* Bright center highlight */}
-                    <span className="absolute w-0.5 h-0.5 bg-red-300 rounded-full blur-[0.5px] animate-blink"></span>
+                    <span className="absolute w-2 h-2 bg-red-300 rounded-full blur-[2px] animate-blink"></span>
+                   
                   </div>
                 </h2>
               </div>
