@@ -30,18 +30,24 @@ export function Loader() {
           <svg height="0" width="0" viewBox="0 0 64 64" className="absolute">
             <defs className="s-xJBuHA073rTt" xmlns="http://www.w3.org/2000/svg">
               <linearGradient className="s-xJBuHA073rTt" gradientUnits="userSpaceOnUse" y2="2" x2="0" y1="62" x1="0" id="b">
-                <stop className="s-xJBuHA073rTt" stopColor="#973BED"></stop>
-                <stop className="s-xJBuHA073rTt" stopColor="#007CFF" offset="1"></stop>
+                <stop className="s-xJBuHA073rTt" stopColor="#FFFFFF" offset="0"></stop>
+                <stop className="s-xJBuHA073rTt" stopColor="#FFFFFF" offset="1"></stop>
               </linearGradient>
               <linearGradient className="s-xJBuHA073rTt" gradientUnits="userSpaceOnUse" y2="0" x2="0" y1="64" x1="0" id="c">
-                <stop className="s-xJBuHA073rTt" stopColor="#FFC800"></stop>
-                <stop className="s-xJBuHA073rTt" stopColor="#F0F" offset="1"></stop>
+                <stop className="s-xJBuHA073rTt" stopColor="#FFFFFF" offset="0"></stop>
+                <stop className="s-xJBuHA073rTt" stopColor="#FFFFFF" offset="1"></stop>
                 <animateTransform repeatCount="indefinite" keySplines=".42,0,.58,1;.42,0,.58,1;.42,0,.58,1;.42,0,.58,1;.42,0,.58,1;.42,0,.58,1;.42,0,.58,1;.42,0,.58,1" keyTimes="0; 0.125; 0.25; 0.375; 0.5; 0.625; 0.75; 0.875; 1" dur="8s" values="0 32 32;-270 32 32;-270 32 32;-540 32 32;-540 32 32;-810 32 32;-810 32 32;-1080 32 32;-1080 32 32" type="rotate" attributeName="gradientTransform"></animateTransform>
               </linearGradient>
               <linearGradient className="s-xJBuHA073rTt" gradientUnits="userSpaceOnUse" y2="2" x2="0" y1="62" x1="0" id="d">
-                <stop className="s-xJBuHA073rTt" stopColor="#00E0ED"></stop>
-                <stop className="s-xJBuHA073rTt" stopColor="#00DA72" offset="1"></stop>
+                <stop className="s-xJBuHA073rTt" stopColor="#FFFFFF" offset="0"></stop>
+                <stop className="s-xJBuHA073rTt" stopColor="#FFFFFF" offset="1"></stop>
               </linearGradient>
+              
+              {/* Radial gradient for glow effect */}
+              <radialGradient id="glow" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                <stop offset="0%" stopColor="rgba(255,255,255,0.3)" />
+                <stop offset="100%" stopColor="rgba(255,255,255,0)" />
+              </radialGradient>
             </defs>
           </svg>
           
