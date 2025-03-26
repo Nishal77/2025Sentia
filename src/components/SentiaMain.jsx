@@ -827,7 +827,7 @@ export function SentiaMain() {
       
       // If we haven't synced in the last 5 minutes, or never synced
       if (!lastSync || (currentTime - parseInt(lastSync)) > 5 * 60 * 1000) {
-        console.log('Syncing with latest data from server');
+        console.log('Attempting to sync with latest data from server');
         
         try {
           // Get data from server with CORS proxy
@@ -838,6 +838,7 @@ export function SentiaMain() {
           
           // Check for 404 errors specifically
           if (response.status === 404) {
+            console.warn('API endpoint not found (404), using local data');
             throw new Error('API endpoint not found (404)');
           }
           
@@ -853,32 +854,33 @@ export function SentiaMain() {
               if (proxyResponse && typeof proxyResponse === 'object') {
                 // Check if the response has content property
                 if (proxyResponse.contents) {
-                  // Check if contents is a valid JSON string before parsing
-                  data = safeJsonParse(proxyResponse.contents);
-                  
-                  // If parsing failed, throw error
-                  if (!data) {
+                  try {
+                    data = JSON.parse(proxyResponse.contents);
+                  } catch (parseError) {
+                    console.error('Error parsing proxy response contents:', parseError);
                     throw new Error('Invalid JSON in proxy response contents');
                   }
                 } else if (proxyResponse.status && proxyResponse.status.http_code >= 400) {
-                  // The proxy successfully got an error response from the API
+                  console.warn(`API error: HTTP ${proxyResponse.status.http_code}`);
                   throw new Error(`API error: HTTP ${proxyResponse.status.http_code}`);
                 }
               } else {
+                console.warn('Invalid proxy response format');
                 throw new Error('Invalid proxy response format');
               }
             } else {
               // Standard response
               const responseText = await response.text();
-              data = safeJsonParse(responseText);
-              
-              if (!data) {
+              try {
+                data = JSON.parse(responseText);
+              } catch (parseError) {
+                console.error('Error parsing direct API response:', parseError);
                 throw new Error('Invalid JSON in direct API response');
               }
             }
             
             if (data && data.events && data.events.length > 0) {
-              console.log('Fetched updated events from server:', data.events.length);
+              console.log('Successfully fetched updated events from server:', data.events.length);
               
               // Compare the timestamp of the server data with our local data
               const serverTimestamp = data.timestamp || currentTime;
@@ -887,30 +889,19 @@ export function SentiaMain() {
               // Only update if server data is newer or we don't have local data
               if (serverTimestamp > localTimestamp || !localStorage.getItem('sentiaLiveEvents')) {
                 console.log('Server data is newer, updating local data');
-                // Check if we have valid events data
-                if (Array.isArray(data.events) && data.events.length > 0) {
-                  setPerformingTeams(data.events);
-                  setNoEventsData(false);
-                } else {
-                  // Handle empty events array
-                  setPerformingTeams([]);
-                  setNoEventsData(true);
-                }
-                
-                // Store these events in localStorage
+                setPerformingTeams(data.events);
+                setNoEventsData(false);
                 localStorage.setItem('sentiaLiveEvents', JSON.stringify(data.events));
                 localStorage.setItem('sentiaDataTimestamp', serverTimestamp.toString());
               } else {
                 console.log('Local data is newer or same as server data');
               }
             } else {
-              console.warn('No events data found in response:', data);
-              // We received a response but no events data
-              setPerformingTeams([]);
-              setNoEventsData(true);
+              console.warn('No events data found in response');
               throw new Error('No events data in response');
             }
           } else {
+            console.warn(`HTTP error: ${response.status}`);
             throw new Error(`HTTP error: ${response.status}`);
           }
         } catch (fetchError) {
@@ -1469,7 +1460,7 @@ export function SentiaMain() {
                   loop
                   muted
                   playsInline
-                  fetchPriority="high"
+                  fetchpriority="high"
                   alt="loading video"
                 />
               </div>

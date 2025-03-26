@@ -311,7 +311,7 @@ export function HeroSection() {
             alt="College Logo"
             className="w-16 h-10 sm:w-20 sm:h-14 md:w-16 md:h-16 object-contain"
             loading="eager"
-            fetchPriority="high"
+            fetchpriority="high"
           />
           <img
             src={MiteLogo}
@@ -324,6 +324,7 @@ export function HeroSection() {
             alt="MITE Logo"
             className="hidden md:block h-16 md:h-20 object-contain"
             loading="eager"
+            fetchpriority="high"
           />
         </div>
         <img
@@ -337,6 +338,7 @@ export function HeroSection() {
           alt="Club MITE Logo"
           className="w-20 h-12 sm:w-28 sm:h-16 md:w-62 md:h-20 object-contain"
           loading="eager"
+          fetchpriority="high"
         />
       </div>
       {/* Content container */}
@@ -355,7 +357,7 @@ export function HeroSection() {
             alt="Sentia 2025 Logo"
             className="w-[450px] sm:w-[600px] md:w-[600px] lg:w-[750px] xl:w-[900px] h-auto mb-8 mx-auto drop-shadow-lg"
             loading="eager"
-            fetchPriority="high"
+            fetchpriority="high"
           />
         </div>
 

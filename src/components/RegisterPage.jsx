@@ -295,7 +295,6 @@ export function RegisterPage() {
           <div className="space-y-4">
             <div className="bg-red-50 p-4 rounded-md border border-red-100">
               <p className="text-red-700 font-bold text-center text-lg">NO SPOT REGISTRATION</p>
-              <p className="text-blue-700 font-bold text-center text-lg">Last date for online registration: March 25, 2025</p>
             </div>
           </div>
         </div>
