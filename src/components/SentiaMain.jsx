@@ -711,9 +711,29 @@ export function SentiaMain() {
 
   // Function to get API URL with proxy if needed
   const getProxiedApiUrl = (url) => {
-    // In production, try alternate approaches
+    // Check if the URL should be the new API endpoint
+    if (url.includes('sentia-api.onrender.com')) {
+      // Try the new API endpoint first (add /v2 if not already there)
+      const newApiUrl = url.replace('sentia-api.onrender.com', 'sentia-admin.onrender.com');
+      console.log('Using updated API URL:', newApiUrl);
+      
+      // In production, try alternate approaches
+      if (window.location.hostname === 'www.sentiamite.me' || 
+          window.location.hostname === 'www.sentia.mite.ac.in' ||
+          window.location.hostname === 'sentiamite.me' ||
+          window.location.hostname === 'sentia.mite.ac.in') {
+        // First try with a reliable CORS proxy
+        return `https://api.allorigins.win/get?url=${encodeURIComponent(newApiUrl)}`;
+      }
+      // Return original URL for development
+      return newApiUrl;
+    }
+    
+    // Return original URL with proxy if needed
     if (window.location.hostname === 'www.sentiamite.me' || 
-        window.location.hostname === 'www.sentia.mite.ac.in') {
+        window.location.hostname === 'www.sentia.mite.ac.in' ||
+        window.location.hostname === 'sentiamite.me' ||
+        window.location.hostname === 'sentia.mite.ac.in') {
       // First try with a reliable CORS proxy
       return `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
     }
@@ -821,93 +841,145 @@ export function SentiaMain() {
 
   const syncWithLatestData = async () => {
     try {
-      // Check when we last synced data
-      const lastSync = localStorage.getItem('sentiaLastSync');
-      const currentTime = getCurrentTimestamp();
+      // Always sync on each call for better real-time updates
+      console.log('Attempting to sync with latest data from server');
       
-      // If we haven't synced in the last 5 minutes, or never synced
-      if (!lastSync || (currentTime - parseInt(lastSync)) > 5 * 60 * 1000) {
-        console.log('Attempting to sync with latest data from server');
+      try {
+        // Get data from server with CORS proxy
+        const apiUrl = getProxiedApiUrl('https://sentia-admin.onrender.com/api/events/getAll');
+        console.log('Using API URL:', apiUrl);
         
-        try {
-          // Get data from server with CORS proxy
-          const apiUrl = getProxiedApiUrl('https://sentia-api.onrender.com/api/events/getAll');
-          console.log('Using API URL:', apiUrl);
+        const response = await fetch(apiUrl, {
+          method: 'GET',
+          headers: {
+            'Accept': 'application/json',
+            'Cache-Control': 'no-cache',
+          }
+        });
+        
+        // Check for 404 errors specifically
+        if (response.status === 404) {
+          console.warn('Primary API endpoint not found (404), trying fallback URL');
+          throw new Error('API endpoint not found (404)');
+        }
+        
+        if (response.ok) {
+          let data;
           
-          const response = await fetch(apiUrl);
-          
-          // Check for 404 errors specifically
-          if (response.status === 404) {
-            console.warn('API endpoint not found (404), using local data');
-            throw new Error('API endpoint not found (404)');
+          // Handle different proxy response formats
+          if (apiUrl.includes('allorigins')) {
+            // For allorigins proxy, the response is wrapped
+            const proxyResponse = await response.json();
+            
+            // Check if the proxy response has content and status
+            if (proxyResponse && typeof proxyResponse === 'object') {
+              // Check if the response has content property
+              if (proxyResponse.contents) {
+                try {
+                  data = JSON.parse(proxyResponse.contents);
+                } catch (parseError) {
+                  console.error('Error parsing proxy response contents:', parseError);
+                  throw new Error('Invalid JSON in proxy response contents');
+                }
+              } else if (proxyResponse.status && proxyResponse.status.http_code >= 400) {
+                console.warn(`API error: HTTP ${proxyResponse.status.http_code}`);
+                throw new Error(`API error: HTTP ${proxyResponse.status.http_code}`);
+              }
+            } else {
+              console.warn('Invalid proxy response format');
+              throw new Error('Invalid proxy response format');
+            }
+          } else {
+            // Standard response
+            const responseText = await response.text();
+            try {
+              data = JSON.parse(responseText);
+            } catch (parseError) {
+              console.error('Error parsing direct API response:', parseError);
+              throw new Error('Invalid JSON in direct API response');
+            }
           }
           
-          if (response.ok) {
-            let data;
+          if (data && data.events && data.events.length > 0) {
+            console.log('Successfully fetched updated events from server:', data.events.length);
+            
+            // Always update with the latest data
+            console.log('Updating local data with server data');
+            setPerformingTeams(data.events);
+            setNoEventsData(false);
+            localStorage.setItem('sentiaLiveEvents', JSON.stringify(data.events));
+            localStorage.setItem('sentiaDataTimestamp', getCurrentTimestamp().toString());
+          } else {
+            console.warn('No events data found in response');
+            throw new Error('No events data in response');
+          }
+        } else {
+          console.warn(`HTTP error: ${response.status}`);
+          throw new Error(`HTTP error: ${response.status}`);
+        }
+      } catch (fetchError) {
+        console.error('Primary API fetch error, trying fallback API:', fetchError);
+        
+        try {
+          // Try the fallback API URL
+          const fallbackApiUrl = getProxiedApiUrl('https://sentia-api.onrender.com/api/events/getAll');
+          console.log('Using fallback API URL:', fallbackApiUrl);
+          
+          const fallbackResponse = await fetch(fallbackApiUrl, {
+            method: 'GET',
+            headers: {
+              'Accept': 'application/json',
+              'Cache-Control': 'no-cache',
+            }
+          });
+          
+          if (fallbackResponse.ok) {
+            let fallbackData;
             
             // Handle different proxy response formats
-            if (apiUrl.includes('allorigins')) {
+            if (fallbackApiUrl.includes('allorigins')) {
               // For allorigins proxy, the response is wrapped
-              const proxyResponse = await response.json();
+              const proxyResponse = await fallbackResponse.json();
               
-              // Check if the proxy response has content and status
-              if (proxyResponse && typeof proxyResponse === 'object') {
-                // Check if the response has content property
-                if (proxyResponse.contents) {
-                  try {
-                    data = JSON.parse(proxyResponse.contents);
-                  } catch (parseError) {
-                    console.error('Error parsing proxy response contents:', parseError);
-                    throw new Error('Invalid JSON in proxy response contents');
-                  }
-                } else if (proxyResponse.status && proxyResponse.status.http_code >= 400) {
-                  console.warn(`API error: HTTP ${proxyResponse.status.http_code}`);
-                  throw new Error(`API error: HTTP ${proxyResponse.status.http_code}`);
+              if (proxyResponse && typeof proxyResponse === 'object' && proxyResponse.contents) {
+                try {
+                  fallbackData = JSON.parse(proxyResponse.contents);
+                } catch (parseError) {
+                  console.error('Error parsing fallback proxy response:', parseError);
+                  throw new Error('Invalid JSON in fallback proxy response');
                 }
               } else {
-                console.warn('Invalid proxy response format');
-                throw new Error('Invalid proxy response format');
+                throw new Error('Invalid fallback proxy response format');
               }
             } else {
               // Standard response
-              const responseText = await response.text();
+              const responseText = await fallbackResponse.text();
               try {
-                data = JSON.parse(responseText);
+                fallbackData = JSON.parse(responseText);
               } catch (parseError) {
-                console.error('Error parsing direct API response:', parseError);
-                throw new Error('Invalid JSON in direct API response');
+                console.error('Error parsing fallback API response:', parseError);
+                throw new Error('Invalid JSON in fallback API response');
               }
             }
             
-            if (data && data.events && data.events.length > 0) {
-              console.log('Successfully fetched updated events from server:', data.events.length);
-              
-              // Compare the timestamp of the server data with our local data
-              const serverTimestamp = data.timestamp || currentTime;
-              const localTimestamp = localStorage.getItem('sentiaDataTimestamp') || 0;
-              
-              // Only update if server data is newer or we don't have local data
-              if (serverTimestamp > localTimestamp || !localStorage.getItem('sentiaLiveEvents')) {
-                console.log('Server data is newer, updating local data');
-                setPerformingTeams(data.events);
-                setNoEventsData(false);
-                localStorage.setItem('sentiaLiveEvents', JSON.stringify(data.events));
-                localStorage.setItem('sentiaDataTimestamp', serverTimestamp.toString());
-              } else {
-                console.log('Local data is newer or same as server data');
-              }
-            } else {
-              console.warn('No events data found in response');
-              throw new Error('No events data in response');
+            if (fallbackData && fallbackData.events && fallbackData.events.length > 0) {
+              console.log('Successfully fetched events from fallback API:', fallbackData.events.length);
+              setPerformingTeams(fallbackData.events);
+              setNoEventsData(false);
+              localStorage.setItem('sentiaLiveEvents', JSON.stringify(fallbackData.events));
+              localStorage.setItem('sentiaDataTimestamp', getCurrentTimestamp().toString());
+              return; // Exit early if fallback succeeds
             }
-          } else {
-            console.warn(`HTTP error: ${response.status}`);
-            throw new Error(`HTTP error: ${response.status}`);
           }
-        } catch (fetchError) {
-          console.error('API fetch error, falling back to local data:', fetchError);
+          
+          // If we got here, fallback API also failed
+          throw new Error('Both primary and fallback APIs failed');
+          
+        } catch (fallbackError) {
+          console.error('Fallback API also failed, using local data:', fallbackError);
           
           // Try no-cors fetch as a last resort
+          await tryFetchNoCors('https://sentia-admin.onrender.com/api/events/getAll');
           await tryFetchNoCors('https://sentia-api.onrender.com/api/events/getAll');
           
           // Use local storage as fallback
@@ -916,39 +988,24 @@ export function SentiaMain() {
             console.log('Using cached local data');
             setPerformingTeams(localData);
             setNoEventsData(false);
-          } else {
+          } else if (FALLBACK_EVENTS && FALLBACK_EVENTS.length > 0) {
             // If localStorage is also empty, use static fallback data if available
-            if (FALLBACK_EVENTS && FALLBACK_EVENTS.length > 0) {
-              console.log('No local data available, using static fallback data');
-              setPerformingTeams(FALLBACK_EVENTS);
-              setNoEventsData(false);
-              
-              // Store fallback events in localStorage for future use
-              localStorage.setItem('sentiaLiveEvents', JSON.stringify(FALLBACK_EVENTS));
-            } else {
-              // No events available at all
-              setPerformingTeams([]);
-              setNoEventsData(true);
-            }
+            console.log('No local data available, using static fallback data');
+            setPerformingTeams(FALLBACK_EVENTS);
+            setNoEventsData(false);
+            
+            // Store fallback events in localStorage for future use
+            localStorage.setItem('sentiaLiveEvents', JSON.stringify(FALLBACK_EVENTS));
+          } else {
+            // No events available at all
+            setPerformingTeams([]);
+            setNoEventsData(true);
           }
         }
-        
-        // Update last sync time
-        localStorage.setItem('sentiaLastSync', currentTime.toString());
-      } else {
-        // If we're not syncing with the server, load from localStorage
-        const localData = getEventsFromLocalStorage();
-        if (localData && localData.length > 0) {
-          setPerformingTeams(localData);
-          setNoEventsData(false);
-        } else if (FALLBACK_EVENTS && FALLBACK_EVENTS.length > 0) {
-          setPerformingTeams(FALLBACK_EVENTS);
-          setNoEventsData(false);
-        } else {
-          setPerformingTeams([]);
-          setNoEventsData(true);
-        }
       }
+      
+      // Update last sync time
+      localStorage.setItem('sentiaLastSync', getCurrentTimestamp().toString());
     } catch (error) {
       console.error('Error syncing with server:', error);
       
@@ -972,8 +1029,8 @@ export function SentiaMain() {
     // Sync with latest data when component mounts
     syncWithLatestData();
     
-    // Also sync periodically
-    const syncInterval = setInterval(syncWithLatestData, 2 * 60 * 1000); // Every 2 minutes
+    // Also sync more frequently (every 30 seconds) to ensure latest admin updates
+    const syncInterval = setInterval(syncWithLatestData, 30 * 1000);
     
     return () => {
       clearInterval(syncInterval);
@@ -1114,6 +1171,8 @@ export function SentiaMain() {
         setNoEventsData(false);
         // Also update localStorage to keep it in sync
         localStorage.setItem("sentiaLiveEvents", JSON.stringify(data.events));
+        // Force a timestamp update to ensure we know this is the latest data
+        localStorage.setItem('sentiaDataTimestamp', getCurrentTimestamp().toString());
       }
     });
 
@@ -1122,11 +1181,28 @@ export function SentiaMain() {
       const data = message.data;
       console.log("Real-time update: Event added", data);
       if (data && data.event) {
+        // Force a full refresh to ensure we have the latest data
+        syncWithLatestData();
+        
+        // Also update locally for immediate feedback
         setPerformingTeams((prevTeams) => {
-          const updatedTeams = [...prevTeams, data.event];
-          // Also update localStorage to keep it in sync
-          localStorage.setItem("sentiaLiveEvents", JSON.stringify(updatedTeams));
-          return updatedTeams;
+          // Check if the event already exists to avoid duplicates
+          const eventExists = prevTeams.some(team => team.id === data.event.id);
+          if (eventExists) {
+            // If it exists, replace it
+            const updatedTeams = prevTeams.map(team => 
+              team.id === data.event.id ? data.event : team
+            );
+            // Update localStorage
+            localStorage.setItem("sentiaLiveEvents", JSON.stringify(updatedTeams));
+            return updatedTeams;
+          } else {
+            // If it's new, add it
+            const updatedTeams = [...prevTeams, data.event];
+            // Update localStorage
+            localStorage.setItem("sentiaLiveEvents", JSON.stringify(updatedTeams));
+            return updatedTeams;
+          }
         });
         setNoEventsData(false);
       }
@@ -1137,11 +1213,15 @@ export function SentiaMain() {
       const data = message.data;
       console.log("Real-time update: Event updated", data);
       if (data && data.event) {
+        // Force a full refresh to ensure we have the latest data
+        syncWithLatestData();
+        
+        // Also update locally for immediate feedback
         setPerformingTeams((prevTeams) => {
           const updatedTeams = prevTeams.map((team) =>
             team.id === data.event.id ? data.event : team
           );
-          // Also update localStorage to keep it in sync
+          // Update localStorage
           localStorage.setItem("sentiaLiveEvents", JSON.stringify(updatedTeams));
           return updatedTeams;
         });
@@ -1153,11 +1233,15 @@ export function SentiaMain() {
       const data = message.data;
       console.log("Real-time update: Event deleted", data);
       if (data && data.eventId) {
+        // Force a full refresh to ensure we have the latest data
+        syncWithLatestData();
+        
+        // Also update locally for immediate feedback
         setPerformingTeams((prevTeams) => {
           const updatedTeams = prevTeams.filter(
             (team) => team.id !== data.eventId
           );
-          // Also update localStorage to keep it in sync
+          // Update localStorage
           localStorage.setItem("sentiaLiveEvents", JSON.stringify(updatedTeams));
           setNoEventsData(updatedTeams.length === 0);
           return updatedTeams;
@@ -1170,11 +1254,15 @@ export function SentiaMain() {
       const data = message.data;
       console.log("Real-time update: Event status changed", data);
       if (data && data.eventId && data.newStatus) {
+        // Force a full refresh to ensure we have the latest data
+        syncWithLatestData();
+        
+        // Also update locally for immediate feedback
         setPerformingTeams((prevTeams) => {
           const updatedTeams = prevTeams.map((team) =>
             team.id === data.eventId ? { ...team, status: data.newStatus } : team
           );
-          // Also update localStorage to keep it in sync
+          // Update localStorage
           localStorage.setItem("sentiaLiveEvents", JSON.stringify(updatedTeams));
           return updatedTeams;
         });

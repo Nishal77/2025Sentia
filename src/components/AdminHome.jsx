@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import apiService from '../utils/apiService';
+import ablyClient from '../utils/ablyClient';
 
 // Import any required video assets
 import drum from '/assets/drum.mp4';
@@ -11,22 +12,69 @@ import dance from '/assets/dance.mp4';
 // Helper function to save data to localStorage
 const saveEventsToLocalStorage = (events) => {
   try {
+    // Verify we have valid events before saving
+    if (!Array.isArray(events)) {
+      console.error('Invalid events data: not an array');
+      return false;
+    }
+    
+    // Add timestamps to events if not already present
+    const timestamp = new Date().toISOString();
+    const eventsWithTimestamp = events.map(event => ({
+      ...event,
+      lastUpdated: event.lastUpdated || timestamp
+    }));
+    
+    // Sort events by status priority for better display
+    const sortedEvents = sortEvents(eventsWithTimestamp);
+    
+    console.log(`Saving ${sortedEvents.length} events to localStorage`);
+    
     // Save to localStorage for persistence
-    localStorage.setItem('sentiaEvents', JSON.stringify(events));
+    localStorage.setItem('sentiaEvents', JSON.stringify(sortedEvents));
     
     // Save to sentiaLiveEvents for the frontend to pick up
-    localStorage.setItem('sentiaLiveEvents', JSON.stringify(events));
+    localStorage.setItem('sentiaLiveEvents', JSON.stringify(sortedEvents));
     
-    // Update via API to notify all clients
-    apiService.updateAllEvents(events)
-      .then(() => {
-        console.log('Events updated successfully in cloud');
-        return true;
+    // Save timestamp of when we last updated the data
+    localStorage.setItem('sentiaDataTimestamp', Date.now().toString());
+    
+    // Update via API to notify all clients using multiple approaches
+    Promise.all([
+      // Try the new API endpoint first
+      apiService.updateAllEvents(sortedEvents),
+      
+      // Try direct Ably publishing as backup
+      new Promise(resolve => {
+        try {
+          const channel = ablyClient.channels.get(EVENTS_CHANNEL);
+          channel.publish(ALL_EVENTS_UPDATED, { events: sortedEvents }, err => {
+            if (err) {
+              console.error('Direct Ably publish failed:', err);
+              resolve(false);
+            } else {
+              console.log('Direct Ably publish succeeded');
+              resolve(true);
+            }
+          });
+        } catch (error) {
+          console.error('Error in direct Ably publish:', error);
+          resolve(false);
+        }
       })
-      .catch(error => {
-        console.error('Error broadcasting events update:', error);
-        return false;
-      });
+    ])
+    .then(([apiResult, ablyResult]) => {
+      if (apiResult && apiResult.success) {
+        console.log('Events updated successfully in cloud via API');
+      } else if (ablyResult) {
+        console.log('Events updated successfully via direct Ably publish');
+      } else {
+        console.warn('Failed to update events in cloud, but saved locally');
+      }
+    })
+    .catch(error => {
+      console.error('Error broadcasting events update:', error);
+    });
     
     return true;
   } catch (error) {
