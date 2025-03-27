@@ -276,6 +276,10 @@ export function Events({ setGlobalVideoHovered }) {
         {
           name: 'Ankitha',
           phone: '+91 99016 43376'
+        },
+        {
+          name: 'Abhishek S A',
+          phone: '+91 8296248438'
         }
       ],
       rules: [
