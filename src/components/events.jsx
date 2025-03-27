@@ -169,7 +169,7 @@ export function Events({ setGlobalVideoHovered }) {
       ]
     },
     'senhacks': {
-      title: 'Senhacks',
+      title: 'SenHacks',
       day: 1,
       coordinators: [
         {
@@ -240,7 +240,7 @@ export function Events({ setGlobalVideoHovered }) {
       ]
     },
     'quiz-quest': {
-      title: 'Quiz quest',
+      title: 'Quiz Quest',
       day: 1,
       coordinators: [
         {
@@ -270,7 +270,7 @@ export function Events({ setGlobalVideoHovered }) {
       
     },
     'master-minds': {
-      title: 'Master minds',
+      title: 'Master Minds',
       day: 1,
       coordinators: [
         {
