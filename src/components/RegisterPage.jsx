@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from "./ui/button";
 import Footer from './Footer';
 import { Link } from 'react-router-dom';
+import FormfacadeEmbed from "@formfacade/embed-react";
 
 import bandicon from '/assets/eventslogo/bandicon.jpeg';
 import fashionlogo from '/assets/eventslogo/fashionlogo.jpeg';
@@ -65,8 +66,77 @@ const allEvents = [
   },
 ];
 
+// Dance Registration Form Component
+const DanceRegistrationForm = () => {
+  const [formSubmitted, setFormSubmitted] = useState(false);
+  
+  const handleFormSubmit = () => {
+    setFormSubmitted(true);
+    console.log('Dance registration form submitted successfully');
+  };
+  
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 overflow-y-auto p-4">
+      <div className="bg-white rounded-lg shadow-xl w-full max-w-4xl max-h-[90vh] overflow-auto relative">
+        <div className="sticky top-0 bg-indigo-700 text-white py-4 px-6 flex justify-between items-center z-10">
+          <h2 className="text-xl font-bold">Eastern & Western Dance Registration</h2>
+          <button 
+            onClick={() => window.history.back()} 
+            className="text-white hover:text-gray-200 transition-colors"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        
+        {formSubmitted ? (
+          <div className="p-8 text-center">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 text-green-500 mx-auto mb-4" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+            </svg>
+            <h3 className="text-2xl font-bold text-gray-800 mb-2">Registration Successful!</h3>
+            <p className="text-gray-600 mb-6">Thank you for registering for the Eastern & Western Dance competition. We'll be in touch soon with more details.</p>
+            <button 
+              onClick={() => window.history.back()} 
+              className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-6 rounded-lg transition-colors"
+            >
+              Back to Events
+            </button>
+          </div>
+        ) : (
+          <div className="p-6">
+            <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
+              <div className="flex">
+                <div className="flex-shrink-0">
+                  <svg className="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <div className="ml-3">
+                  <p className="text-sm text-yellow-700">
+                    Please complete all required fields. Your information will be used to contact you regarding the event.
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <FormfacadeEmbed
+              formFacadeURL="https://formfacade.com/include/110781608183398634563/form/1FAIpQLSesYPBrk__OSN67xoUTqFhuZ00ULTKnDfD1rP6mroOIYc0nBQ/classic.js/?div=ff-compose"
+              onSubmitForm={handleFormSubmit}
+              className="w-full min-h-[500px]"
+            />
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
 // Simple Event Card component for registration page
 const SimpleEventCard = ({ id, title, description, time, building, day, disclaimer }) => {
+  const [showDanceForm, setShowDanceForm] = useState(false);
+  
   // Helper function to get icon for the event
   const getEventIcon = () => {
     switch(id) {
@@ -141,67 +211,96 @@ const SimpleEventCard = ({ id, title, description, time, building, day, disclaim
     }
   };
 
+  const handleRegisterClick = () => {
+    if (id === 'eastern-western-dance') {
+      setShowDanceForm(true);
+      // Add the form to URL to allow back button to work properly
+      window.history.pushState({}, "", window.location.pathname + "?event=dance-registration");
+    } else if (id === 'quiz-quest') {
+      window.open('https://docs.google.com/forms/d/e/1FAIpQLSeDnWEjjGqzTYJNqLWi3PpTLEpAFrttBKYeLzVXzUaqRSYdzg/viewform', '_blank');
+    } 
+    else if (id === 'master-minds') {
+      window.open('https://docs.google.com/forms/d/e/1FAIpQLSdeuPzFc9YTha_jDPjiFmo-4mR0e2UwOrcbQVgPNmYiusqHRA/viewform', '_blank');
+    }
+    else if (id === 'robo-wars-soccer') {
+      window.open('https://docs.google.com/forms/d/e/1FAIpQLSfzm5xRpxU4orOsUNbMElK5EAw42AaXIxSLPoamReaQkVkzfQ/viewform', '_blank');
+    }
+    else if (id === 'robo-mania') {
+      window.open('https://docs.google.com/forms/d/e/1FAIpQLScIg1ypq5jYG0SsBsZe5NxoZo67olTIm3WXkLr7cINXis6VdA/viewform', '_blank');
+    }
+  };
+
+  // Handle back button for form
+  useEffect(() => {
+    const handlePopState = () => {
+      setShowDanceForm(false);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    
+    // Check if we should show the form based on URL params
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('event') === 'dance-registration' && id === 'eastern-western-dance') {
+      setShowDanceForm(true);
+    }
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, [id]);
+
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 ease-in-out hover:shadow-lg border border-transparent hover:border-gray-300 group">
-      <div className="p-5 flex flex-col h-full" style={{ minHeight: "380px" }}>
-        <div className="flex items-start mb-3">
-          <div className="w-14 h-14 bg-black/80 rounded-lg mr-4 flex items-center justify-center p-0 overflow-hidden text-white flex-shrink-0 mt-1">
-            {getEventIcon()}
+    <>
+      <div className="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 ease-in-out hover:shadow-lg border border-transparent hover:border-gray-300 group">
+        <div className="p-5 flex flex-col h-full" style={{ minHeight: "380px" }}>
+          <div className="flex items-start mb-3">
+            <div className="w-14 h-14 bg-black/80 rounded-lg mr-4 flex items-center justify-center p-0 overflow-hidden text-white flex-shrink-0 mt-1">
+              {getEventIcon()}
+            </div>
+            <div>
+              <h3 className="font-semibold text-black/80 text-lg group-hover:text-black">{title}</h3>
+              <p className="text-gray-500 text-sm">{building} • Day: {day}</p>
+              {time && <p className="text-gray-500 text-xs">{time}</p>}
+              {disclaimer && (
+                <p className="text-xs font-medium text-red-600 mt-1 bg-red-50 inline-block px-2 py-0.5 rounded-full border border-red-200">
+                  {disclaimer}
+                </p>
+              )}
+            </div>
           </div>
-          <div>
-            <h3 className="font-semibold text-black/80 text-lg group-hover:text-black">{title}</h3>
-            <p className="text-gray-500 text-sm">{building} • Day: {day}</p>
-            {time && <p className="text-gray-500 text-xs">{time}</p>}
-            {disclaimer && (
-              <p className="text-xs font-medium text-red-600 mt-1 bg-red-50 inline-block px-2 py-0.5 rounded-full border border-red-200">
-                {disclaimer}
-              </p>
-            )}
+          
+          <div className="flex-grow text-sm">
+            <p className="text-gray-600 group-hover:text-gray-700">
+              {description}
+            </p>
           </div>
+          
+          {id === 'battle-of-bands' || id === 'fashion-walk' ? (
+            <button 
+              className="w-full mt-4 bg-red-600 text-white py-2 text-sm font-medium transition-colors rounded-lg cursor-not-allowed"
+              disabled
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 inline-block mr-2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+              Registration Closed
+            </button>
+          ) : (
+            <button 
+              className="w-full mt-4 bg-black hover:bg-gray-800 text-white py-2 text-sm font-medium transition-colors rounded-lg cursor-pointer"
+              onClick={handleRegisterClick}
+            >
+              Register Now
+            </button>
+          )}
         </div>
-        
-        <div className="flex-grow text-sm">
-          <p className="text-gray-600 group-hover:text-gray-700">
-            {description}
-          </p>
-        </div>
-        
-        {id === 'battle-of-bands' || id === 'fashion-walk' ? (
-          <button 
-            className="w-full mt-4 bg-red-600 text-white py-2 text-sm font-medium transition-colors rounded-lg cursor-not-allowed"
-            disabled
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 inline-block mr-2">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-            Registration Closed
-          </button>
-        ) : (
-          <button 
-            className="w-full mt-4 bg-black hover:bg-gray-800 text-white py-2 text-sm font-medium transition-colors rounded-lg cursor-pointer"
-            onClick={() => {
-              if (id === 'quiz-quest') {
-                window.open('https://docs.google.com/forms/d/e/1FAIpQLSeDnWEjjGqzTYJNqLWi3PpTLEpAFrttBKYeLzVXzUaqRSYdzg/viewform', '_blank');
-              } 
-              else if (id === 'master-minds') {
-                window.open('https://docs.google.com/forms/d/e/1FAIpQLSdeuPzFc9YTha_jDPjiFmo-4mR0e2UwOrcbQVgPNmYiusqHRA/viewform', '_blank');
-              }
-              else if (id === 'robo-wars-soccer') {
-                window.open('https://docs.google.com/forms/d/e/1FAIpQLSfzm5xRpxU4orOsUNbMElK5EAw42AaXIxSLPoamReaQkVkzfQ/viewform', '_blank');
-              }
-              else if (id === 'robo-mania') {
-                window.open('https://docs.google.com/forms/d/e/1FAIpQLScIg1ypq5jYG0SsBsZe5NxoZo67olTIm3WXkLr7cINXis6VdA/viewform', '_blank');
-              }
-              else if (id === 'eastern-western-dance') {
-                window.open('https://docs.google.com/forms/d/e/1FAIpQLSesYPBrk__OSN67xoUTqFhuZ00ULTKnDfD1rP6mroOIYc0nBQ/viewform', '_blank');
-              }
-            }}
-          >
-            Register Now
-          </button>
-        )}
       </div>
-    </div>
+      
+      {/* Show embedded form for dance event */}
+      {showDanceForm && id === 'eastern-western-dance' && (
+        <DanceRegistrationForm />
+      )}
+    </>
   );
 };
 

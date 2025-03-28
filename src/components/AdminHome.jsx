@@ -9,8 +9,8 @@ import fashionwalk from '/assets/fashionwalk.mp4';
 import robowars from '/assets/robowars.mp4';
 import dance from '/assets/dance.mp4';
 
-// Helper function to save data to localStorage
-const saveEventsToLocalStorage = (events) => {
+// Helper function to save data to API and broadcast updates
+const saveEventsToAPI = async (events) => {
   try {
     // Verify we have valid events before saving
     if (!Array.isArray(events)) {
@@ -28,26 +28,28 @@ const saveEventsToLocalStorage = (events) => {
     // Sort events by status priority for better display
     const sortedEvents = sortEvents(eventsWithTimestamp);
     
-    console.log(`Saving ${sortedEvents.length} events to localStorage`);
+    console.log(`Saving ${sortedEvents.length} events to API`);
     
-    // Save to localStorage for persistence
-    localStorage.setItem('sentiaEvents', JSON.stringify(sortedEvents));
+    // Send events to both API endpoints to ensure they're properly updated
+    const primaryPromise = apiService.updateAllEvents(sortedEvents);
     
-    // Save to sentiaLiveEvents for the frontend to pick up
-    localStorage.setItem('sentiaLiveEvents', JSON.stringify(sortedEvents));
-    
-    // Save timestamp of when we last updated the data
-    localStorage.setItem('sentiaDataTimestamp', Date.now().toString());
-    
-    // Update via API to notify all clients using multiple approaches
-    Promise.all([
-      // Try the new API endpoint first
-      apiService.updateAllEvents(sortedEvents),
-      
-      // Try direct Ably publishing as backup
-      new Promise(resolve => {
-        try {
-          const channel = ablyClient.channels.get(EVENTS_CHANNEL);
+    // Also try direct Ably publishing as a reliable approach
+    const ablyPromise = new Promise(resolve => {
+      try {
+        const channel = ablyClient.channels.get(EVENTS_CHANNEL);
+        if (channel.state !== 'attached') {
+          channel.attach(() => {
+            channel.publish(ALL_EVENTS_UPDATED, { events: sortedEvents }, err => {
+              if (err) {
+                console.error('Direct Ably publish failed:', err);
+                resolve(false);
+              } else {
+                console.log('Direct Ably publish succeeded');
+                resolve(true);
+              }
+            });
+          });
+        } else {
           channel.publish(ALL_EVENTS_UPDATED, { events: sortedEvents }, err => {
             if (err) {
               console.error('Direct Ably publish failed:', err);
@@ -57,84 +59,108 @@ const saveEventsToLocalStorage = (events) => {
               resolve(true);
             }
           });
-        } catch (error) {
-          console.error('Error in direct Ably publish:', error);
-          resolve(false);
         }
-      })
-    ])
-    .then(([apiResult, ablyResult]) => {
-      if (apiResult && apiResult.success) {
-        console.log('Events updated successfully in cloud via API');
-      } else if (ablyResult) {
-        console.log('Events updated successfully via direct Ably publish');
-      } else {
-        console.warn('Failed to update events in cloud, but saved locally');
+      } catch (error) {
+        console.error('Error in direct Ably publish:', error);
+        resolve(false);
       }
-    })
-    .catch(error => {
-      console.error('Error broadcasting events update:', error);
     });
     
-    return true;
+    // Wait for both methods to complete
+    const [apiResult, ablyResult] = await Promise.all([primaryPromise, ablyPromise]);
+    
+    if ((apiResult && apiResult.success) || ablyResult) {
+      console.log('Events updated successfully via API or Ably');
+      return true;
+    } else {
+      console.warn('Failed to update events via API or Ably');
+      return false;
+    }
   } catch (error) {
-    console.error('Error saving events to localStorage:', error);
+    console.error('Error saving events to API:', error);
     return false;
   }
 };
 
-// Helper function to get data from localStorage
-const getEventsFromLocalStorage = () => {
+// Helper function to get data from API directly
+const getEventsFromAPI = async () => {
   try {
-    const storedEvents = localStorage.getItem('sentiaLiveEvents');
+    // Try to fetch from primary API first
+    console.log('Fetching events from primary API');
     
-    if (!storedEvents) {
-      return [];
+    try {
+      const response = await fetch('https://sentia-admin.onrender.com/api/events/getAll', {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Cache-Control': 'no-cache',
+        },
+        cache: 'no-store' // Force fresh request
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        if (data && data.events && Array.isArray(data.events)) {
+          console.log('Successfully fetched', data.events.length, 'events from primary API');
+          
+          // Add type property to events if not present
+          const eventsWithTypes = data.events.map(event => {
+            if (event.type) return event;
+            
+            if (event.parentEvent) {
+              return { ...event, type: 'team' };
+            } else {
+              return { ...event, type: 'mainEvent' };
+            }
+          });
+          
+          return eventsWithTypes;
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching from primary API:', error);
     }
     
-    const parsedEvents = JSON.parse(storedEvents);
+    // If primary API fails, try fallback API
+    console.log('Fetching events from fallback API');
     
-    // Extra safety check - ensure we're not loading default team names
-    const defaultTeamNames = ["Tech Titans", "Elegance Elite", "Bhangra Beats", "Fusion Flames"];
-    const hasDefaultTeams = parsedEvents.some(event => 
-      defaultTeamNames.includes(event.name) || defaultTeamNames.includes(event.event)
-    );
-    
-    if (hasDefaultTeams) {
-      console.log('Default teams detected in admin panel, removing them');
-      // Remove default teams
-      const filteredEvents = parsedEvents.filter(event => 
-        !defaultTeamNames.includes(event.name) && !defaultTeamNames.includes(event.event)
-      );
+    try {
+      const response = await fetch('https://sentia-api.onrender.com/api/events/getAll', {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Cache-Control': 'no-cache',
+        },
+        cache: 'no-store' // Force fresh request
+      });
       
-      if (filteredEvents.length === 0) {
-        // If all events were defaults, clear the localStorage
-        localStorage.removeItem('sentiaLiveEvents');
-        localStorage.removeItem('sentiaEvents');
-        return [];
+      if (response.ok) {
+        const data = await response.json();
+        if (data && data.events && Array.isArray(data.events)) {
+          console.log('Successfully fetched', data.events.length, 'events from fallback API');
+          
+          // Add type property to events if not present
+          const eventsWithTypes = data.events.map(event => {
+            if (event.type) return event;
+            
+            if (event.parentEvent) {
+              return { ...event, type: 'team' };
+            } else {
+              return { ...event, type: 'mainEvent' };
+            }
+          });
+          
+          return eventsWithTypes;
+        }
       }
-      
-      // Save the filtered events back to localStorage
-      saveEventsToLocalStorage(filteredEvents);
-      return filteredEvents;
+    } catch (error) {
+      console.error('Error fetching from fallback API:', error);
     }
     
-    // Ensure all events have a type property
-    return parsedEvents.map(event => {
-      // If item already has a type, keep it
-      if (event.type) {
-        return event;
-      }
-      
-      // Otherwise, determine if it's a main event or team based on structure
-      if (event.parentEvent) {
-        return { ...event, type: 'team' };
-      } else {
-        return { ...event, type: 'mainEvent' };
-      }
-    });
+    // If all API calls fail, return default events only as a last resort
+    return [];
   } catch (error) {
-    console.error('Error parsing stored events:', error);
+    console.error('Error in getEventsFromAPI:', error);
     return [];
   }
 };
@@ -174,7 +200,7 @@ const getVideoSource = (videoType) => {
 };
 
 export function AdminHome() {
-  const [events, setEvents] = useState(getEventsFromLocalStorage);
+  const [events, setEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [newEvent, setNewEvent] = useState({
     name: '',
@@ -214,6 +240,9 @@ export function AdminHome() {
   
   // Add state for Events View editor
   const [nextEvent, setNextEvent] = useState('Coming up next');
+
+  // Add state for loading
+  const [isDataLoading, setIsDataLoading] = useState(true);
   
   const navigate = useNavigate();
   
@@ -251,10 +280,119 @@ export function AdminHome() {
     checkAuth();
   }, [navigate]);
   
-  // Save events to localStorage whenever they change
+  // Fetch events from API on load
   useEffect(() => {
-    saveEventsToLocalStorage(events);
-  }, [events]);
+    const fetchEventsData = async () => {
+      setIsDataLoading(true);
+      try {
+        const apiEvents = await getEventsFromAPI();
+        if (apiEvents && apiEvents.length > 0) {
+          setEvents(apiEvents);
+        }
+      } catch (error) {
+        console.error('Error fetching events data:', error);
+      } finally {
+        setIsDataLoading(false);
+      }
+    };
+    
+    fetchEventsData();
+  }, []);
+  
+  // Set up Ably for real-time updates
+  useEffect(() => {
+    // Get the Ably channel
+    const channel = ablyClient.channels.get(EVENTS_CHANNEL);
+    
+    // Ensure channel is attached
+    if (channel.state !== 'attached') {
+      channel.attach();
+    }
+    
+    // Handle Ably real-time updates
+    const handleAllEventsUpdated = (message) => {
+      if (message.data && message.data.events && Array.isArray(message.data.events)) {
+        console.log('Received real-time events update:', message.data.events.length, 'events');
+        setEvents(message.data.events);
+      }
+    };
+    
+    const handleEventAdded = (message) => {
+      if (message.data && message.data.event) {
+        console.log('Received real-time event added:', message.data.event);
+        setEvents(prev => {
+          // Check if event already exists to prevent duplicates
+          const exists = prev.some(e => e.id === message.data.event.id);
+          if (exists) {
+            return prev.map(e => e.id === message.data.event.id ? message.data.event : e);
+          } else {
+            return [...prev, message.data.event];
+          }
+        });
+      }
+    };
+    
+    const handleEventUpdated = (message) => {
+      if (message.data && message.data.event) {
+        console.log('Received real-time event update:', message.data.event);
+        setEvents(prev => prev.map(e => 
+          e.id === message.data.event.id ? message.data.event : e
+        ));
+      }
+    };
+    
+    const handleEventDeleted = (message) => {
+      if (message.data && message.data.eventId) {
+        console.log('Received real-time event deletion:', message.data.eventId);
+        setEvents(prev => prev.filter(e => e.id !== message.data.eventId));
+      }
+    };
+    
+    const handleEventStatusChanged = (message) => {
+      if (message.data && message.data.eventId && message.data.newStatus) {
+        console.log('Received real-time status change:', message.data.eventId, message.data.newStatus);
+        setEvents(prev => prev.map(e => 
+          e.id === message.data.eventId ? { ...e, status: message.data.newStatus } : e
+        ));
+      }
+    };
+    
+    // Subscribe to all event types
+    channel.subscribe(ALL_EVENTS_UPDATED, handleAllEventsUpdated);
+    channel.subscribe(EVENT_ADDED, handleEventAdded);
+    channel.subscribe(EVENT_UPDATED, handleEventUpdated);
+    channel.subscribe(EVENT_DELETED, handleEventDeleted);
+    channel.subscribe(EVENT_STATUS_CHANGED, handleEventStatusChanged);
+    
+    // Set up periodic API refresh as a backup
+    const refreshInterval = setInterval(async () => {
+      try {
+        const apiEvents = await getEventsFromAPI();
+        if (apiEvents && apiEvents.length > 0) {
+          setEvents(apiEvents);
+        }
+      } catch (error) {
+        console.error('Error in periodic refresh:', error);
+      }
+    }, 60000); // Refresh every minute
+    
+    // Cleanup function
+    return () => {
+      channel.unsubscribe(ALL_EVENTS_UPDATED, handleAllEventsUpdated);
+      channel.unsubscribe(EVENT_ADDED, handleEventAdded);
+      channel.unsubscribe(EVENT_UPDATED, handleEventUpdated);
+      channel.unsubscribe(EVENT_DELETED, handleEventDeleted);
+      channel.unsubscribe(EVENT_STATUS_CHANGED, handleEventStatusChanged);
+      clearInterval(refreshInterval);
+    };
+  }, []);
+  
+  // Save events to API whenever they change - replace the localStorage effect
+  useEffect(() => {
+    if (events.length > 0 && !isDataLoading) {
+      saveEventsToAPI(events);
+    }
+  }, [events, isDataLoading]);
   
   // Effect for rotating between events and teams views in the preview tab
   useEffect(() => {
@@ -630,8 +768,8 @@ export function AdminHome() {
     );
   };
   
-  // Function to add a new event
-  const handleAddEvent = (e) => {
+  // Function to add a new event - update to use API directly
+  const handleAddEvent = async (e) => {
     e.preventDefault();
     
     // Check if we've reached the limit of 4 main events
@@ -652,11 +790,16 @@ export function AdminHome() {
     // Add the new event to the events array
     const updatedEvents = [...events, newEventWithId];
     
-    // Update state and save to localStorage/frontend
+    // Update state
     setEvents(updatedEvents);
-    const saved = saveEventsToLocalStorage(updatedEvents);
     
-    if (saved) {
+    // Save to API and broadcast update
+    const saved = await saveEventsToAPI(updatedEvents);
+    
+    // Also send individual event update for better real-time experience
+    const eventAdded = await apiService.addEvent(newEventWithId);
+    
+    if (saved || eventAdded) {
       // Reset the form
       setNewEvent({
         name: '',
@@ -673,8 +816,8 @@ export function AdminHome() {
     }
   };
   
-  // Function to add a new team
-  const handleAddTeam = (e) => {
+  // Function to add a new team - update to use API directly
+  const handleAddTeam = async (e) => {
     e.preventDefault();
     
     // Make sure a parent event is selected
@@ -683,10 +826,10 @@ export function AdminHome() {
       return;
     }
     
-    // Check if we've reached the limit of 4 teams
+    // Check if we've reached the limit of 8 teams (increased from 4)
     const teamsCount = events.filter(event => event.type === 'team').length;
-    if (teamsCount >= 4) {
-      showToast('Maximum of 4 teams allowed', 'error');
+    if (teamsCount >= 8) {
+      showToast('Maximum of 8 teams allowed', 'error');
       return;
     }
     
@@ -702,11 +845,16 @@ export function AdminHome() {
     // Add the new team to the events array
     const updatedEvents = [...events, newTeamWithId];
     
-    // Update state and save to localStorage/frontend
+    // Update state
     setEvents(updatedEvents);
-    const saved = saveEventsToLocalStorage(updatedEvents);
     
-    if (saved) {
+    // Save to API and broadcast update
+    const saved = await saveEventsToAPI(updatedEvents);
+    
+    // Also send individual event update for better real-time experience
+    const teamAdded = await apiService.addEvent(newTeamWithId);
+    
+    if (saved || teamAdded) {
       // Reset the form
       setNewTeam({
         name: '',
@@ -724,7 +872,8 @@ export function AdminHome() {
     }
   };
   
-  const handleDeleteEvent = (id) => {
+  // Update the delete event handler to use API
+  const handleDeleteEvent = async (id) => {
     if (window.confirm('Are you sure you want to delete this item?')) {
       // Determine if this is a main event
       const isMainEvent = events.find(e => e.id === id)?.type === 'mainEvent';
@@ -740,11 +889,16 @@ export function AdminHome() {
           !(event.type === 'team' && event.parentEvent === mainEventName)
         );
         
-        // Update state and save to localStorage/frontend
+        // Update state
         setEvents(updatedEvents);
-        const saved = saveEventsToLocalStorage(updatedEvents);
         
-        if (saved) {
+        // Save to API and broadcast update
+        const saved = await saveEventsToAPI(updatedEvents);
+        
+        // Also send individual delete event for better real-time experience
+        const deleted = await apiService.deleteEvent(id);
+        
+        if (saved || deleted) {
           showToast('Event and associated teams deleted', 'success');
         } else {
           showToast('Failed to delete event. Please try again.', 'error');
@@ -753,11 +907,16 @@ export function AdminHome() {
         // Just delete the individual item (team)
         updatedEvents = events.filter(event => event.id !== id);
         
-        // Update state and save to localStorage/frontend
+        // Update state
         setEvents(updatedEvents);
-        const saved = saveEventsToLocalStorage(updatedEvents);
         
-        if (saved) {
+        // Save to API and broadcast update
+        const saved = await saveEventsToAPI(updatedEvents);
+        
+        // Also send individual delete event for better real-time experience
+        const deleted = await apiService.deleteEvent(id);
+        
+        if (saved || deleted) {
           showToast('Team deleted successfully', 'success');
         } else {
           showToast('Failed to delete team. Please try again.', 'error');
@@ -788,8 +947,8 @@ export function AdminHome() {
     setIsTeamFormVisible(false);
   };
   
-  // Function to update an event's status
-  const updateEventStatus = (id, newStatus) => {
+  // Update the status update handler to use API
+  const updateEventStatus = async (id, newStatus) => {
     try {
       // Create a copy of the events array with the updated status
       const updatedEvents = events.map(event => {
@@ -802,10 +961,13 @@ export function AdminHome() {
       // Update state
       setEvents(updatedEvents);
       
-      // Save to localStorage and update frontend
-      const saved = saveEventsToLocalStorage(updatedEvents);
+      // Save to API and broadcast update
+      const saved = await saveEventsToAPI(updatedEvents);
       
-      if (saved) {
+      // Also send individual status update for better real-time experience
+      const statusUpdated = await apiService.updateEventStatus(id, newStatus);
+      
+      if (saved || statusUpdated) {
         // Show success message
         showToast(`Status updated to ${newStatus}`, 'success');
         return true;
