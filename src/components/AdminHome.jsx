@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import apiService from '../utils/apiService';
 import ablyClient from '../utils/ablyClient';
+import { EVENTS_CHANNEL, EVENT_UPDATED, EVENT_ADDED, EVENT_DELETED, EVENT_STATUS_CHANGED, ALL_EVENTS_UPDATED } from '../utils/ably';
 
 // Import any required video assets
 import drum from '/assets/drum.mp4';
@@ -14,7 +15,7 @@ const saveEventsToAPI = async (events) => {
   try {
     // Verify we have valid events before saving
     if (!Array.isArray(events)) {
-      console.error('Invalid events data: not an array');
+      console.error('AdminHome: Invalid events data: not an array');
       return false;
     }
     
@@ -28,56 +29,78 @@ const saveEventsToAPI = async (events) => {
     // Sort events by status priority for better display
     const sortedEvents = sortEvents(eventsWithTimestamp);
     
-    console.log(`Saving ${sortedEvents.length} events to API`);
+    console.log(`AdminHome: Saving ${sortedEvents.length} events`);
     
-    // Send events to both API endpoints to ensure they're properly updated
-    const primaryPromise = apiService.updateAllEvents(sortedEvents);
-    
-    // Also try direct Ably publishing as a reliable approach
-    const ablyPromise = new Promise(resolve => {
-      try {
-        const channel = ablyClient.channels.get(EVENTS_CHANNEL);
-        if (channel.state !== 'attached') {
-          channel.attach(() => {
-            channel.publish(ALL_EVENTS_UPDATED, { events: sortedEvents }, err => {
-              if (err) {
-                console.error('Direct Ably publish failed:', err);
-                resolve(false);
-              } else {
-                console.log('Direct Ably publish succeeded');
-                resolve(true);
-              }
-            });
-          });
-        } else {
-          channel.publish(ALL_EVENTS_UPDATED, { events: sortedEvents }, err => {
+    // First and foremost, try to publish directly to Ably
+    // This is the most reliable way to ensure real-time updates
+    try {
+      console.log('AdminHome: Attempting direct Ably publish for ALL_EVENTS_UPDATED');
+      const channel = ablyClient.channels.get(EVENTS_CHANNEL);
+      
+      // Make sure channel is attached before publishing
+      if (channel.state !== 'attached') {
+        await new Promise((resolve, reject) => {
+          channel.attach((err) => {
             if (err) {
-              console.error('Direct Ably publish failed:', err);
-              resolve(false);
+              console.error('AdminHome: Error attaching to channel:', err);
+              reject(err);
             } else {
-              console.log('Direct Ably publish succeeded');
-              resolve(true);
+              console.log('AdminHome: Channel attached successfully');
+              resolve();
             }
           });
-        }
-      } catch (error) {
-        console.error('Error in direct Ably publish:', error);
-        resolve(false);
+        });
       }
-    });
-    
-    // Wait for both methods to complete
-    const [apiResult, ablyResult] = await Promise.all([primaryPromise, ablyPromise]);
-    
-    if ((apiResult && apiResult.success) || ablyResult) {
-      console.log('Events updated successfully via API or Ably');
+      
+      // Publish the update with proper error handling
+      await new Promise((resolve, reject) => {
+        console.log('AdminHome: Publishing to Ably channel', EVENTS_CHANNEL);
+        channel.publish(ALL_EVENTS_UPDATED, { events: sortedEvents }, (err) => {
+          if (err) {
+            console.error('AdminHome: Direct Ably publish failed:', err);
+            reject(err);
+          } else {
+            console.log('AdminHome: Direct Ably publish succeeded');
+            resolve();
+          }
+        });
+      });
+      
+      console.log('AdminHome: Events successfully published to Ably');
+      
+      // Also save to API as a backup (don't wait for this to complete)
+      apiService.updateAllEvents(sortedEvents).then(result => {
+        if (result && result.success) {
+          console.log('AdminHome: API update successful as well');
+        } else {
+          console.warn('AdminHome: API update failed, but Ably publish succeeded');
+        }
+      }).catch(error => {
+        console.error('AdminHome: API update error, but Ably publish succeeded:', error);
+      });
+      
       return true;
-    } else {
-      console.warn('Failed to update events via API or Ably');
-      return false;
+    } catch (ablyError) {
+      console.error('AdminHome: Error in direct Ably publish:', ablyError);
+      
+      // If Ably direct publish fails, try via API service which has its own Ably fallback
+      try {
+        console.log('AdminHome: Trying API service as fallback for publishing');
+        const result = await apiService.updateAllEvents(sortedEvents);
+        if (result && result.success) {
+          console.log('AdminHome: Events updated via API service successfully');
+          return true;
+        } else {
+          console.warn('AdminHome: API service update also failed');
+          return false;
+        }
+      } catch (apiError) {
+        console.error('AdminHome: API service update error:', apiError);
+        return false;
+      }
     }
   } catch (error) {
-    console.error('Error saving events to API:', error);
+    console.error('AdminHome: Error in saveEventsToAPI:', error);
     return false;
   }
 };
@@ -299,27 +322,44 @@ export function AdminHome() {
     fetchEventsData();
   }, []);
   
-  // Set up Ably for real-time updates
+  // Set up Ably for real-time updates with improved error handling
   useEffect(() => {
+    console.log('AdminHome: Setting up Ably channel for real-time updates');
+    
+    // Make sure Ably is connected
+    if (ablyClient.connection.state !== 'connected') {
+      console.log('AdminHome: Ably not connected, connecting now...');
+      ablyClient.connect();
+    }
+    
     // Get the Ably channel
     const channel = ablyClient.channels.get(EVENTS_CHANNEL);
     
     // Ensure channel is attached
     if (channel.state !== 'attached') {
-      channel.attach();
+      console.log('AdminHome: Channel not attached, attaching now...');
+      channel.attach((err) => {
+        if (err) {
+          console.error('AdminHome: Error attaching to channel:', err);
+        } else {
+          console.log('AdminHome: Successfully attached to Ably channel');
+        }
+      });
     }
     
-    // Handle Ably real-time updates
+    // Handle Ably real-time updates with detailed logging
     const handleAllEventsUpdated = (message) => {
+      console.log('AdminHome: Received ALL_EVENTS_UPDATED event', message.id);
       if (message.data && message.data.events && Array.isArray(message.data.events)) {
-        console.log('Received real-time events update:', message.data.events.length, 'events');
+        console.log('AdminHome: Updating events array with', message.data.events.length, 'events');
         setEvents(message.data.events);
       }
     };
     
     const handleEventAdded = (message) => {
+      console.log('AdminHome: Received EVENT_ADDED event', message.id);
       if (message.data && message.data.event) {
-        console.log('Received real-time event added:', message.data.event);
+        console.log('AdminHome: Adding event:', message.data.event.name || message.data.event.id);
         setEvents(prev => {
           // Check if event already exists to prevent duplicates
           const exists = prev.some(e => e.id === message.data.event.id);
@@ -333,8 +373,9 @@ export function AdminHome() {
     };
     
     const handleEventUpdated = (message) => {
+      console.log('AdminHome: Received EVENT_UPDATED event', message.id);
       if (message.data && message.data.event) {
-        console.log('Received real-time event update:', message.data.event);
+        console.log('AdminHome: Updating event:', message.data.event.name || message.data.event.id);
         setEvents(prev => prev.map(e => 
           e.id === message.data.event.id ? message.data.event : e
         ));
@@ -342,15 +383,17 @@ export function AdminHome() {
     };
     
     const handleEventDeleted = (message) => {
+      console.log('AdminHome: Received EVENT_DELETED event', message.id);
       if (message.data && message.data.eventId) {
-        console.log('Received real-time event deletion:', message.data.eventId);
+        console.log('AdminHome: Deleting event with ID:', message.data.eventId);
         setEvents(prev => prev.filter(e => e.id !== message.data.eventId));
       }
     };
     
     const handleEventStatusChanged = (message) => {
+      console.log('AdminHome: Received EVENT_STATUS_CHANGED event', message.id);
       if (message.data && message.data.eventId && message.data.newStatus) {
-        console.log('Received real-time status change:', message.data.eventId, message.data.newStatus);
+        console.log('AdminHome: Changing event status:', message.data.eventId, 'to', message.data.newStatus);
         setEvents(prev => prev.map(e => 
           e.id === message.data.eventId ? { ...e, status: message.data.newStatus } : e
         ));
@@ -358,32 +401,35 @@ export function AdminHome() {
     };
     
     // Subscribe to all event types
+    console.log('AdminHome: Subscribing to event channels');
     channel.subscribe(ALL_EVENTS_UPDATED, handleAllEventsUpdated);
     channel.subscribe(EVENT_ADDED, handleEventAdded);
     channel.subscribe(EVENT_UPDATED, handleEventUpdated);
     channel.subscribe(EVENT_DELETED, handleEventDeleted);
     channel.subscribe(EVENT_STATUS_CHANGED, handleEventStatusChanged);
     
-    // Set up periodic API refresh as a backup
-    const refreshInterval = setInterval(async () => {
-      try {
-        const apiEvents = await getEventsFromAPI();
-        if (apiEvents && apiEvents.length > 0) {
-          setEvents(apiEvents);
-        }
-      } catch (error) {
-        console.error('Error in periodic refresh:', error);
+    // Set up heartbeat to check Ably connection every 10 seconds
+    const heartbeatInterval = setInterval(() => {
+      if (channel.state !== 'attached') {
+        console.log('AdminHome heartbeat: Channel not attached, reattaching...');
+        channel.attach();
       }
-    }, 60000); // Refresh every minute
+      
+      if (ablyClient.connection.state !== 'connected') {
+        console.log('AdminHome heartbeat: Ably not connected, reconnecting...');
+        ablyClient.connect();
+      }
+    }, 10000);
     
     // Cleanup function
     return () => {
+      console.log('AdminHome: Cleaning up Ably subscriptions');
       channel.unsubscribe(ALL_EVENTS_UPDATED, handleAllEventsUpdated);
       channel.unsubscribe(EVENT_ADDED, handleEventAdded);
       channel.unsubscribe(EVENT_UPDATED, handleEventUpdated);
       channel.unsubscribe(EVENT_DELETED, handleEventDeleted);
       channel.unsubscribe(EVENT_STATUS_CHANGED, handleEventStatusChanged);
-      clearInterval(refreshInterval);
+      clearInterval(heartbeatInterval);
     };
   }, []);
   

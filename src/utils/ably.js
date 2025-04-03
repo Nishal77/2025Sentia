@@ -1,6 +1,6 @@
 // Ably configuration
 export const ABLY_CONFIG = {
-  api_key: "TejSQw.Me5e8A:uP3cFGffiIKloex2SLWZZabVLxxZYJmOEmor8mZB3Fs"
+  api_key: import.meta.env.VITE_ABLY_API_KEY || "TejSQw.Me5e8A:uP3cFGffiIKloex2SLWZZabVLxxZYJmOEmor8mZB3Fs"
 };
 
 // Event channels and names - keeping the same names for compatibility

@@ -1,6 +1,9 @@
 import * as Ably from 'ably';
 import { ABLY_CONFIG } from './ably';
 
+// Log Ably configuration (without sensitive data) for debugging
+console.log('Initializing Ably with client ID:', 'sentia-client-' + Math.random().toString(36).substring(2, 6) + '...');
+
 // Initialize Ably with the provided configuration and improved options
 const ablyClient = new Ably.Realtime({
   key: ABLY_CONFIG.api_key,

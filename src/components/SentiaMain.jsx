@@ -4,26 +4,14 @@ import { HeroSection } from "./HeroSection";
 import Events from "./events";
 import { Link } from "react-router-dom";
 import Footer from "./Footer";
-import ablyClient from "../utils/ablyClient";
-import {
-  EVENTS_CHANNEL,
-  ALL_EVENTS_UPDATED,
-  EVENT_ADDED,
-  EVENT_UPDATED,
-  EVENT_DELETED,
-  EVENT_STATUS_CHANGED,
-} from "../utils/ably";
 import Countdown, { MiniCountdown } from "./Countdown";
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "./ui/table";
 
 import Sonisoni from "../assets/Songs/Sonisoni.mp3";
 import WhatJhumka from "../assets/Songs/WhatJhumka320.mp3";
 import TheBreakupSong from "../assets/Songs/TheBreakupSong.mp3";
 
-// Replace this line
-// import Sentia2025 from '../assets/Sentia2025.mp4';
-
-// With Cloudinary video URL
-// import Sentia2025 from '../assets/Sentia2025.mp4'; // Removed local import
+// Media files from Cloudinary
 const Sentia2025 =
   "https://res.cloudinary.com/dqmryiyhz/video/upload/v1742270393/sentia/xlnc53qccudeyxw96g1l.mp4";
 
@@ -39,26 +27,7 @@ const contacts = [
   { name: "Sanjana", phone: "+91 9606632307" },
 ];
 
-// Cloudinary URL for SentiaDressUpdate
-//const SentiaDressUpdate = 'https://res.cloudinary.com/dqmryiyhz/video/upload/v1742054083/sentia/sitpekusuf2gx3gcghse.mp4';
-
 import jonithaspotify from "/assets/jonithaspotify.jpeg";
-
-// Remove local image imports
-// import image1 from '../assets/sentia2024/image1.jpg';
-// import image2 from '../assets/sentia2024/image2.jpg';
-// import image3 from '../assets/sentia2024/image3.jpg';
-// import image4 from '../assets/sentia2024/image4.jpg';
-// import image5 from '../assets/sentia2024/image5.jpg';
-// import image6 from '../assets/sentia2024/image6.jpg';
-// import image7 from '../assets/sentia2024/image7.jpg';
-// import image8 from '../assets/sentia2024/image8.jpg';
-// import image9 from '../assets/sentia2024/image9.jpg';
-// import image10 from '../assets/sentia2024/image10.jpg';
-// import image11 from '../assets/sentia2024/image11.jpg';
-// import image12 from '../assets/sentia2024/image12.jpg';
-// import image13 from '../assets/sentia2024/image13.jpg';
-// import image14 from '../assets/sentia2024/image14.jpg';
 
 // Cloudinary image URLs for event gallery
 const eventImageUrls = [
@@ -92,57 +61,6 @@ const oldmitefestivals = [
     image: "/assets/OldMite/image5.jpg",
   },
 ];
-// Get teams from localStorage only - NEVER use default data
-const getTeamsFromStorage = () => {
-  try {
-    const storedEvents = localStorage.getItem('sentiaLiveEvents');
-    if (!storedEvents) {
-      return [];
-    }
-    
-    // Parse the events
-    const parsedEvents = JSON.parse(storedEvents);
-    
-    // Extra safety check - if the parsed events contain our known default team names,
-    // we'll return an empty array to force admin panel data entry
-    const defaultTeamNames = ["Tech Titans", "Elegance Elite", "Bhangra Beats", "Fusion Flames"];
-    const hasDefaultTeams = parsedEvents.some(event => 
-      defaultTeamNames.includes(event.name) || defaultTeamNames.includes(event.event)
-    );
-    
-    if (hasDefaultTeams) {
-      // Clear localStorage if default teams are found
-      localStorage.removeItem('sentiaLiveEvents');
-      localStorage.removeItem('sentiaEvents');
-      console.log('Default teams detected and removed from storage');
-      return [];
-    }
-    
-    return parsedEvents;
-  } catch (error) {
-    console.error('Error loading events from storage:', error);
-    // Clear localStorage on error to be safe
-    localStorage.removeItem('sentiaLiveEvents');
-    localStorage.removeItem('sentiaEvents');
-    return [];
-  }
-};
-
-// Function to get the correct video source based on the team's video field
-const getVideoSource = (videoType) => {
-  switch (videoType) {
-    case "drum":
-      return drum;
-    case "fashionwalk":
-      return fashionwalk;
-    case "robowars":
-      return robowars;
-    case "dance":
-      return dance;
-    default:
-      return drum; // Default fallback
-  }
-};
 
 // Add these optimizations to SentiaMain.jsx
 
@@ -250,9 +168,73 @@ class MediaManager {
 
 export default new MediaManager();
 
+// Add this live events data
+const liveEventsData = [
+  {
+    id: 1,
+    name: "Eastern Dance",
+    venue: "Main Stage",
+    status: "Coming Up",
+    isLive: true,
+    imageUrl: "/assets/eventslogo/eastern.png"
+  },
+  {
+    id: 2,
+    name: "Western Dance",
+    venue: "Main Stage",
+    status: "Coming up",
+    isLive: true,
+    imageUrl: "/assets/eventslogo/western.png"
+  }
+  // {
+  //   id: 3,
+  //   name: "Robo Wars & Robo Soccer",
+  //   venue: "Student Center - SC105",
+  //   status: "ENDED",
+  //   isLive: false
+  // },
+  // {
+  //   id: 4,
+  //   name: "Eastern and Western Dance",
+  //   venue: "Science Block - PHY303",
+  //   status: "ENDED",
+  //   isLive: false
+  // }
+];
+
+const upcomingEvents = [
+  {
+    id: 1,
+    name: "Quiz Quest",
+    time: "13:00",
+    venue: "PG Block - MCA102"
+  }
+];
+
+// Add thumbnail images for events
+const eventThumbnails = {
+  "Battle of Bands": "https://res.cloudinary.com/dqmryiyhz/image/upload/v1742054297/sentia/kxtpcfe7qro7ngmteueh.jpg",
+  "Fashion Walk": "https://res.cloudinary.com/dqmryiyhz/image/upload/v1742054298/sentia/ai9ds3vlcb2mhyexwcci.jpg",
+  "Robo Wars & Robo Soccer": "https://res.cloudinary.com/dqmryiyhz/image/upload/v1742054299/sentia/dthrxfpl9giyiavfdvhv.jpg",
+  "Eastern and Western Dance": "https://res.cloudinary.com/dqmryiyhz/image/upload/v1742399128/sentia/kh6o1rywyhifbekfscih.jpg",
+  "Eastern Dance": "/assets/eastern.png",
+  "Western Dance": "/assets/western.png"
+};
+
+// Update performing teams data with only dance performances
+const performingTeams = [
+  { id: 1, name: "Fusion Crew", status: "LIVE" },
+  { id: 2, name: "Rhythmic Flow", status: "ENDED" },
+  { id: 3, name: "Groove Masters", status: "UPNEXT" },
+  { id: 4, name: "Motion Mavericks", status: "BE READY" },
+  { id: 5, name: "Step Squad" },
+  { id: 6, name: "Dance Dynasty" },
+  { id: 7, name: "Beat Breakers" },
+  { id: 8, name: "Twist Titans" }
+];
+
 export function SentiaMain() {
   const [activeView, setActiveView] = useState("events");
-  const [events, setEvents] = useState([]);
   const [isVideoHovered, setIsVideoHovered] = useState(false);
   const [currentAudio, setCurrentAudio] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -269,6 +251,13 @@ export function SentiaMain() {
   // State for contact popup
   const [isContactPopupOpen, setIsContactPopupOpen] = useState(false);
   const [randomContacts, setRandomContacts] = useState([]);
+
+  // Add state to track which tab is active
+  const [activeTab, setActiveTab] = useState("events"); // "events" or "teams"
+
+  // Add state to track animation status
+  const [isAnimating, setIsAnimating] = useState(false);
+  const animationTimeoutRef = useRef(null);
 
   // Modify the initialization code to check for screen size popup
   useEffect(() => {
@@ -403,7 +392,6 @@ export function SentiaMain() {
   });
 
   // Live events slider state
-  const [liveEventsView, setLiveEventsView] = useState("events"); // 'events' or 'teams'
   const [liveEventsVisible, setLiveEventsVisible] = useState(true);
 
   const intervalRef = useRef(null);
@@ -441,30 +429,6 @@ export function SentiaMain() {
     // Cleanup on unmount or when dependency changes
     return clearSliderInterval;
   }, [eventImages.length, isAnyVideoHovered]);
-
-  // Effect to toggle between events view and teams view every 4 seconds
-  useEffect(() => {
-    if (!isAnyVideoHovered) {
-      const viewChangeInterval = setInterval(() => {
-        // Fade out
-        setLiveEventsVisible(false);
-
-        // Change view after fade-out effect
-        sliderTimeoutRef.current = setTimeout(() => {
-          setLiveEventsView((prev) => (prev === "events" ? "teams" : "events"));
-          // Fade in
-          setLiveEventsVisible(true);
-        }, 300);
-      }, 4000); // Switch every 4 seconds
-
-      return () => {
-        clearInterval(viewChangeInterval);
-        if (sliderTimeoutRef.current) {
-          clearTimeout(sliderTimeoutRef.current);
-        }
-      };
-    }
-  }, [isAnyVideoHovered]);
 
   // Handle play/pause functionality
   const togglePlay = () => {
@@ -591,488 +555,6 @@ export function SentiaMain() {
     };
   }, [isPlaying]);
 
-  // Function to render events view with thumbnails
-  const renderEventsView = () => {
-    if (noEventsData || !events || events.length === 0) {
-      return (
-        <div className="p-4 flex flex-col items-center justify-center h-full text-center">
-          <svg 
-            xmlns="http://www.w3.org/2000/svg" 
-            className="h-10 w-10 mb-3 text-indigo-600" 
-            fill="none" 
-            viewBox="0 0 24 24" 
-            stroke="currentColor"
-          >
-            <path 
-              strokeLinecap="round" 
-              strokeLinejoin="round" 
-              strokeWidth={1.5} 
-              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" 
-            />
-          </svg>
-          <h3 className="text-lg font-semibold mb-1">Coming Soon</h3>
-          <p className="text-gray-500">Events will be scheduled soon. Stay tuned for updates!</p>
-        </div>
-      );
-    }
-    
-    // For when we have events data
-    return (
-      <div className="p-4">
-        {/* Filter events by the active view */}
-        {filteredEvents.map((event, index) => (
-          <div key={index} className="mb-4">
-            <h3>{event.name || event.event}</h3>
-            <p>{event.description}</p>
-            {event.location && <p>Location: {event.location}</p>}
-            {event.time && <p>Time: {event.time}</p>}
-            {event.team && <p>Team: {event.team}</p>}
-          </div>
-        ))}
-      </div>
-    );
-  };
-
-  // Function to render teams view with list
-  const renderTeamsView = () => {
-    if (noEventsData || !events || events.length === 0) {
-      return (
-        <div className="p-4 flex flex-col items-center justify-center h-full text-center">
-          <svg 
-            xmlns="http://www.w3.org/2000/svg" 
-            className="h-10 w-10 mb-3 text-indigo-600" 
-            fill="none" 
-            viewBox="0 0 24 24" 
-            stroke="currentColor"
-          >
-            <path 
-              strokeLinecap="round" 
-              strokeLinejoin="round" 
-              strokeWidth={1.5} 
-              d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" 
-            />
-          </svg>
-          <h3 className="text-lg font-semibold mb-1">Teams Coming Soon</h3>
-          <p className="text-gray-500">Teams will be announced soon. Stay tuned for updates!</p>
-        </div>
-      );
-    }
-
-    // Group by team name
-    const teams = {};
-    events.forEach((event) => {
-      // Use team or performing team field
-      const teamName = event.team || event.performingTeam || "Unknown Team";
-      if (!teams[teamName]) {
-        teams[teamName] = [];
-      }
-      teams[teamName].push(event);
-    });
-
-    return (
-      <div className="p-4">
-        {Object.keys(teams).map((teamName, index) => (
-          <div key={index} className="mb-4">
-            <h3>{teamName}</h3>
-            <p>Events: {teams[teamName].length}</p>
-            {teams[teamName].map((event, eventIndex) => (
-              <div key={eventIndex} className="ml-4 mt-1">
-                <p>{event.name || event.event}</p>
-              </div>
-            ))}
-          </div>
-        ))}
-      </div>
-    );
-  };
-
-  // Function to manually change live events view
-  const changeLiveEventsView = (view) => {
-    if (view === liveEventsView) return;
-
-    // Fade out
-    setLiveEventsVisible(false);
-
-    // Change view after fade-out effect
-    setTimeout(() => {
-      setLiveEventsView(view);
-      // Fade in
-      setLiveEventsVisible(true);
-    }, 300);
-  };
-
-  const [performingTeams, setPerformingTeams] = useState([]);
-  const [noEventsData, setNoEventsData] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-
-  // Get current timestamp function
-  const getCurrentTimestamp = () => {
-    return Date.now();
-  };
-
-  // Function to get API URL with proxy if needed
-  const getProxiedApiUrl = (url) => {
-    // Check if the URL should be the new API endpoint
-    if (url.includes('sentia-api.onrender.com')) {
-      // Try the new API endpoint first
-      const newApiUrl = url.replace('sentia-api.onrender.com', 'sentia-admin.onrender.com');
-      console.log('Using updated API URL:', newApiUrl);
-      
-      // In production, try alternate approaches
-      if (window.location.hostname !== 'localhost') {
-        // First try with a reliable CORS proxy
-        return `https://api.allorigins.win/get?url=${encodeURIComponent(newApiUrl)}`;
-      }
-      // Return original URL for development
-      return newApiUrl;
-    }
-    
-    // Return original URL with proxy if needed
-    if (window.location.hostname !== 'localhost') {
-      // First try with a reliable CORS proxy
-      return `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
-    }
-    // Return original URL for development
-    return url;
-  };
-
-  // Function to safely parse JSON with error handling
-  const safeJsonParse = (text) => {
-    try {
-      // Check if the text looks like JSON before attempting to parse
-      if (typeof text === 'string' && 
-          (text.trim().startsWith('{') || text.trim().startsWith('['))) {
-        return JSON.parse(text);
-      }
-      console.error('Invalid JSON format:', text);
-      return null;
-    } catch (error) {
-      console.error('JSON parse error:', error);
-      return null;
-    }
-  };
-
-  // Try to fetch with no-cors as a last resort
-  const tryFetchNoCors = async (url) => {
-    try {
-      // This will be an opaque response we can't read from
-      // But might help with pre-fetching for cache
-      await fetch(url, { 
-        mode: 'no-cors',
-        cache: 'no-cache'
-      });
-      console.log('Sent no-cors request to warm up API');
-      return true;
-    } catch (error) {
-      console.error('Even no-cors fetch failed:', error);
-      return false;
-    }
-  };
-
-  // Fallback static data in case both API and localStorage fail
-  const FALLBACK_EVENTS = [
-    {
-      id: "fallback1",
-      title: "Dance Competition",
-      description: "Exciting dance performances from talented teams.",
-      status: "upcoming",
-      time: "10:00 AM",
-      location: "Main Auditorium",
-      date: "2025-03-15",
-      day: 1,
-      coordinator: {
-        name: "John Doe",
-        phone: "9876543210"
-      }
-    },
-    {
-      id: "fallback2",
-      title: "Battle of Bands",
-      description: "Musical showdown between college bands.",
-      status: "upcoming",
-      time: "2:00 PM",
-      location: "Open Air Theatre",
-      date: "2025-03-16",
-      day: 2,
-      coordinator: {
-        name: "Jane Smith",
-        phone: "9876543211"
-      }
-    },
-    {
-      id: "fallback3",
-      title: "Technical Symposium",
-      description: "Showcase your technical skills in this exciting competition.",
-      status: "upcoming", 
-      time: "9:00 AM",
-      location: "Seminar Hall",
-      date: "2025-03-17",
-      day: 3,
-      coordinator: {
-        name: "Alex Johnson",
-        phone: "9876543212"
-      }
-    }
-  ];
-
-  // Main function to fetch data from API
-  const fetchEventsFromAPI = async () => {
-    setIsLoading(true);
-    
-    try {
-      // Try primary API first (sentia-admin)
-      const primaryApiUrl = getProxiedApiUrl('https://sentia-admin.onrender.com/api/events/getAll');
-      console.log('Attempting to fetch from primary API:', primaryApiUrl);
-      
-      let primaryResponse;
-      try {
-        primaryResponse = await fetch(primaryApiUrl, {
-          method: 'GET',
-          headers: {
-            'Accept': 'application/json',
-            'Cache-Control': 'no-cache'
-          },
-          cache: 'no-store' // Force fresh request
-        });
-      } catch (primaryFetchError) {
-        console.error('Primary API fetch failed:', primaryFetchError);
-        throw new Error('Primary API fetch failed');
-      }
-      
-      // Check for 404 errors specifically on primary API
-      if (primaryResponse.status === 404) {
-        console.warn('Primary API endpoint not found (404), trying fallback API');
-        throw new Error('Primary API endpoint not found (404)');
-      }
-      
-      // If primary API responded successfully
-      if (primaryResponse.ok) {
-        let data;
-        
-        // Handle different proxy response formats
-        if (primaryApiUrl.includes('allorigins')) {
-          // For allorigins proxy, the response is wrapped
-          const proxyResponse = await primaryResponse.json();
-          
-          // Check if the proxy response has content
-          if (proxyResponse && typeof proxyResponse === 'object' && proxyResponse.contents) {
-            try {
-              data = JSON.parse(proxyResponse.contents);
-            } catch (parseError) {
-              console.error('Error parsing proxy response contents:', parseError);
-              throw new Error('Invalid JSON in proxy response contents');
-            }
-          } else {
-            throw new Error('Invalid proxy response format');
-          }
-        } else {
-          // Standard response
-          const responseText = await primaryResponse.text();
-          try {
-            data = JSON.parse(responseText);
-          } catch (parseError) {
-            console.error('Error parsing direct API response:', parseError);
-            throw new Error('Invalid JSON in direct API response');
-          }
-        }
-        
-        // If we got valid data from primary API
-        if (data && data.events && data.events.length > 0) {
-          console.log('Successfully fetched events from primary API:', data.events.length);
-          setPerformingTeams(data.events);
-          setNoEventsData(false);
-          setIsLoading(false);
-          return data.events;
-        } else {
-          console.warn('No events data found in primary API response');
-          throw new Error('No events data in primary API response');
-        }
-      } else {
-        console.warn(`Primary API HTTP error: ${primaryResponse.status}`);
-        throw new Error(`Primary API HTTP error: ${primaryResponse.status}`);
-      }
-    } catch (primaryError) {
-      console.error('Primary API error, trying fallback API:', primaryError);
-      
-      try {
-        // Try fallback API (sentia-api)
-        const fallbackApiUrl = getProxiedApiUrl('https://sentia-api.onrender.com/api/events/getAll');
-        console.log('Attempting to fetch from fallback API:', fallbackApiUrl);
-        
-        let fallbackResponse;
-        try {
-          fallbackResponse = await fetch(fallbackApiUrl, {
-            method: 'GET',
-            headers: {
-              'Accept': 'application/json',
-              'Cache-Control': 'no-cache'
-            },
-            cache: 'no-store' // Force fresh request
-          });
-        } catch (fallbackFetchError) {
-          console.error('Fallback API fetch failed:', fallbackFetchError);
-          throw new Error('Fallback API fetch failed');
-        }
-        
-        // Check if fallback API responded successfully
-        if (fallbackResponse.ok) {
-          let data;
-          
-          // Handle different proxy response formats
-          if (fallbackApiUrl.includes('allorigins')) {
-            // For allorigins proxy, the response is wrapped
-            const proxyResponse = await fallbackResponse.json();
-            
-            // Check if the proxy response has content
-            if (proxyResponse && typeof proxyResponse === 'object' && proxyResponse.contents) {
-              try {
-                data = JSON.parse(proxyResponse.contents);
-              } catch (parseError) {
-                console.error('Error parsing fallback proxy response contents:', parseError);
-                throw new Error('Invalid JSON in fallback proxy response contents');
-              }
-            } else {
-              throw new Error('Invalid fallback proxy response format');
-            }
-          } else {
-            // Standard response
-            const responseText = await fallbackResponse.text();
-            try {
-              data = JSON.parse(responseText);
-            } catch (parseError) {
-              console.error('Error parsing fallback direct API response:', parseError);
-              throw new Error('Invalid JSON in fallback direct API response');
-            }
-          }
-          
-          // If we got valid data from fallback API
-          if (data && data.events && data.events.length > 0) {
-            console.log('Successfully fetched events from fallback API:', data.events.length);
-            setPerformingTeams(data.events);
-            setNoEventsData(false);
-            setIsLoading(false);
-            return data.events;
-          } else {
-            console.warn('No events data found in fallback API response');
-            throw new Error('No events data in fallback API response');
-          }
-        } else {
-          console.warn(`Fallback API HTTP error: ${fallbackResponse.status}`);
-          throw new Error(`Fallback API HTTP error: ${fallbackResponse.status}`);
-        }
-      } catch (fallbackError) {
-        console.error('Both APIs failed, using fallback data:', fallbackError);
-        
-        // Try no-cors fetch as a last resort to warm up APIs
-        await tryFetchNoCors('https://sentia-admin.onrender.com/api/events/getAll');
-        await tryFetchNoCors('https://sentia-api.onrender.com/api/events/getAll');
-        
-        // Use fallback static data as last resort
-        console.log('Using static fallback data');
-        setPerformingTeams(FALLBACK_EVENTS);
-        setNoEventsData(false);
-        setIsLoading(false);
-        return FALLBACK_EVENTS;
-      }
-    }
-  };
-
-  // Setup Ably channel and fetch initial data
-  useEffect(() => {
-    console.log('Setting up Ably channel and fetching initial data');
-    
-    // Fetch events data initially
-    fetchEventsFromAPI();
-    
-    // Setup Ably channel for real-time updates
-    const channel = ablyClient.channels.get(EVENTS_CHANNEL);
-    
-    // Ensure channel is attached
-    if (channel.state !== 'attached') {
-      channel.attach();
-    }
-    
-    // Reconnect function for Ably to ensure persistent connection
-    const ensureAblyConnection = () => {
-      if (ablyClient.connection.state !== 'connected') {
-        console.log('Reconnecting to Ably...');
-        ablyClient.connect();
-      }
-      
-      if (channel.state !== 'attached') {
-        console.log('Reattaching to channel...');
-        channel.attach();
-      }
-    };
-    
-    // Set interval to check connection periodically
-    const connectionCheckInterval = setInterval(ensureAblyConnection, 30000); // Check every 30 seconds
-    
-    // Set interval to refresh data periodically even without Ably updates
-    const dataRefreshInterval = setInterval(fetchEventsFromAPI, 60000); // Refresh every 60 seconds
-
-    // Handler for when all events are updated
-    channel.subscribe(ALL_EVENTS_UPDATED, (message) => {
-      const data = message.data;
-      console.log("Real-time update: All events updated", data);
-      if (data && data.events && data.events.length > 0) {
-        setPerformingTeams(data.events);
-        setNoEventsData(false);
-      } else {
-        // If the update didn't contain valid data, fetch fresh data
-        fetchEventsFromAPI();
-      }
-    });
-
-    // Handler for when a single event is added
-    channel.subscribe(EVENT_ADDED, (message) => {
-      const data = message.data;
-      console.log("Real-time update: Event added", data);
-      
-      // Fetch all fresh data to ensure we have the complete set
-      fetchEventsFromAPI();
-    });
-
-    // Handler for when a single event is updated
-    channel.subscribe(EVENT_UPDATED, (message) => {
-      const data = message.data;
-      console.log("Real-time update: Event updated", data);
-      
-      // Fetch all fresh data to ensure we have the complete set
-      fetchEventsFromAPI();
-    });
-
-    // Handler for when a single event is deleted
-    channel.subscribe(EVENT_DELETED, (message) => {
-      const data = message.data;
-      console.log("Real-time update: Event deleted", data);
-      
-      // Fetch all fresh data to ensure we have the complete set
-      fetchEventsFromAPI();
-    });
-
-    // Handler for when an event status is changed
-    channel.subscribe(EVENT_STATUS_CHANGED, (message) => {
-      const data = message.data;
-      console.log("Real-time update: Event status changed", data);
-      
-      // Fetch all fresh data to ensure we have the complete set
-      fetchEventsFromAPI();
-    });
-
-    // Cleanup function
-    return () => {
-      clearInterval(connectionCheckInterval);
-      clearInterval(dataRefreshInterval);
-      
-      channel.unsubscribe(ALL_EVENTS_UPDATED);
-      channel.unsubscribe(EVENT_ADDED);
-      channel.unsubscribe(EVENT_UPDATED);
-      channel.unsubscribe(EVENT_DELETED);
-      channel.unsubscribe(EVENT_STATUS_CHANGED);
-    };
-  }, []);
-
   // Function to manually close the popup
   const closeScreenSizePopup = () => {
     setShowScreenSizePopup(false);
@@ -1117,6 +599,93 @@ export function SentiaMain() {
       if (popupTimer) {
         clearTimeout(popupTimer);
       }
+    };
+  }, []);
+
+  // Add useEffect for automatic tab switching
+  useEffect(() => {
+    const tabInterval = setInterval(() => {
+      // Start animation
+      setIsAnimating(true);
+      
+      // Set a small delay before actually changing tabs to let animation start
+      animationTimeoutRef.current = setTimeout(() => {
+        setActiveTab(prev => prev === "events" ? "teams" : "events");
+        
+        // Allow some time for the entrance animation before setting isAnimating to false
+        setTimeout(() => {
+          setIsAnimating(false);
+        }, 500); // Increased for smoother animation
+      }, 500); // Increased for smoother animation
+    }, 5000); // Changed from 4000 to 5000 (5 seconds)
+    
+    return () => {
+      clearInterval(tabInterval);
+      if (animationTimeoutRef.current) {
+        clearTimeout(animationTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  // Function to handle manual tab changing with animation
+  const changeTab = (tab) => {
+    if (isAnimating || tab === activeTab) return;
+    
+    setIsAnimating(true);
+    
+    animationTimeoutRef.current = setTimeout(() => {
+      setActiveTab(tab);
+      
+      setTimeout(() => {
+        setIsAnimating(false);
+      }, 500); // Increased for smoother animation
+    }, 500); // Increased for smoother animation
+  };
+
+  // Define animation styles
+  const animationStyles = `
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateX(20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    
+    @keyframes fadeOut {
+      from { opacity: 1; transform: translateX(0); }
+      to { opacity: 0; transform: translateX(-20px); }
+    }
+    
+    .duration-600 {
+      transition-duration: 800ms;
+    }
+    
+    /* Custom scrollbar styles */
+    .thin-scrollbar::-webkit-scrollbar {
+      width: 4px;
+    }
+    
+    .thin-scrollbar::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.05);
+      border-radius: 10px;
+    }
+    
+    .thin-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(107, 70, 193, 0.3);
+      border-radius: 10px;
+    }
+    
+    .thin-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: rgba(107, 70, 193, 0.5);
+    }
+  `;
+  
+  // Add styles to document
+  useEffect(() => {
+    const styleElement = document.createElement('style');
+    styleElement.textContent = animationStyles;
+    document.head.appendChild(styleElement);
+    
+    return () => {
+      document.head.removeChild(styleElement);
     };
   }, []);
 
@@ -1204,69 +773,14 @@ export function SentiaMain() {
           {/* Middle Row - Speakers, Agenda, and Workshops */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Live Events Card with Slider */}
-            <div className="bg-white p-5 rounded-lg shadow-sm min-h-[400px] flex flex-col">
-              <div className="flex items-center gap-2 mb-3">
-                <h2 className="text-xl font-bold flex items-center justify-between font-panchang">
-                  <div className="flex items-center">
-                    <span className="bg-gradient-to-r from-red-600 to-red-400 bg-clip-text text-transparent">
-                      Live
-                    </span>
-                    <span className="text-black ml-1">Events</span>
-                  </div>
-                  <div className="relative flex items-center justify-center ml-4">
-                    {/* Outer glow effect */}
-                    <span className="absolute w-8 h-8 rounded-full bg-red-500/10 animate-[ping_2s_ease-in-out_infinite]"></span>
-                    {/* Middle glow */}
-                    <span className="absolute w-6 h-6 rounded-full bg-red-500/20 animate-[ping_2s_ease-in-out_infinite] delay-100"></span>
-                    {/* Inner glow */}
-                    <span className="absolute w-5 h-5 rounded-full bg-red-500/30 animate-pulse"></span>
-                    {/* Core dot */}
-                    <span className="relative w-4 h-4 bg-red-500 rounded-full shadow-[0_0_25px_rgba(255,0,0,0.9)] animate-blink"></span>
-                    {/* Bright center highlight */}
-                    <span className="absolute w-2 h-2 bg-red-300 rounded-full blur-[2px] animate-blink"></span>
-                   
-                  </div>
-                </h2>
-              </div>
-
-              {/* Slider content with transition */}
-              <div className="flex-grow relative">
-                <div
-                  className={`absolute inset-0 transition-opacity duration-500 ease-in-out ${
-                    liveEventsVisible ? "opacity-100" : "opacity-0"
-                  }`}
-                >
-                  {liveEventsView === "events"
-                    ? renderEventsView()
-                    : renderTeamsView()}
-                </div>
-              </div>
-
-              {/* Navigation dots */}
-              <div className="flex justify-center gap-2 mt-4 pt-2">
-                <button
-                  className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                    liveEventsView === "events"
-                      ? "bg-red-500 scale-110"
-                      : "bg-gray-300 hover:bg-gray-400"
-                  }`}
-                  onClick={() => changeLiveEventsView("events")}
-                  aria-label="View events"
-                  onMouseEnter={() => setIsAnyVideoHovered(true)}
-                  onMouseLeave={() => setIsAnyVideoHovered(false)}
-                />
-                <button
-                  className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                    liveEventsView === "teams"
-                      ? "bg-red-500 scale-110"
-                      : "bg-gray-300 hover:bg-gray-400"
-                  }`}
-                  onClick={() => changeLiveEventsView("teams")}
-                  aria-label="View teams"
-                  onMouseEnter={() => setIsAnyVideoHovered(true)}
-                  onMouseLeave={() => setIsAnyVideoHovered(false)}
-                />
-              </div>
+            <div className="bg-white p-4 rounded-lg shadow-sm">
+              <video
+                src="/assets/videom.mp4"
+                className="w-full h-full object-cover rounded-lg"
+                controls
+                autoPlay
+                loop
+              />
             </div>
 
             {/* Agenda Card */}
